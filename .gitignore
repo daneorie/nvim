@@ -1,2 +1,5 @@
 
 pack/packer/start/packer.nvim/
+swap/
+plugin/
+.netrwhist

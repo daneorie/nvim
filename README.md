@@ -1,5 +1,5 @@
 # nvim
-Requires the installation of `fd`, `fzf`. I used * [Homebrew](https://brew.sh) for such installations.
+Requires the installation of `fd`, `fzf`. I used [Homebrew](https://brew.sh) for such installations.
 
 ## Plugin List
 * [packer.nvim](https://github.com/wbthomason/packer.nvim)

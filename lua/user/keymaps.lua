@@ -5,6 +5,13 @@ local function map(mode, lhs, rhs, opts)
 	end
 	vim.keymap.set(mode, lhs, rhs, options)
 end
+local function silent_map(mode, lhs, rhs, opts)
+	local options = { noremap = true, silent = true }
+	if opts then
+		options = vim.tbl_extend('force', options, opts)
+	end
+	vim.keymap.set(mode, lhs, rhs, options)
+end
 
 --Remap space as leader key
 vim.g.mapleader = " "
@@ -13,6 +20,8 @@ vim.g.maplocalleader = " "
 -- utility mappings
 map({"n", "v"}, "<leader>s", ":w<CR>")
 map({"n", "v"}, "<leader>oo", ":e ")
+map({"n", "v"}, "<leader>nn", ":set number!<CR>") -- toggle line numbers
+map({"n", "v"}, "<leader>nr", ":set relativenumber!<CR>") -- toggle relative numbers
 
 -- Set keymaps for Colemak navigation.
 --   Here's the circle of mappings: n -> h -> i -> k -> o -> l -> e -> j -> n
@@ -75,14 +84,14 @@ map("n", "<C-o>", "<C-w>l")
 -- Plugin-specific keymaps
 
 -- NERDTree
-map("n", "<leader>n", ":NERDTreeFocus<CR>")
+map("n", "<leader>nt", ":NERDTreeFocus<CR>")
 map("n", "<C-h>", ":NERDTree<CR>")
 map("n", "<leader>t", ":NERDTreeToggle<CR>")
 map("n", "<C-f>", ":NERDTreeFind<CR>")
 map("n", "<leader>r", ":NERDTreeRefreshRoot<CR>") --refresh file list
 
 -- Telescope
-map("n", "<leader>qr",  "<cmd>:lua require('user.telescope').reload()<CR>", { noremap = true, silent = true })
+silent_map("n", "<leader>qr",  "<cmd>:lua require('user.telescope').reload()<CR>")
 map("n", "<leader>ff",  "<cmd>Telescope find_files<CR>")
 map("n", "<leader>fg",  "<cmd>Telescope live_grep<CR>")
 map("n", "<leader>fb",  "<cmd>Telescope buffers<CR>")
@@ -100,3 +109,19 @@ map("n", "<leader>7", "<Plug>BuffetSwitch(7)")
 map("n", "<leader>8", "<Plug>BuffetSwitch(8)")
 map("n", "<leader>9", "<Plug>BuffetSwitch(9)")
 map("n", "<leader>0", "<Plug>BuffetSwitch(10)")
+
+-- LSP
+silent_map("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>")
+silent_map("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>")
+silent_map("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>")
+silent_map("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>")
+silent_map("n", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>")
+silent_map("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>")
+silent_map("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>")
+silent_map("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>")
+silent_map("n", "<leader>f", "<cmd>lua vim.diagnostic.open_float()<CR>")
+silent_map("n", "[d", '<cmd>lua vim.diagnostic.goto_prev({ border = "rounded" })<CR>')
+silent_map("n", "gl", '<cmd>lua vim.diagnostic.open_float({ border = "rounded" })<CR>')
+silent_map("n", "]d", '<cmd>lua vim.diagnostic.goto_next({ border = "rounded" })<CR>')
+silent_map("n", "<leader>q", "<cmd>lua vim.diagnostic.setloclist()<CR>")
+vim.cmd([[ command! Format execute 'lua vim.lsp.buf.format{async=true}' ]])

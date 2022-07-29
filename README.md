@@ -5,14 +5,12 @@ Requires the installation of [fd](https://github.com/sharkdp/fd), [fzf](https://
 * [packer.nvim](https://github.com/wbthomason/packer.nvim)
 * [popup.nvim](https://github.com/nvim-lua/popup.nvim)
 * [plenary.nvim](https://github.com/nvim-lua/plenary.nvim)
-* [luash](https://github.com/zserge/luash)
 * [nvim-autopairs](https://github.com/windwp/nvim-autopairs)
 * [vim-buffet](https://github.com/bagrat/vim-buffet)
 * [nerdcommenter](https://github.com/preservim/nerdcommenter)
 * [nerdtree](https://github.com/scrooloose/nerdtree)
 * [lualine.nvim](https://github.com/nvim-lualine/lualine.nvim)
 * [nvim-web-devicons](https://github.com/kyazdani42/nvim-web-devicons)
-* [project.nvim](https://github.com/ahmedkhalf/project.nvim)
 * [impatient.nvim](https://github.com/lewis6991/impatient.nvim)
 * [indent-blankline.nvim](https://github.com/lukas-reineke/indent-blankline.nvim)
 * [vim-startify](https://github.com/mhinz/vim-startify)
@@ -20,6 +18,8 @@ Requires the installation of [fd](https://github.com/sharkdp/fd), [fzf](https://
 * [vim-devicons](https://github.com/ryanoasis/vim-devicons)
 * [toggleterm.nvim](https://github.com/akinsho/toggleterm.nvim)
 * [orgmode](https://github.com/nvim-orgmode/orgmode)
+* [whick-key.nvim](https://github.com/folke/which-key.nvim)
+* [vim-visual-multi](https://github.com/mg979/vim-visual-multi)
  
 -- Colorschemes
 * [nightfox.nvim](https://github.com/EdenEast/nightfox.nvim)
@@ -38,8 +38,8 @@ Requires the installation of [fd](https://github.com/sharkdp/fd), [fzf](https://
 
 -- LSP
 * [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig)
-* [nvim-lsp-installer](https://github.com/williamboman/nvim-lsp-installer)
 * [null-ls.nvim](https://github.com/jose-elias-alvarez/null-ls.nvim)
+* [nvim-jdtls](https://github.com/mfussenegger/nvim-jdtls)
 
 -- Telescope
 * [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim)
@@ -47,6 +47,7 @@ Requires the installation of [fd](https://github.com/sharkdp/fd), [fzf](https://
 
 -- Treesitter
 * [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter)
+* [nvim-treesitter-textobjects](https://github.com/nvim-treesitter/nvim-treesitter-textobjects)
 
 -- Git
 

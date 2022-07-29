@@ -8,7 +8,7 @@ Requires the installation of [fd](https://github.com/sharkdp/fd), [fzf](https://
 * [nvim-autopairs](https://github.com/windwp/nvim-autopairs)
 * [vim-buffet](https://github.com/bagrat/vim-buffet)
 * [nerdcommenter](https://github.com/preservim/nerdcommenter)
-* [nerdtree](https://github.com/scrooloose/nerdtree)
+* [nerdtree](https://github.com/preservim/nerdtree)
 * [lualine.nvim](https://github.com/nvim-lualine/lualine.nvim)
 * [nvim-web-devicons](https://github.com/kyazdani42/nvim-web-devicons)
 * [impatient.nvim](https://github.com/lewis6991/impatient.nvim)
@@ -50,6 +50,8 @@ Requires the installation of [fd](https://github.com/sharkdp/fd), [fzf](https://
 * [nvim-treesitter-textobjects](https://github.com/nvim-treesitter/nvim-treesitter-textobjects)
 
 -- Git
+* [nerdtree-git-plugin](https://github.com/Xuyuanp/nerdtree-git-plugin)
+* [gitsigns.nvim](https://github.com/lewis6991/gitsigns.nvim)
 
 -- DAP
 * [nvim-dap](https://github.com/mfussenegger/nvim-dap)

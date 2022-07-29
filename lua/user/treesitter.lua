@@ -30,26 +30,26 @@ configs.setup {
 			keymaps = {
 				-- You can use the capture groups defined in textobjects.scm
 				["aA"] = "@attribute.outer",   --  1
-				["iA"] = "@attribute.inner",   --  2
+				["hA"] = "@attribute.inner",   --  2
 				["ab"] = "@block.outer",       --  3
-				["ib"] = "@block.inner",       --  4
+				["hb"] = "@block.inner",       --  4
 				["ac"] = "@call.outer",        --  5
-				["ic"] = "@call.inner",        --  6
+				["hc"] = "@call.inner",        --  6
 				["at"] = "@class.outer",       --  7
-				["it"] = "@class.inner",       --  8
+				["ht"] = "@class.inner",       --  8
 				["a/"] = "@comment.outer",     --  9
-				["i/"] = "@comment.inner",     -- 
-				["ai"] = "@conditional.outer", -- 10
-				["ii"] = "@conditional.inner", -- 11
+				["h/"] = "@comment.inner",     -- 
+				["ah"] = "@conditional.outer", -- 10
+				["hh"] = "@conditional.inner", -- 11
 				["aF"] = "@frame.outer",       -- 12
-				["iF"] = "@frame.inner",       -- 13
+				["hF"] = "@frame.inner",       -- 13
 				["af"] = "@function.outer",    -- 14
-				["if"] = "@function.inner",    -- 15
+				["hf"] = "@function.inner",    -- 15
 				["al"] = "@loop.outer",        -- 16
-				["il"] = "@loop.inner",        -- 17
+				["hl"] = "@loop.inner",        -- 17
 				["aa"] = "@parameter.outer",   -- 18
-				["ia"] = "@parameter.inner",   -- 19
-				["is"] = "@scopename.inner",   -- 20
+				["ha"] = "@parameter.inner",   -- 19
+				["hs"] = "@scopename.inner",   -- 20
 				["as"] = "@statement.outer",   -- 21
 			},
 		},

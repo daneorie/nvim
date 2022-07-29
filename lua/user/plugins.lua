@@ -45,17 +45,16 @@ return require("packer").startup(function(use)
 	use "windwp/nvim-autopairs" -- Autopairs, integrates with both cmp and treesitter
 	use "bagrat/vim-buffet" -- buffer labeling
 	use "preservim/nerdcommenter" -- an easy way for commenting out lines
-	use "scrooloose/nerdtree" -- a file explorer for neovim (netrw comes as default for neovim)
+	use "preservim/nerdtree" -- a file explorer for neovim (netrw comes as default for neovim)
+	use "ryanoasis/vim-devicons" -- devicon support for nerdtree
 	use {
 		"nvim-lualine/lualine.nvim",
 		requires = { "kyazdani42/nvim-web-devicons", opt = true },
 	}
-	--use "ahmedkhalf/project.nvim"
 	use "lewis6991/impatient.nvim"
 	use "lukas-reineke/indent-blankline.nvim"
 	use "mhinz/vim-startify" -- a really handy start page with lots of customizations
 	use { "neoclide/coc.nvim", branch = "release" } -- a fast code completion engine
-	use "ryanoasis/vim-devicons" -- devicon support for nerdtree
 	use "akinsho/toggleterm.nvim"
 	use "nvim-orgmode/orgmode"
 	use "folke/which-key.nvim"
@@ -98,6 +97,8 @@ return require("packer").startup(function(use)
 	use "nvim-treesitter/nvim-treesitter-textobjects"
 
 	-- Git
+	use "Xuyuanp/nerdtree-git-plugin" -- show git status flags in NERDTree
+	use "lewis6991/gitsigns.nvim" -- show git decorations in buffers
 
 	-- DAP
 	use "mfussenegger/nvim-dap"

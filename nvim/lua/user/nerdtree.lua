@@ -8,7 +8,7 @@ g.NERDTreeMapJumpFirstChild = "E"
 g.NERDTreeMapJumpLastChild = "I"
 g.NERDTreeMapJumpNextSibling = "<C-e>"
 g.NERDTreeMapJumpPrevSibling = "<C-i>"
-g.NERDTreeMapToggleHidden = "K"
+g.NERDTreeMapToggleHidden = "H"
 g.NERDTreeMapMenuDown = "e"
 g.NERDTreeMapMenuUp = "i"
 

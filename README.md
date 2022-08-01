@@ -2,21 +2,29 @@
 Requires the installation of [fd](https://github.com/sharkdp/fd), [fzf](https://github.com/junegunn/fzf). I used [Homebrew](https://brew.sh) for such installations.
 
 Install NeoVim
-`brew install neovim`
+```
+brew install neovim
+```
 
 Node is necessary for some plugins
-`brew install node`
+```
+brew install node
+```
 
 For proper devicon support, a patched font must be added to the terminal.
-`brew tap homebrew/cask-fonts`
-`brew install font-bitstream-vera-sans-mono-nerd-font`
+```
+brew tap homebrew/cask-fonts
+brew install font-bitstream-vera-sans-mono-nerd-font
+```
 Then select the BitStream font in the terminal for proper devicon support
 
 In order to not have issues with Alt commands in iTerm2, set the 'Option key' to 'Esc+' in
 Preferences > Profiles > Keys > General.
 
 Set or create an environment variable NVIM_HOME in the 'rc' file to the location of the nvim directory. Currently, this is only referenced for the swap file directory.
-`set NVIM_HOME="/path/to/nvim/"`
+```
+set NVIM_HOME="/path/to/nvim/"
+```
 
 ## Plugin List
 * [packer.nvim](https://github.com/wbthomason/packer.nvim)

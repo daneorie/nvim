@@ -2,3 +2,4 @@ nvim/pack/packer/start/packer.nvim/
 nvim/swap/
 nvim/plugin/
 nvim/.netrwhist
+.DS_Store

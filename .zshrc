@@ -1,12 +1,28 @@
 export EDITOR=nvim
-set -o vi
 alias ll='ls -l'
 alias lla='ls -la'
 alias v='nvim'
 alias vi='nvim'
 alias vim='nvim'
 
-export PATH="/usr/local/sbin:$PATH"
+# Use vi modes in command line and change keybindings for Colemak
+bindkey -v
+bindkey -M vicmd "j" vi-repeat-search
+bindkey -M vicmd "J" vi-rev-repeat-search
+bindkey -M vicmd "^J" down-history
+bindkey -M vicmd "l" vi-forward-word-end
+bindkey -M vicmd "L" vi-forward-blank-word-end
+bindkey -M vicmd "h" vi-insert
+bindkey -M vicmd "H" vi-insert-bol
+bindkey -M vicmd "k" vi-open-line-below
+bindkey -M vicmd "K" vi-open-line-above
+bindkey -M vicmd "n" vi-backward-char
+bindkey -M vicmd "e" down-line-or-history
+bindkey -M vicmd "E" vi-join
+bindkey -M vicmd "i" up-line-or-history
+bindkey -M vicmd "o" vi-forward-char
+
+export PATH="/opt/homebrew/bin:/usr/local/sbin:$PATH"
 export NVIM_HOME=~/.config/nvim
 export MAVEN_HOME=~/apache-maven-3.8.1
 export PATH="$PATH:$MAVEN_HOME/bin"

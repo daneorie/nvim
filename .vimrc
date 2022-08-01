@@ -1,3 +1,4 @@
+set shell="/bin/zsh"
 set tabstop=4
 
 noremap n h

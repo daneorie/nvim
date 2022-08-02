@@ -31,6 +31,7 @@ bindkey -M vicmd "i" up-line-or-history
 bindkey -M vicmd "o" vi-forward-char
 
 # Setting the prompt
+NEWLINE=$'\n'
 ## Options
 THEME_VI_INS_MODE_SYMBOL=${THEME_VI_INS_MODE_SYMBOL:-'λ'}
 THEME_VI_CMD_MODE_SYMBOL=${THEME_VI_CMD_MODE_SYMBOL:-'ᐅ'}
@@ -67,7 +68,7 @@ TRAPINT() {
 }
 
 autoload -Uz vcs_info # enable vcs_info
-zstyle ":vcs_info:*" formats " %s(%F{red}%b%f)" # git(main)
+zstyle ":vcs_info:*" formats "%s(%F{red}%b%f)" # git(main)
 precmd() {
 	set-prompt
 }
@@ -77,10 +78,13 @@ set-prompt() {
 	if [[ -z ${vcs_info_msg_0_} ]]; then
 		# Oh hey, nothing from vcs_info, so we got more space.
 		# Let's print a longer part of $PWD...
-		PS1="%n@%m [%F{red}%5~%f] %F{green}$THEME_VI_MODE_SYMBOL%f "
+		PS1="%n@%m [%F{red}%5~%f]$NEWLINE%F{green}$THEME_VI_MODE_SYMBOL%f "
+		RPS1=""
 	else
 		# vcs_info found something, that needs space. So a shorter $PWD
 		# makes sense.
-		PS1="%n@%m [%F{red}%3~%f]${vcs_info_msg_0_} %F{green}$THEME_VI_MODE_SYMBOL%f "
+		#PS1="%n@%m [%F{red}%3~%f]$NEWLINE${vcs_info_msg_0_} %F{green}$THEME_VI_MODE_SYMBOL%f "
+		PS1="%n@%m [%F{red}%3~%f]$NEWLINE%F{green}$THEME_VI_MODE_SYMBOL%f "
+		RPS1="%{$(echotc UP 1)%}${vcs_info_msg_0_}%{$(echotc DO 1)%}"
 	fi
 }

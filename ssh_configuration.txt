@@ -1,0 +1,31 @@
+ssh-keygen -t ed25519 -C "your_email@example.com"
+eval "$(ssh-agent -s)"
+
+vi ~/.ssh/config
+Host *
+  AddKeysToAgent yes
+  UseKeychain yes
+  IdentityFile ~/.ssh/id_ed25519
+
+ssh-add -K ~/.ssh/id_ed25519
+
+pbcopy < ~/.ssh/id_ed25519.pub
+
+
+# Testing the SSH connection to GitHub
+ssh -T git@github.com
+
+# List the existing remote repositories and their URLs with:
+git remote -v
+
+# That command should output something like:
+origin  https://your_server/your_user_name/your_project_name.git (fetch)
+origin  https://your_server/your_user_name/your_project_name.git (push)
+
+# Change your remote repository’s URL with:
+git remote set-url origin git@your_server:your_user_name/your_project_name.git
+
+# Run git remote -v once more to verify that the remote repository’s URL has changed:
+origin  git@your_server:your_user_name/your_project_name.git (fetch)
+origin  git@your_server:your_user_name/your_project_name.git (push)
+

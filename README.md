@@ -37,6 +37,7 @@ Clone and build in `$HOME/Documents/GitHub/`:
 * [vscode-java-test](https://github.com/microsoft/vscode-java-test)
 ```npm install; npm run build-plugin```
 
+
 1. Install the various JDKs.
 ```brew install openjdk@11 # for example```
 2. Link them to `/Library/Java/JavaVirtualMachines`.
@@ -51,7 +52,7 @@ Clone and build in `$HOME/Documents/GitHub/`:
 * [nvim-autopairs](https://github.com/windwp/nvim-autopairs)
 * [vim-buffet](https://github.com/bagrat/vim-buffet)
 * [nerdcommenter](https://github.com/preservim/nerdcommenter)
-~~* [nerdtree](https://github.com/preservim/nerdtree)~~
+* ~~[nerdtree](https://github.com/preservim/nerdtree)~~
 * [lualine.nvim](https://github.com/nvim-lualine/lualine.nvim)
 * [nvim-web-devicons](https://github.com/kyazdani42/nvim-web-devicons)
 * [nvim-tree](https://github.com/kyazdani42/nvim-tree)
@@ -94,7 +95,7 @@ Clone and build in `$HOME/Documents/GitHub/`:
 * [nvim-treesitter-textobjects](https://github.com/nvim-treesitter/nvim-treesitter-textobjects)
 
 -- Git
-~~* [nerdtree-git-plugin](https://github.com/Xuyuanp/nerdtree-git-plugin)~~
+* ~~[nerdtree-git-plugin](https://github.com/Xuyuanp/nerdtree-git-plugin)~~
 * [gitsigns.nvim](https://github.com/lewis6991/gitsigns.nvim)
 
 -- DAP

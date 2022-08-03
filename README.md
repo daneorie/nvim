@@ -1,4 +1,6 @@
 # nvim
+
+## Basic Setup
 Requires the installation of [fd](https://github.com/sharkdp/fd), [fzf](https://github.com/junegunn/fzf). I used [Homebrew](https://brew.sh) for such installations.
 
 Install NeoVim
@@ -25,6 +27,17 @@ Set or create an environment variable NVIM_HOME in the 'rc' file to the location
 ```
 set NVIM_HOME="/path/to/nvim/"
 ```
+
+## Java LSP Setup (configuration files are already setup)
+Download [eclipse.jdt.ls](https://github.com/eclipse/eclipse.jdt.ls#installation) to `/Library/Java/LanguageServers`
+
+Clone and build in `$HOME/Documents/GitHub/`:
+	[java-debug](https://github.com/microsoft/java-debug) (`./mvnw clean install`)
+	[vscode-java-test](https://github.com/microsoft/vscode-java-test) (`npm install; npm run build-plugin`)
+
+Install the various JDKs (e.g., `brew install openjdk@11`), link them to `/Library/Java/JavaVirtualMachines`, and add `Contents/Home` to `jenv`
+	if an installation fails (for ARM or something), use [zulu](https://www.azul.com/downloads/?version=java-8-lts&architecture=arm-64-bit&package=jdk) instead
+
 
 ## Plugin List
 * [packer.nvim](https://github.com/wbthomason/packer.nvim)

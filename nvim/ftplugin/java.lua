@@ -3,9 +3,9 @@ capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
 local workspace_dir = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
 
 local bundles = {
-	vim.fn.glob("/Users/daneorie/Documents/GitHub/java-debug/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-*.jar")
+	vim.fn.glob(vim.fn.getenv("HOME") .. "/Documents/GitHub/java-debug/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-*.jar")
 }
-vim.list_extend(bundles, vim.split(vim.fn.glob("/Users/daneorie/Documents/GitHub/vscode-java-test/server/*.jar"), "\n"))
+vim.list_extend(bundles, vim.split(vim.fn.glob(vim.fn.getenv("HOME") .. "/Documents/GitHub/vscode-java-test/server/*.jar"), "\n"))
 
 local config = {
 	-- The command that starts the language server

@@ -14,6 +14,8 @@ export KEYTIMEOUT=1 # this lowers the time it takes to switch from viins to vicm
 eval "$(jenv init -)"
 
 # Use vi modes in command line and change keybindings for Colemak
+#   Here's the circle of mappings: n -> h -> i -> k -> o -> l -> e -> j -> n
+#   Use this circle to determine the original mappings. (I used the reverse to generate the below mappings.)
 bindkey -v
 bindkey -M vicmd "j" vi-repeat-search
 bindkey -M vicmd "J" vi-rev-repeat-search
@@ -79,12 +81,12 @@ set-prompt() {
 		# Oh hey, nothing from vcs_info, so we got more space.
 		# Let's print a longer part of $PWD...
 		PS1="%n@%m [%F{red}%5~%f]$NEWLINE%F{green}$THEME_VI_MODE_SYMBOL%f "
-		RPS1=""
+		RPS1="%{$(echotc UP 1)%}%K{white}%F{black} %D{%T} %f%k%{$(echotc DO 1)%}"
 	else
 		# vcs_info found something, that needs space. So a shorter $PWD
 		# makes sense.
 		#PS1="%n@%m [%F{red}%3~%f]$NEWLINE${vcs_info_msg_0_} %F{green}$THEME_VI_MODE_SYMBOL%f "
 		PS1="%n@%m [%F{red}%3~%f]$NEWLINE%F{green}$THEME_VI_MODE_SYMBOL%f "
-		RPS1="%{$(echotc UP 1)%}${vcs_info_msg_0_}%{$(echotc DO 1)%}"
+		RPS1="%{$(echotc UP 1)%}${vcs_info_msg_0_} %K{white}%F{black} %D{%T} %f%k%{$(echotc DO 1)%}"
 	fi
 }

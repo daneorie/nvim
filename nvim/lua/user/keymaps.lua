@@ -84,11 +84,14 @@ map("n", "<C-o>", "<C-w>l")
 -- Plugin-specific keymaps
 
 -- NERDTree
-map("n", "<leader>nt", ":NERDTreeFocus<CR>")
-map("n", "<C-h>", ":NERDTree<CR>")
-map("n", "<leader>t", ":NERDTreeToggle<CR>")
-map("n", "<C-f>", ":NERDTreeFind<CR>")
-map("n", "<leader>r", ":NERDTreeRefreshRoot<CR>") --refresh file list
+--map("n", "<leader>nt", ":NERDTreeFocus<CR>")
+--map("n", "<C-h>", ":NERDTree<CR>")
+--map("n", "<leader>t", ":NERDTreeToggle<CR>")
+--map("n", "<C-f>", ":NERDTreeFind<CR>")
+--map("n", "<leader>r", ":NERDTreeRefreshRoot<CR>") --refresh file list
+
+-- nvim-tree
+map("n", "<leader>t", ":NvimTreeToggle<CR>")
 
 -- Telescope
 silent_map("n", "<leader>qr",  "<cmd>:lua require('user.telescope').reload()<CR>")

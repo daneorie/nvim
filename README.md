@@ -31,19 +31,29 @@ set NVIM_HOME="/path/to/nvim/"
 ## Java LSP Setup (configuration files are already setup)
 Download [eclipse.jdt.ls](https://github.com/eclipse/eclipse.jdt.ls#installation) to `/Library/Java/LanguageServers`
 
+1. Install the various JDKs.
+	```
+	brew install openjdk@11 # for example
+	```
+2. Link them to `/Library/Java/JavaVirtualMachines`.
+	```
+	sudo ln -sfn ~/Documents/zulu-OpenJDK/openjdk-11.jdk /Library/Java/JavaVirtualMachines/openjdk-11.jdk
+	```
+3. Add `Contents/Home` to `jenv`. If an installation fails (for ARM or something), use [zulu](https://www.azul.com/downloads/?version=java-8-lts&architecture=arm-64-bit&package=jdk) instead.
+	```
+	jenv add /Library/Java/JavaVirtualMachines/openjdk-11.jdk/Contents/Home
+	```
+
 Clone and build in `$HOME/Documents/GitHub/`:
 * [java-debug](https://github.com/microsoft/java-debug)
-```./mvnw clean install```
+```
+./mvnw clean install
+```
 * [vscode-java-test](https://github.com/microsoft/vscode-java-test)
-```npm install; npm run build-plugin```
-
-
-1. Install the various JDKs.
-```brew install openjdk@11 # for example```
-2. Link them to `/Library/Java/JavaVirtualMachines`.
-```sudo ln -sfn ~/Documents/zulu-OpenJDK/openjdk-11.jdk /Library/Java/JavaVirtualMachines/openjdk-11.jdk```
-3. Add `Contents/Home` to `jenv`. If an installation fails (for ARM or something), use [zulu](https://www.azul.com/downloads/?version=java-8-lts&architecture=arm-64-bit&package=jdk) instead.
-```jenv add /Library/Java/JavaVirtualMachines/openjdk-11.jdk/Contents/Home```
+```
+npm install
+npm run build-plugin
+```
 
 ## Plugin List
 * [packer.nvim](https://github.com/wbthomason/packer.nvim)
@@ -55,7 +65,7 @@ Clone and build in `$HOME/Documents/GitHub/`:
 * ~~[nerdtree](https://github.com/preservim/nerdtree)~~
 * [lualine.nvim](https://github.com/nvim-lualine/lualine.nvim)
 * [nvim-web-devicons](https://github.com/kyazdani42/nvim-web-devicons)
-* [nvim-tree](https://github.com/kyazdani42/nvim-tree)
+* [nvim-tree](https://github.com/kyazdani42/nvim-tree.lua)
 * [impatient.nvim](https://github.com/lewis6991/impatient.nvim)
 * [indent-blankline.nvim](https://github.com/lukas-reineke/indent-blankline.nvim)
 * [vim-startify](https://github.com/mhinz/vim-startify)

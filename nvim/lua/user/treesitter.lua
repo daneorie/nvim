@@ -5,7 +5,7 @@ end
 
 configs.setup {
 	ensure_installed = "all", -- a list of parsers or "all"
-	ignore_install = { }, -- list of parsers to ignore installing (for "all")
+	ignore_install = { "phpdoc" }, -- list of parsers to ignore installing (for "all")
 	sync_install = false, -- install parsers synchronously
 	auto_install = true, -- automatically install missing parsers when entering buffer
 	highlight = {

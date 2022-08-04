@@ -1,4 +1,6 @@
 # nvim
+
+## Basic Setup
 Requires the installation of [fd](https://github.com/sharkdp/fd), [fzf](https://github.com/junegunn/fzf). I used [Homebrew](https://brew.sh) for such installations.
 
 Install NeoVim
@@ -31,6 +33,33 @@ Set or create an environment variable NVIM_HOME in the 'rc' file to the location
 set NVIM_HOME="/path/to/nvim/"
 ```
 
+## Java LSP Setup (configuration files are already setup)
+Download [eclipse.jdt.ls](https://github.com/eclipse/eclipse.jdt.ls#installation) to `/Library/Java/LanguageServers`
+
+Clone and build in `$HOME/Documents/GitHub/`:
+* [java-debug](https://github.com/microsoft/java-debug)
+```
+./mvnw clean install
+```
+* [vscode-java-test](https://github.com/microsoft/vscode-java-test)
+```
+npm install; npm run build-plugin
+```
+
+
+1. Install the various JDKs.
+	```
+	brew install openjdk@11 # for example
+	```
+2. Link them to `/Library/Java/JavaVirtualMachines`.
+	```
+	sudo ln -sfn ~/Documents/zulu-OpenJDK/openjdk-11.jdk /Library/Java/JavaVirtualMachines/openjdk-11.jdk
+	```
+3. Add `Contents/Home` to `jenv`. If an installation fails (for ARM or something), use [zulu](https://www.azul.com/downloads/?version=java-8-lts&architecture=arm-64-bit&package=jdk) instead.
+	```
+	jenv add /Library/Java/JavaVirtualMachines/openjdk-11.jdk/Contents/Home
+	```
+
 ## Plugin List
 * [packer.nvim](https://github.com/wbthomason/packer.nvim)
 * [popup.nvim](https://github.com/nvim-lua/popup.nvim)
@@ -38,9 +67,10 @@ set NVIM_HOME="/path/to/nvim/"
 * [nvim-autopairs](https://github.com/windwp/nvim-autopairs)
 * [vim-buffet](https://github.com/bagrat/vim-buffet)
 * [nerdcommenter](https://github.com/preservim/nerdcommenter)
-* [nerdtree](https://github.com/preservim/nerdtree)
+* ~~[nerdtree](https://github.com/preservim/nerdtree)~~
 * [lualine.nvim](https://github.com/nvim-lualine/lualine.nvim)
 * [nvim-web-devicons](https://github.com/kyazdani42/nvim-web-devicons)
+* [nvim-tree](https://github.com/kyazdani42/nvim-tree.lua)
 * [impatient.nvim](https://github.com/lewis6991/impatient.nvim)
 * [indent-blankline.nvim](https://github.com/lukas-reineke/indent-blankline.nvim)
 * [vim-startify](https://github.com/mhinz/vim-startify)
@@ -80,7 +110,7 @@ set NVIM_HOME="/path/to/nvim/"
 * [nvim-treesitter-textobjects](https://github.com/nvim-treesitter/nvim-treesitter-textobjects)
 
 -- Git
-* [nerdtree-git-plugin](https://github.com/Xuyuanp/nerdtree-git-plugin)
+* ~~[nerdtree-git-plugin](https://github.com/Xuyuanp/nerdtree-git-plugin)~~
 * [gitsigns.nvim](https://github.com/lewis6991/gitsigns.nvim)
 
 -- DAP

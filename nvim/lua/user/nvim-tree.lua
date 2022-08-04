@@ -18,11 +18,16 @@ local list = {
 require("nvim-tree").setup({
 	view = {
 		mappings = {
-			custom_only = false,
 			list = list,
 		},
 	},
 	renderer = {
+<<<<<<< HEAD
 		group_empty = true,
+=======
+		indent_markers = {
+			enable = true,
+		},
+>>>>>>> main
 	},
 })

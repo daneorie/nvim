@@ -36,6 +36,8 @@ set NVIM_HOME="/path/to/nvim/"
 ## Java LSP Setup (configuration files are already setup)
 Download [eclipse.jdt.ls](https://github.com/eclipse/eclipse.jdt.ls#installation) to `/Library/Java/LanguageServers`
 
+<<<<<<< HEAD
+=======
 Clone and build in `$HOME/Documents/GitHub/`:
 * [java-debug](https://github.com/microsoft/java-debug)
 ```
@@ -47,6 +49,7 @@ npm install; npm run build-plugin
 ```
 
 
+>>>>>>> main
 1. Install the various JDKs.
 	```
 	brew install openjdk@11 # for example
@@ -59,6 +62,20 @@ npm install; npm run build-plugin
 	```
 	jenv add /Library/Java/JavaVirtualMachines/openjdk-11.jdk/Contents/Home
 	```
+<<<<<<< HEAD
+
+Clone and build in `$HOME/Documents/GitHub/`:
+* [java-debug](https://github.com/microsoft/java-debug)
+```
+./mvnw clean install
+```
+* [vscode-java-test](https://github.com/microsoft/vscode-java-test)
+```
+npm install
+npm run build-plugin
+```
+=======
+>>>>>>> main
 
 ## Plugin List
 * [packer.nvim](https://github.com/wbthomason/packer.nvim)

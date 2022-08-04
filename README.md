@@ -11,6 +11,11 @@ Node is necessary for some plugins
 brew install node
 ```
 
+Antigen is the plugin manager for zsh
+```
+brew install antigen
+```
+
 For proper devicon support, a patched font must be added to the terminal.
 ```
 brew tap homebrew/cask-fonts

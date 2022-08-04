@@ -4,6 +4,7 @@ alias lla='ls -la'
 alias v='nvim'
 alias vi='nvim'
 alias vim='nvim'
+alias cdu='cd-gitroot'
 
 export PATH="/opt/homebrew/bin:/usr/local/sbin:$PATH"
 export NVIM_HOME=~/.config/nvim
@@ -12,6 +13,13 @@ export PATH="$PATH:$MAVEN_HOME/bin"
 export PATH="$HOME/.jenv/bin:$PATH"
 export KEYTIMEOUT=1 # this lowers the time it takes to switch from viins to vicmd and vice versa
 eval "$(jenv init -)"
+
+# Plugins (Antigen)
+source /usr/local/share/antigen/antigen.zsh
+
+antigen bundle mollifier/cd-gitroot
+
+antigen apply
 
 # Use vi modes in command line and change keybindings for Colemak
 #   Here's the circle of mappings: n -> h -> i -> k -> o -> l -> e -> j -> n

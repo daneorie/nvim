@@ -22,4 +22,7 @@ require("nvim-tree").setup({
 			list = list,
 		},
 	},
+	renderer = {
+		group_empty = true,
+	},
 })

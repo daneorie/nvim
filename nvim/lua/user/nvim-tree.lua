@@ -22,8 +22,12 @@ require("nvim-tree").setup({
 		},
 	},
 	renderer = {
+<<<<<<< HEAD
+		group_empty = true,
+=======
 		indent_markers = {
 			enable = true,
 		},
+>>>>>>> main
 	},
 })

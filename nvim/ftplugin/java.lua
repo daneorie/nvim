@@ -39,9 +39,9 @@ local config = {
 		"-Dlog.level=ALL",
 		"-javaagent:" .. home .. "/.local/share/nvim/mason/packages/jdtls/lombok.jar",
 		"-Xms1g",
-		--"--add-modules=ALL-SYSTEM",
-		--"--add-opens", "java.base/java.util=ALL-UNNAMED",
-		--"--add-opens", "java.base/java.lang=ALL-UNNAMED",
+		"--add-modules=ALL-SYSTEM",
+		"--add-opens", "java.base/java.util=ALL-UNNAMED",
+		"--add-opens", "java.base/java.lang=ALL-UNNAMED",
 		"-jar", vim.fn.glob(home .. "/.local/share/nvim/mason/packages/jdtls/plugins/org.eclipse.equinox.launcher_*.jar"),
 		"-configuration", home .. "/.local/share/nvim/mason/packages/jdtls/config_" .. CONFIG,
 		"-data", vim.fn.expand("~/.cache/jdtls-workspace") .. workspace_dir
@@ -155,7 +155,7 @@ vim.cmd([[ command! -buffer JdtUpdateConfig lua require('jdtls').update_project_
 vim.cmd([[ command! -buffer JdtJol lua require('jdtls').jol() ]])
 vim.cmd([[ command! -buffer JdtBytecode lua require('jdtls').javap() ]])
 vim.cmd([[ command! -buffer JdtJshell lua require('jdtls').jshell() ]])
-vim.cmd([[ command! Format execute 'lua vim.lsp.buf.format{async=true}' ]])
+--jdtls.add_commands()
 
 local status_ok, which_key = pcall(require, "which-key")
 if not status_ok then

@@ -12,7 +12,7 @@ local servers = {
 	"cssls",
 	"cssmodules_ls",
 	"html",
-	"jdtls",
+	--"jdtls",
 	"jsonls",
 	"sumneko_lua",
 	"tsserver",
@@ -79,7 +79,7 @@ for _, server in pairs(servers) do
 	end
 
 	if server == "jdtls" then
-		goto continue
+		--goto continue
 	end
 
 	lspconfig[server].setup(opts)

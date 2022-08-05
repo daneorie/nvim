@@ -117,7 +117,6 @@ M.on_attach = function(client, bufnr)
 	lsp_highlight_document(client)
 	attach_navic(client, bufnr)
 
-	-- TODO: refactor this into a method that checks if string in list
 	if client.name == "tsserver" then
 		client.resolved_capabilities.document_formatting = false
 		lsp_inlayhints(bufnr, client)

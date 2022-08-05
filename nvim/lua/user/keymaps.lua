@@ -80,11 +80,18 @@ map("n", "<C-e>", "<C-w>j")
 map("n", "<C-i>", "<C-w>k")
 map("n", "<C-o>", "<C-w>l")
 
+-- Clear highlights
+map("n", "<leader>h", "<cmd>nohlsearch<CR>")
+
+-- Stay in visual mode after indenting
+map("v", "<", "<gv")
+map("v", ">", ">gv")
+
 --------------------------
 -- Plugin-specific keymaps
 
 -- nvim-tree
-map("n", "<leader>t", ":NvimTreeToggle<CR>")
+map("n", "<leader>nt", ":NvimTreeToggle<CR>")
 
 -- Telescope
 silent_map("n", "<leader>qr",  "<cmd>:lua require('user.telescope').reload()<CR>")
@@ -107,17 +114,29 @@ map("n", "<leader>9", "<Plug>BuffetSwitch(9)")
 map("n", "<leader>0", "<Plug>BuffetSwitch(10)")
 
 -- LSP
-silent_map("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>")
-silent_map("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>")
-silent_map("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>")
-silent_map("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>")
-silent_map("n", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>")
-silent_map("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>")
-silent_map("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>")
-silent_map("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>")
-silent_map("n", "<leader>f", "<cmd>lua vim.diagnostic.open_float()<CR>")
-silent_map("n", "[d", '<cmd>lua vim.diagnostic.goto_prev({ border = "rounded" })<CR>')
-silent_map("n", "gl", '<cmd>lua vim.diagnostic.open_float({ border = "rounded" })<CR>')
-silent_map("n", "]d", '<cmd>lua vim.diagnostic.goto_next({ border = "rounded" })<CR>')
-silent_map("n", "<leader>q", "<cmd>lua vim.diagnostic.setloclist()<CR>")
-vim.cmd([[ command! Format execute 'lua vim.lsp.buf.format{async=true}' ]])
+--silent_map("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>")
+--silent_map("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>")
+--silent_map("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>")
+--silent_map("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>")
+--silent_map("n", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>")
+--silent_map("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>")
+--silent_map("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>")
+--silent_map("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>")
+--silent_map("n", "<leader>f", "<cmd>lua vim.diagnostic.open_float()<CR>")
+--silent_map("n", "[d", '<cmd>lua vim.diagnostic.goto_prev({ border = "rounded" })<CR>')
+--silent_map("n", "gl", '<cmd>lua vim.diagnostic.open_float({ border = "rounded" })<CR>')
+--silent_map("n", "]d", '<cmd>lua vim.diagnostic.goto_next({ border = "rounded" })<CR>')
+--silent_map("n", "<leader>q", "<cmd>lua vim.diagnostic.setloclist()<CR>")
+--vim.cmd([[ command! Format execute 'lua vim.lsp.buf.formatting{async=true}' ]])
+--map("n", "<leader>fo",  "<cmd>Format<CR>")
+
+-- DAP
+map("n", "<leader>db", "<cmd>lua require'dap'.toggle_breakpoint()<CR>")
+map("n", "<leader>dc", "<cmd>lua require'dap'.continue()<CR>")
+map("n", "<leader>di", "<cmd>lua require'dap'.step_into()<CR>")
+map("n", "<leader>do", "<cmd>lua require'dap'.step_over()<CR>")
+map("n", "<leader>dO", "<cmd>lua require'dap'.step_out()<CR>")
+map("n", "<leader>dr", "<cmd>lua require'dap'.repl.toggle()<CR>")
+map("n", "<leader>dl", "<cmd>lua require'dap'.run_last()<CR>")
+map("n", "<leader>du", "<cmd>lua require'dapui'.toggle()<CR>")
+map("n", "<leader>dt", "<cmd>lua require'dap'.terminate()<CR>")

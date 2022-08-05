@@ -40,41 +40,27 @@ packer.init({
 
 return require("packer").startup(function(use)
 	use "wbthomason/packer.nvim" -- Have packer manage itself
-	use "nvim-lua/popup.nvim"
+
+	-- Lua Development
 	use "nvim-lua/plenary.nvim" -- Useful lua functions used by lots of plugins
-	use "windwp/nvim-autopairs" -- Autopairs, integrates with both cmp and treesitter
-	use "bagrat/vim-buffet" -- buffer labeling
-	use "preservim/nerdcommenter" -- an easy way for commenting out lines
-	--use "preservim/nerdtree" -- a file explorer for neovim (netrw comes as default for neovim)
-	use "ryanoasis/vim-devicons" -- devicon support for nerdtree
-	use {
-		"nvim-lualine/lualine.nvim",
-		requires = {
-			"kyazdani42/nvim-web-devicons",
-			opt = true
-		},
-	}
-	use {
-		"kyazdani42/nvim-tree.lua",
-		requires = {
-			"kyazdani42/nvim-web-devicons"
-		},
-	}
-	use "lewis6991/impatient.nvim"
-	use "lukas-reineke/indent-blankline.nvim"
-	use "mhinz/vim-startify" -- a really handy start page with lots of customizations
-	use { "neoclide/coc.nvim", branch = "release" } -- a fast code completion engine
-	use "akinsho/toggleterm.nvim"
-	use "nvim-orgmode/orgmode"
-	use "folke/which-key.nvim"
+	use "nvim-lua/popup.nvim"
+	use "folke/lua-dev.nvim"
+
+	-- LSP
+	use "neovim/nvim-lspconfig" -- enable LSP
 	use "williamboman/mason.nvim"
 	use "williamboman/mason-lspconfig.nvim"
-	use { "mg979/vim-visual-multi", branch = "master" }
- 
-	-- Colorschemes
-	use "EdenEast/nightfox.nvim" -- theme
+	use "jose-elias-alvarez/null-ls.nvim" -- for formatters and linters
+	use "ray-x/lsp_signature.nvim"
+	use "SmiteshP/nvim-navic"
+	use "simrat39/symbols-outline.nvim"
+	use "b0o/SchemaStore.nvim"
+	use "RRethy/vim-illuminate"
+	use "j-hui/fidget.nvim"
+	use "lvimuser/lsp-inlayhints.nvim"
+	use "https://git.sr.ht/~whynothugo/lsp_lines.nvim"
 
-	-- cmp plugins
+	-- Completion
 	use "hrsh7th/nvim-cmp" -- The completion plugin
 	use "hrsh7th/cmp-buffer" -- buffer completions
 	use "hrsh7th/cmp-path" -- path completions
@@ -82,39 +68,90 @@ return require("packer").startup(function(use)
 	use "hrsh7th/cmp-nvim-lsp"
 	use "hrsh7th/cmp-nvim-lua"
 
-	-- snippets
+	-- Snippets
 	use "L3MON4D3/LuaSnip" -- snippet engine
 	use "rafamadriz/friendly-snippets" -- a bunch of snippets to use
 
-	-- LSP
-	use "neovim/nvim-lspconfig" -- enable LSP
-	--use "williamboman/nvim-lsp-installer" -- simple to use language server installer
-	use "jose-elias-alvarez/null-ls.nvim" -- for formatters and linters
-	use "mfussenegger/nvim-jdtls" -- Java LSP
-
-	-- Telescope
-	use { "nvim-telescope/telescope.nvim", tag = "0.1.0", }
-	use "nvim-telescope/telescope-file-browser.nvim"
-
-	-- Treesitter
+	-- Syntax/Treesitter
 	use {
 		"nvim-treesitter/nvim-treesitter",
 		run = function() require("nvim-treesitter.install").update({ with_sync = true }) end,
 	}
 	use "nvim-treesitter/nvim-treesitter-textobjects"
+	use "kylechui/nvim-surround"
 
-	-- Git
-	--use "Xuyuanp/nerdtree-git-plugin" -- show git status flags in NERDTree
-	use "lewis6991/gitsigns.nvim" -- show git decorations in buffers
+	-- Marks
+	use "christianchiarulli/harpoon"
+	use "MattesGroeger/vim-bookmarks"
 
-	-- DAP
+	-- Fuzzy Finder/Telescope
+	use "nvim-telescope/telescope.nvim"
+	use "nvim-telescope/telescope-file-browser.nvim"
+	use "tom-anders/telescope-vim-bookmarks.nvim"
+
+	-- Note Taking
+	use "nvim-orgmode/orgmode"
+
+	-- Colorschemes
+	use "EdenEast/nightfox.nvim" -- theme
+
+	-- Ulility
+	use "lewis6991/impatient.nvim"
+	use { "neoclide/coc.nvim", branch = "release" } -- a fast code completion engine
+	use { "mg979/vim-visual-multi", branch = "master" }
+
+	-- Icon
+	use "kyazdani42/nvim-web-devicons"
+
+	-- Debugging
 	use "mfussenegger/nvim-dap"
 	use "rcarriga/nvim-dap-ui"
-	use "ravenxrz/DAPInstall.nvim"
+	--use "ravenxrz/DAPInstall.nvim"
+
+	-- Tabline
+	use "bagrat/vim-buffet" -- buffer labeling
+
+	-- Statusline
+	use "nvim-lualine/lualine.nvim"
+
+	-- Startup
+	use "mhinz/vim-startify" -- a really handy start page with lots of customizations
+
+	-- Indent
+	use "lukas-reineke/indent-blankline.nvim"
+
+	-- File Explorer
+	use "kyazdani42/nvim-tree.lua"
+
+	-- Comment
+	use "preservim/nerdcommenter" -- an easy way for commenting out lines
+
+	-- Terminal
+	use "akinsho/toggleterm.nvim"
+
+	-- Git
+	use "lewis6991/gitsigns.nvim" -- show git decorations in buffers
+
+	-- Editing Support
+	use "windwp/nvim-autopairs" -- Autopairs, integrates with both cmp and treesitter
+
+	-- Keybinding
+	use "folke/which-key.nvim"
+
+	-- Java
+	use "mfussenegger/nvim-jdtls" -- Java LSP
+
+	-- Markdown
+	use {
+		"iamcco/markdown-preview.nvim",
+		run = "cd app && npm install",
+		setup = function() vim.g.mkdp_filetypes = { "markdown" } end,
+		ft = { "markdown" },
+	}
 
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the end after all plugins
-	if packer_bootstrap then
+	if PACKER_BOOTSTRAP then
 		require("packer").sync()
 	end
 end)

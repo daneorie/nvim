@@ -18,7 +18,7 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
 -- utility mappings
-map({"n", "v"}, "<leader>s", ":w<CR>")
+map({"n", "v"}, "<leader>w", ":w<CR>")
 map({"n", "v"}, "<leader>oo", ":e ")
 map({"n", "v"}, "<leader>nn", ":set number!<CR>") -- toggle line numbers
 map({"n", "v"}, "<leader>nr", ":set relativenumber!<CR>") -- toggle relative numbers
@@ -56,7 +56,7 @@ map({"n", "v", "i"}, "<A-Up>", ":resize +2<CR>")             -- increase height
 map({"n", "v", "i"}, "<A-Right>", ":vertical resize +2<CR>") -- increase width
 
 -- delete current buffer and move to previous buffer
-map({"n", "v"}, "<leader>d", ":bprevious<CR>:bdelete #<CR>")
+--map({"n", "v"}, "<leader>d", ":bprevious<CR>:bdelete #<CR>")
 
 -- move line or visually selected block - alt+j/k (Colemak)
 map("i", "<A-e>", "<Esc>:m .+1<CR>==gi")
@@ -82,13 +82,6 @@ map("n", "<C-o>", "<C-w>l")
 
 --------------------------
 -- Plugin-specific keymaps
-
--- NERDTree
---map("n", "<leader>nt", ":NERDTreeFocus<CR>")
---map("n", "<C-h>", ":NERDTree<CR>")
---map("n", "<leader>t", ":NERDTreeToggle<CR>")
---map("n", "<C-f>", ":NERDTreeFind<CR>")
---map("n", "<leader>r", ":NERDTreeRefreshRoot<CR>") --refresh file list
 
 -- nvim-tree
 map("n", "<leader>t", ":NvimTreeToggle<CR>")

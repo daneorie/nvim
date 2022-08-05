@@ -1,10 +1,15 @@
---return {
-	--"compilerOptions": {
-		--"module": "commonjs",
-		--"target": "es6",
-		--"checkJs": false
-	--},
-	--"exclude": [
-		--"node_modules"
-	--]
---}
+return {
+	settings = {
+		typescript = {
+			inlayHints = {
+				includeInlayEnumMemberValueHints = true,
+				includeInlayFunctionLikeReturnTypeHints = true,
+				includeInlayFunctionParameterTypeHints = true,
+				includeInlayParameterNameHints = "all", -- 'none' | 'literals' | 'all';
+				includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+				includeInlayPropertyDeclarationTypeHints = true,
+				includeInlayVariableTypeHints = true,
+			},
+		},
+	},
+}

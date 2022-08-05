@@ -2,11 +2,6 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
 local workspace_dir = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
 
-local bundles = {
-	vim.fn.glob(vim.fn.getenv("HOME") .. "/Documents/GitHub/java-debug/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-*.jar")
-}
-vim.list_extend(bundles, vim.split(vim.fn.glob(vim.fn.getenv("HOME") .. "/Documents/GitHub/vscode-java-test/server/*.jar"), "\n"))
-
 -- Determine OS
 local home = os.getenv "HOME"
 if vim.fn.has "mac" == 1 then
@@ -18,6 +13,11 @@ elseif vim.fn.has "unix" == 1 then
 else
 	print "Unsupported system"
 end
+
+local bundles = {
+	vim.fn.glob(home .. "/Documents/GitHub/java-debug/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-*.jar")
+}
+vim.list_extend(bundles, vim.split(vim.fn.glob(home .. "/Documents/GitHub/vscode-java-test/server/*.jar"), "\n"))
 
 local status, jdtls = pcall(require, "jdtls")
 if not status then
@@ -58,17 +58,21 @@ local config = {
 				runtimes  = {
 					{
 						name = "JavaSE-1.8",
-						path = "/Library/Java/JavaVirtualMachines/openjdk-8.jdk/",
+						path = vim.fn.resolve("/Library/Java/JavaVirtualMachines/openjdk-8.jdk/"),
 					},
 					{
 						name = "JavaSE-11",
-						path = "/Library/Java/JavaVirtualMachines/openjdk-11.jdk/",
+						path = vim.fn.resolve("/Library/Java/JavaVirtualMachines/openjdk-11.jdk/"),
 					},
 					{
 						name = "JavaSE-17",
-						path = "/Library/Java/JavaVirtualMachines/openjdk-17.jdk/",
+						path = vim.fn.resolve("/Library/Java/JavaVirtualMachines/openjdk-17.jdk/"),
 					},
-				}
+				},
+				updateBuildConfiguration = "interactive",
+			},
+			eclipse = {
+				downloadSources = true,
 			},
 			maven = {
 				downloadSources = true,
@@ -125,6 +129,10 @@ local config = {
 -- or attaches to an existing client & server depending on the `root_dir`.
 require("jdtls").start_or_attach(config)
 
+vim.cmd "command! -buffer -nargs=? -complete=custom,v:lua.require'jdtls'._complete_compile JdtCompile lua require('jdtls').compile(<f-args>)"
+vim.cmd "command! -buffer -nargs=? -complete=custom,v:lua.require'jdtls'._complete_set_runtime JdtSetRuntime lua require('jdtls').set_runtime(<f-args>)"
+vim.cmd "command! -buffer JdtUpdateConfig lua require('jdtls').update_project_config()"
+vim.cmd "command! -buffer JdtBytecode lua require('jdtls').javap()"
 vim.cmd([[ command! Format execute 'lua vim.lsp.buf.format{async=true}' ]])
 
 local status_ok, which_key = pcall(require, "which-key")

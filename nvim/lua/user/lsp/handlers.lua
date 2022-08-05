@@ -1,12 +1,22 @@
 local M = {}
 
--- TODO: backfill this to template
+M.capabilities = vim.lsp.protocol.make_client_capabilities()
+
+local status_cmp_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
+if not status_cmp_ok then
+	return
+end
+
+M.capabilities.textDocument.completion.completionItem.snippetSupport = true
+M.capabilities = cmp_nvim_lsp.update_capabilities(M.capabilities)
+
 M.setup = function()
+	local icons = require("user.icons")
 	local signs = {
-		{ name = "DiagnosticSignError", text = "" },
-		{ name = "DiagnosticSignWarn", text = "" },
-		{ name = "DiagnosticSignHint", text = "" },
-		{ name = "DiagnosticSignInfo", text = "" },
+		{ name = "DiagnosticSignError", text = icons.diagnostics.Error },
+		{ name = "DiagnosticSignWarn", text = icons.diagnostics.Warning },
+		{ name = "DiagnosticSignHint", text = icons.diagnostics.Hint },
+		{ name = "DiagnosticSignInfo", text = icons.diagnostics.Information },
 	}
 
 	for _, sign in ipairs(signs) do
@@ -15,6 +25,7 @@ M.setup = function()
 
 	local config = {
 		-- disable virtual text
+		virtual_lines = false,
 		virtual_text = false,
 		-- show signs
 		signs = {
@@ -24,10 +35,10 @@ M.setup = function()
 		underline = true,
 		severity_sort = true,
 		float = {
-			focusable = false,
+			focusable = true,
 			style = "minimal",
 			border = "rounded",
-			source = "always",
+			source = "if_many",
 			header = "",
 			prefix = "",
 		},
@@ -37,12 +48,12 @@ M.setup = function()
 
 	vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
 		border = "rounded",
-		width = 60,
+		--width = 60,
 	})
 
 	vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
 		border = "rounded",
-		width = 60,
+		--width = 60,
 	})
 end
 
@@ -82,28 +93,72 @@ local function lsp_highlight_document(client)
 	-- end
 end
 
+local function attach_navic(client, bufnr)
+	vim.g.navic_silence = true
+	local status_ok, navic = pcall(require, "nvim-navic")
+	if not status_ok then
+		return
+	end
+	navic.attach(client, bufnr)
+end
+
+local function lsp_inlayhints(bufnr, client)
+	-- Set autocommands conditional on server_capabilities
+	local status_ok, hints = pcall(require, "lsp-inlayhints")
+	if not status_ok then
+		return
+	end
+	hints.on_attach(bufnr, client)
+	-- end
+end
+
 M.on_attach = function(client, bufnr)
 	lsp_keymaps(bufnr)
 	lsp_highlight_document(client)
+	attach_navic(client, bufnr)
 
-	-- vim.notify(client.name .. " starting...")
 	-- TODO: refactor this into a method that checks if string in list
 	if client.name == "tsserver" then
 		client.resolved_capabilities.document_formatting = false
+		lsp_inlayhints(bufnr, client)
 	end
+
 	if client.name == "jdt.ls" then
 		require("jdtls").setup_dap({ hotcodereplace = "auto" })
 		require("jdtls.dap").setup_dap_main_class_configs()
+		vim.lsp.codelens.refresh()
 	end
 end
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-
-local status_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
-if not status_ok then
-	return
+function M.enable_format_on_save()
+	vim.cmd [[
+		augroup format_on_save
+			autocmd!
+			autocmd BufWritePre * lua vim.lsp.buf.format({ async = true })
+		augroup end
+	]]
+	vim.notify "Enabled format on save"
 end
 
-M.capabilities = cmp_nvim_lsp.update_capabilities(capabilities)
+function M.disable_format_on_save()
+	M.remove_augroup "format_on_save"
+	vim.notify "Disabled format on save"
+end
+
+function M.toggle_format_on_save()
+	if vim.fn.exists "#format_on_save#BufWritePre" == 0 then
+		M.enable_format_on_save()
+	else
+		M.disable_format_on_save()
+	end
+end
+
+function M.remove_augroup(name)
+	if vim.fn.exists("#" .. name) == 1 then
+		vim.cmd("au! " .. name)
+	end
+end
+
+vim.cmd [[ command! LspToggleAutoFormat execute 'lua require("user.lsp.handlers").toggle_format_on_save()' ]]
 
 return M

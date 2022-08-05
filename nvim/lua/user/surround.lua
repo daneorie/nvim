@@ -8,7 +8,7 @@ surround.setup {
 		insert = "<C-g>s",
 		insert_line = "<C-g>S",
 		normal = "<leader>s",
-		normal_cur = "ss",
+		normal_cur = "<leader>ss",
 		normal_line = "S",
 		normal_cur_line = "SS",
 		visual = "<leader>s",

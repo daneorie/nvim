@@ -55,7 +55,7 @@ local config = {
 	settings = {
 		java = {
 			configuration = {
-				runtimes  = {
+				runtimes = {
 					{
 						name = "JavaSE-1.8",
 						path = vim.fn.resolve("/Library/Java/JavaVirtualMachines/openjdk-8.jdk/"),
@@ -70,6 +70,21 @@ local config = {
 					},
 				},
 				updateBuildConfiguration = "interactive",
+			},
+			import = {
+				gradle = {
+					enabled = true;
+				},
+				maven = {
+					enabled = true;
+				},
+				exclusions = {
+					"**/node_modules/**",
+					"**/.metadata/**",
+					"**/archetype-resources/**",
+					"**/META-INF/maven/**",
+					"/**/test/**",
+				}
 			},
 			eclipse = {
 				downloadSources = true,
@@ -94,22 +109,27 @@ local config = {
 			format = {
 				enabled = false,
 			},
-		},
-		signatureHelp = {
-			enabled = true,
-		},
-		completion = {
-			favoriteStaticMembers = {
-				"org.hamcrest.MatcherAssert.assertThat",
-				"org.hamcrest.Matchers.*",
-				"org.hamcrest.CoreMatchers.*",
-				"org.junit.jupiter.api.Assertions.*",
-				"java.util.Objects.requireNonNull",
-				"java.util.Objects.requireNonNullElse",
-				"org.mockito.Mockito.*",
+			signatureHelp = {
+				enabled = true,
 			},
+			completion = {
+				favoriteStaticMembers = {
+					"org.hamcrest.MatcherAssert.assertThat",
+					"org.hamcrest.Matchers.*",
+					"org.hamcrest.CoreMatchers.*",
+					"org.junit.Assert.*",
+					"org.junit.Assume.*",
+					"org.junit.jupiter.api.Assertions.*",
+					"org.junit.jupiter.api.Assumptions.*",
+					"org.junit.jupiter.api.DynamicContainer.*",
+					"org.junit.jupiter.api.DynamicTest.*",
+					"java.util.Objects.requireNonNull",
+					"java.util.Objects.requireNonNullElse",
+					"org.mockito.Mockito.*",
+				},
+			},
+			extendedClientCapabilities = extendedClientCapabilities,
 		},
-		extendedClientCapabilities = extendedClientCapabilities,
 	},
 
 	-- Language server `initializationOptions`
@@ -127,12 +147,14 @@ local config = {
 }
 -- This starts a new client & server,
 -- or attaches to an existing client & server depending on the `root_dir`.
-require("jdtls").start_or_attach(config)
+jdtls.start_or_attach(config)
 
-vim.cmd "command! -buffer -nargs=? -complete=custom,v:lua.require'jdtls'._complete_compile JdtCompile lua require('jdtls').compile(<f-args>)"
-vim.cmd "command! -buffer -nargs=? -complete=custom,v:lua.require'jdtls'._complete_set_runtime JdtSetRuntime lua require('jdtls').set_runtime(<f-args>)"
-vim.cmd "command! -buffer JdtUpdateConfig lua require('jdtls').update_project_config()"
-vim.cmd "command! -buffer JdtBytecode lua require('jdtls').javap()"
+vim.cmd([[ command! -buffer -nargs=? -complete=custom,v:lua.require'jdtls'._complete_compile JdtCompile lua require('jdtls').compile(<f-args>) ]])
+vim.cmd([[ command! -buffer -nargs=? -complete=custom,v:lua.require'jdtls'._complete_set_runtime JdtSetRuntime lua require('jdtls').set_runtime(<f-args>) ]])
+vim.cmd([[ command! -buffer JdtUpdateConfig lua require('jdtls').update_project_config() ]])
+vim.cmd([[ command! -buffer JdtJol lua require('jdtls').jol() ]])
+vim.cmd([[ command! -buffer JdtBytecode lua require('jdtls').javap() ]])
+vim.cmd([[ command! -buffer JdtJshell lua require('jdtls').jshell() ]])
 vim.cmd([[ command! Format execute 'lua vim.lsp.buf.format{async=true}' ]])
 
 local status_ok, which_key = pcall(require, "which-key")

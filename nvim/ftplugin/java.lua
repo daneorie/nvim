@@ -157,6 +157,36 @@ vim.cmd([[ command! -buffer JdtBytecode lua require('jdtls').javap() ]])
 vim.cmd([[ command! -buffer JdtJshell lua require('jdtls').jshell() ]])
 --jdtls.add_commands()
 
+local function map(mode, lhs, rhs, opts)
+	local options = { noremap = true }
+	if opts then
+		options = vim.tbl_extend('force', options, opts)
+	end
+	vim.keymap.set(mode, lhs, rhs, options)
+end
+local function silent_map(mode, lhs, rhs, opts)
+	local options = { noremap = true, silent = true }
+	if opts then
+		options = vim.tbl_extend('force', options, opts)
+	end
+	vim.keymap.set(mode, lhs, rhs, options)
+end
+silent_map("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>")
+silent_map("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>")
+silent_map("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>")
+silent_map("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>")
+silent_map("n", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>")
+silent_map("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>")
+silent_map("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>")
+silent_map("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>")
+silent_map("n", "<leader>f", "<cmd>lua vim.diagnostic.open_float()<CR>")
+silent_map("n", "[d", '<cmd>lua vim.diagnostic.goto_prev({ border = "rounded" })<CR>')
+silent_map("n", "gl", '<cmd>lua vim.diagnostic.open_float({ border = "rounded" })<CR>')
+silent_map("n", "]d", '<cmd>lua vim.diagnostic.goto_next({ border = "rounded" })<CR>')
+silent_map("n", "<leader>q", "<cmd>lua vim.diagnostic.setloclist()<CR>")
+vim.cmd([[ command! Format execute 'lua vim.lsp.buf.formatting{async=true}' ]])
+map("n", "<leader>fo",  "<cmd>Format<CR>")
+
 local status_ok, which_key = pcall(require, "which-key")
 if not status_ok then
   return

@@ -79,7 +79,7 @@ for _, server in pairs(servers) do
 	end
 
 	if server == "jdtls" then
-		--goto continue
+		goto continue
 	end
 
 	lspconfig[server].setup(opts)

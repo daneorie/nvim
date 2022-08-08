@@ -1,23 +1,36 @@
 export EDITOR=nvim
 alias ll='ls -l'
 alias lla='ls -la'
+alias lld='ls -ld'
 alias v='nvim'
 alias vi='nvim'
 alias vim='nvim'
 alias cdu='cd-gitroot'
 
-export PATH="/opt/homebrew/bin:/usr/local/sbin:$PATH"
 export NVIM_HOME=~/.config/nvim
 export MAVEN_HOME=~/apache-maven-3.8.1
-export PATH="$PATH:$MAVEN_HOME/bin"
-export PATH="$HOME/.jenv/bin:$PATH"
+
+# Add any new paths to this list
+paths_to_add=(
+	"$(brew --prefix)/bin"
+	"/usr/local/sbin"
+	"$MAVEN_HOME/bin"
+	"$HOME/.jenv/bin"
+)
+# Add paths to PATH if they don't already exist
+for path_to_add in "${paths_to_add[@]}"; do
+	if [[ ":$PATH:" != *":$path_to_add:"* ]]; then
+		export PATH="$PATH:$path_to_add"
+	fi
+done
+
 export KEYTIMEOUT=1 # this lowers the time it takes to switch from viins to vicmd and vice versa
 eval "$(jenv init -)"
 
 # Plugins (Antigen)
 source /usr/local/share/antigen/antigen.zsh
 
-antigen bundle mollifier/cd-gitroot
+antigen bundle mollifier/cd-gitroot # type "cd-gitroot<CR>" to get to the root directory of a git repo; aliased above
 
 antigen apply
 
@@ -25,20 +38,20 @@ antigen apply
 #   Here's the circle of mappings: n -> h -> i -> k -> o -> l -> e -> j -> n
 #   Use this circle to determine the original mappings. (I used the reverse to generate the below mappings.)
 bindkey -v
-bindkey -M vicmd "j" vi-repeat-search
-bindkey -M vicmd "J" vi-rev-repeat-search
-bindkey -M vicmd "^J" down-history
-bindkey -M vicmd "l" vi-forward-word-end
-bindkey -M vicmd "L" vi-forward-blank-word-end
 bindkey -M vicmd "h" vi-insert
-bindkey -M vicmd "H" vi-insert-bol
+bindkey -M vicmd "j" vi-repeat-search
 bindkey -M vicmd "k" vi-open-line-below
-bindkey -M vicmd "K" vi-open-line-above
+bindkey -M vicmd "l" vi-forward-word-end
 bindkey -M vicmd "n" vi-backward-char
 bindkey -M vicmd "e" down-line-or-history
-bindkey -M vicmd "E" vi-join
 bindkey -M vicmd "i" up-line-or-history
 bindkey -M vicmd "o" vi-forward-char
+bindkey -M vicmd "J" vi-rev-repeat-search
+bindkey -M vicmd "H" vi-insert-bol
+bindkey -M vicmd "K" vi-open-line-above
+bindkey -M vicmd "L" vi-forward-blank-word-end
+bindkey -M vicmd "E" vi-join
+bindkey -M vicmd "^J" down-history
 
 # Setting the prompt
 NEWLINE=$'\n'

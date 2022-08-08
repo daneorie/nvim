@@ -16,7 +16,7 @@ surround.setup {
 		delete = "ds",
 		change = "cs",
 	},
-	delimiters = {
+	surrounds = {
 		pairs = {
 			["("] = { "( ", " )" },
 			[")"] = { "(", ")" },
@@ -62,7 +62,7 @@ surround.setup {
 			vim.notify ("Invalid surround character", vim.log.levels.INFO)
 		end,
 	},
-	highlight_motion = { -- Highlight before inserting/changing surrounds
+	highlight = { -- Highlight before inserting/changing surrounds
 		duration = 0,
 	},
 }

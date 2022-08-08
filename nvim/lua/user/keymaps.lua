@@ -25,22 +25,38 @@ map({"n", "v"}, "<leader>nr", ":set relativenumber!<CR>") -- toggle relative num
 
 -- Set keymaps for Colemak navigation.
 --   Here's the circle of mappings: n -> h -> i -> k -> o -> l -> e -> j -> n
-map({"n", "v"}, "n", "h")
-map({"n", "v"}, "N", "H")
-map({"n", "v"}, "e", "j")
-map({"n", "v"}, "E", "J")
-map({"n", "v"}, "i", "k")
-map({"n", "v"}, "I", "K")
-map({"n", "v"}, "o", "l")
-map({"n", "v"}, "O", "L")
-map({"n", "v"}, "h", "i")
-map({"n", "v"}, "H", "I")
-map({"n", "v"}, "k", "o")
-map({"n", "v"}, "K", "O")
-map({"n", "v"}, "l", "e")
-map({"n", "v"}, "L", "E")
-map({"n", "v"}, "j", "n")
-map({"n", "v"}, "J", "N")
+map({"n", "v"}, "n", "h") -- arrow: left
+map({"n", "v"}, "e", "j") -- arrow: down
+map({"n", "v"}, "i", "k") -- arrow: up
+map({"n", "v"}, "o", "l") -- arrow: right
+map({"n", "v"}, "h", "i") -- insert
+map({"n", "v"}, "k", "o") -- newline insert
+map({"n", "v"}, "l", "e") -- end of word
+map({"n", "v"}, "j", "n") -- next match
+map({"n", "v"}, "N", "H") -- top of page
+map({"n", "v"}, "E", "J") -- join line below to current line
+map({"n", "v"}, "I", "K") -- <unset>?
+map({"n", "v"}, "O", "L") -- bottom of page
+map({"n", "v"}, "H", "I") -- insert at beginning of line
+map({"n", "v"}, "K", "O") -- insert newline
+map({"n", "v"}, "L", "E") -- end of word (space separated)
+map({"n", "v"}, "J", "N") -- previous match
+--map({"n", "v"}, "<C-n>", "<C-h>")
+--map({"n", "v"}, "<C-e>", "<C-j>")
+--map({"n", "v"}, "<C-i>", "<C-k>")
+--map({"n", "v"}, "<C-o>", "<C-l>")
+--map({"n", "v"}, "<C-h>", "<C-i>")
+--map({"n", "v"}, "<C-k>", "<C-o>")
+--map({"n", "v"}, "<C-l>", "<C-e>")
+--map({"n", "v"}, "<C-j>", "<C-n>")
+
+-- vertical scrolling. <C-y> is scroll up by default, so using <C-u> for scroll down works
+--   very nicely in Colemak, since U and Y are above E and I (up and down in Colemak).
+map({"n", "v"}, "<C-u>", "<C-e>")
+
+-- page scrolling. Similar to the vertical scrolling, these keys are right below E and I.
+map({"n", "v"}, "<C-,>", "<C-d>")
+map({"n", "v"}, "<C-.>", "<C-u>")
 
 -- move between buffers
 map("n", "<Tab>", ":bn<CR>")

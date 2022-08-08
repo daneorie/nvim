@@ -4,7 +4,6 @@
 -- find more here: https://www.nerdfonts.com/cheat-sheet
 vim.g.use_nerd_icons = false
 if vim.fn.has "mac" == 1 or vim.g.use_nerd_icons then
-	-- elseif vim.fn.has "mac" == 1 then
 	return {
 		kind = {
 			Text = "",

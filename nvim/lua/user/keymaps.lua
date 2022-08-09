@@ -106,6 +106,10 @@ map("v", ">", ">gv")
 --------------------------
 -- Plugin-specific keymaps
 
+-- which-key
+map({"n", "v"}, "<C-h>", ":WhichKey<CR>")
+map("i", "<C-h>", ":WhichKey<CR>")
+
 -- nvim-tree
 map("n", "<leader>nt", ":NvimTreeToggle<CR>")
 
@@ -115,6 +119,9 @@ map("n", "<leader>ff",  "<cmd>Telescope find_files<CR>")
 map("n", "<leader>fg",  "<cmd>Telescope live_grep<CR>")
 map("n", "<leader>fb",  "<cmd>Telescope buffers<CR>")
 map("n", "<leader>fh",  "<cmd>Telescope help_tags<CR>")
+map("n", "<leader>fw",  "<cmd>Telescope workspaces<CR>")
+map("n", "<leader>fv",  "<cmd>Telescope vim_bookmarks current_file<CR>")
+map("n", "<leader>fV",  "<cmd>Telescope vim_bookmarks all<CR>")
 map("n", "<leader>bf",  "<cmd>Telescope file_browser<CR>")
 
 -- vim-buffet

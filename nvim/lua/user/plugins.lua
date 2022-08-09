@@ -83,9 +83,12 @@ return require("packer").startup(function(use)
 	-- Marks
 	use "christianchiarulli/harpoon"
 	use "MattesGroeger/vim-bookmarks"
+	use "natecraddock/sessions.nvim"
+	use "natecraddock/workspaces.nvim"
 
 	-- Fuzzy Finder/Telescope
 	use "nvim-telescope/telescope.nvim"
+	use { "nvim-telescope/telescope-fzf-native.nvim", run = "make" }
 	use "nvim-telescope/telescope-file-browser.nvim"
 	use "tom-anders/telescope-vim-bookmarks.nvim"
 

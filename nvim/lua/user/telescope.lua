@@ -1,47 +1,33 @@
-local M = {}
-
-function M.reload()
-	-- Telescope will give us something like ju/colors.lua, 
-	-- so this function convert the selected entry to 
-	-- the module name: ju.colors
-	local function get_module_name(s)
-		local module_name;
-
-		module_name = s:gsub("%.lua", "")
-		module_name = module_name:gsub("%/", ".")
-		module_name = module_name:gsub("%.init", "")
-
-		return module_name
-	end
-
-	local prompt_title = "~ neovim modules ~"
-
-	-- sets the path to the lua folder
-	local path = "~/.config/nvim/lua"
-
-	local opts = {
-		prompt_title = prompt_title,
-		cwd = path,
-
-		attach_mappings = function(_, map)
-		 -- Adds a new map to ctrl+e.
-			map("i", "<c-e>", function(_)
-				-- these two a very self-explanatory
-				local entry = require("telescope.actions.state").get_selected_entry()
-				local name = get_module_name(entry.value)
-
-				-- call the helper method to reload the module
-				-- and give some feedback
-				R(name)
-				P(name .. " RELOADED!!!")
-			end)
-
-			return true
-		end
-	}
-
-	-- call the builtin method to list files
-	require('telescope.builtin').find_files(opts)
+local status_ok, actions = pcall(require, "telescope.actions")
+if not status_ok then
+	return
 end
 
-return M;
+require("telescope").setup({
+	defaults = {
+		mappings  = {
+			n = {
+				["<C-h>"] = "which_key",
+				["e"] = actions.move_selection_next,
+				["i"] = actions.move_selection_previous,
+				["<C-u>"] = actions.results_scrolling_down,
+				["<C-y>"] = actions.results_scrolling_up,
+				["<C-,>"] = actions.preview_scrolling_down,
+				["<C-.>"] = actions.preview_scrolling_up,
+			},
+			i = {
+				["<C-h>"] = "which_key",
+				["<C-e>"] = actions.move_selection_next,
+				["<C-i>"] = actions.move_selection_previous,
+				["<C-u>"] = actions.results_scrolling_down,
+				["<C-y>"] = actions.results_scrolling_up,
+				["<C-,>"] = actions.preview_scrolling_down,
+				["<C-.>"] = actions.preview_scrolling_up,
+			},
+		},
+	},
+	pickers = {
+	},
+	extensions  = {
+	},
+});

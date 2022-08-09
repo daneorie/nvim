@@ -3,3 +3,4 @@ nvim/swap/
 nvim/plugin/
 nvim/.netrwhist
 .DS_Store
+.nvim/session

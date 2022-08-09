@@ -4,7 +4,7 @@ end
 
 -- Change some default mappings for Colemak
 local list = {
-	{ key = "p", action = "print_path", action_cb = print_node_path },
+	{ key = "<leader>p", action = "print_path", action_cb = print_node_path },
 	{ key = { "<CR>", "k", "<2-LeftMouse>" }, action = "edit" },
 	{ key = "<C-l>",                          action = "edit_in_place" },
 	{ key = "K",                              action = "edit_no_picker" },

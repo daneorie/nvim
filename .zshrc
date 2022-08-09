@@ -10,9 +10,12 @@ alias cdu='cd-gitroot'
 export NVIM_HOME=~/.config/nvim
 export MAVEN_HOME=~/apache-maven-3.8.1
 
+if [[ -n "/usr/local/bin/brew" ]]; then
+	export PATH="$PATH:/opt/homebrew/bin"
+fi
+
 # Add any new paths to this list
 paths_to_add=(
-	"$(brew --prefix)/bin"
 	"/usr/local/sbin"
 	"$MAVEN_HOME/bin"
 	"$HOME/.jenv/bin"

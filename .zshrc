@@ -1,12 +1,3 @@
-export EDITOR=nvim
-alias ll='ls -l'
-alias lla='ls -la'
-alias lld='ls -ld'
-alias v='nvim'
-alias vi='nvim'
-alias vim='nvim'
-alias cdu='cd-gitroot'
-
 export NVIM_HOME=~/.config/nvim
 export MAVEN_HOME=~/apache-maven-3.8.1
 
@@ -26,6 +17,18 @@ for path_to_add in "${paths_to_add[@]}"; do
 		export PATH="$PATH:$path_to_add"
 	fi
 done
+
+export EDITOR=nvim
+export PAGER=less
+export LESSKEY=~/.lesskey
+alias ll='ls -l'
+alias lla='ls -la'
+alias lld='ls -ld'
+alias v='nvim'
+alias vi='nvim'
+alias vim='nvim'
+alias cdu='cd-gitroot'
+alias less="$(brew --prefix)/Cellar/less/590/bin/less"
 
 export KEYTIMEOUT=1 # this lowers the time it takes to switch from viins to vicmd and vice versa
 eval "$(jenv init -)"

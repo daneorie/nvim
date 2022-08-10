@@ -1,4 +1,4 @@
 require("sessions").setup({
     events = { "WinEnter" },
-    session_filepath = ".nvim/session",
+    session_filepath = "~/.nvim/session",
 })

@@ -100,7 +100,7 @@ return require("packer").startup(function(use)
 
 	-- Ulility
 	use "lewis6991/impatient.nvim"
-	use { "neoclide/coc.nvim", branch = "release" } -- a fast code completion engine
+	--use { "neoclide/coc.nvim", branch = "release" } -- a fast code completion engine
 	use { "mg979/vim-visual-multi", branch = "master" }
 
 	-- Icon

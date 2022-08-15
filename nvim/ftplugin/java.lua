@@ -91,6 +91,7 @@ local config = {
 			},
 			maven = {
 				downloadSources = true,
+				updateSnapshots = true,
 			},
 			implementationsCodeLens = {
 				enabled = true,
@@ -113,6 +114,7 @@ local config = {
 				enabled = true,
 			},
 			completion = {
+				enabled = true,
 				favoriteStaticMembers = {
 					"org.hamcrest.MatcherAssert.assertThat",
 					"org.hamcrest.Matchers.*",
@@ -182,7 +184,7 @@ silent_map("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>")
 silent_map("n", "<leader>f", "<cmd>lua vim.diagnostic.open_float()<CR>")
 silent_map("n", "[d", '<cmd>lua vim.diagnostic.goto_prev({ border = "rounded" })<CR>')
 silent_map("n", "gl", '<cmd>lua vim.diagnostic.open_float({ border = "rounded" })<CR>')
-silent_map("n", "]d", '<cmd>lua vim.diagnostic.goto_next({ border = "rounded" })<CR>:-1<CR>:+1<CR>') -- -1 +1 accounts for the offset caused by the previous diagnostic lsp_lines
+silent_map("n", "]d", '<cmd>lua vim.diagnostic.goto_next({ border = "rounded" })<CR>')
 silent_map("n", "<leader>q", "<cmd>lua vim.diagnostic.setloclist()<CR>")
 vim.cmd([[ command! Format execute 'lua vim.lsp.buf.formatting{async=true}' ]])
 map("n", "<leader>fo",  "<cmd>Format<CR>")

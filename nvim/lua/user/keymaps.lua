@@ -97,7 +97,7 @@ map("n", "<C-i>", "<C-w>k")
 map("n", "<C-o>", "<C-w>l")
 
 -- Clear highlights
-map("n", "<leader>h", "<cmd>nohlsearch<CR>")
+map("n", "<leader>h", ":nohlsearch<CR>")
 
 -- Stay in visual mode after indenting
 map("v", "<", "<gv")
@@ -111,18 +111,22 @@ map({"n", "v"}, "<C-h>", ":WhichKey<CR>")
 map("i", "<C-h>", ":WhichKey<CR>")
 
 -- nvim-tree
+map("n", "<leader>l", "<cmd>lua require('lsp_lines').toggle()<CR>")
+
+-- nvim-tree
 map("n", "<leader>nt", ":NvimTreeToggle<CR>")
 
 -- Telescope
-silent_map("n", "<leader>qr",  "<cmd>:lua require('user.telescope').reload()<CR>")
-map("n", "<leader>ff",  "<cmd>Telescope find_files<CR>")
-map("n", "<leader>fg",  "<cmd>Telescope live_grep<CR>")
-map("n", "<leader>fb",  "<cmd>Telescope buffers<CR>")
-map("n", "<leader>fh",  "<cmd>Telescope help_tags<CR>")
-map("n", "<leader>fw",  "<cmd>Telescope workspaces<CR>")
-map("n", "<leader>fv",  "<cmd>Telescope vim_bookmarks current_file<CR>")
-map("n", "<leader>fV",  "<cmd>Telescope vim_bookmarks all<CR>")
-map("n", "<leader>bf",  "<cmd>Telescope file_browser<CR>")
+silent_map("n", "<leader>qr", "<cmd>lua require('user.telescope').reload()<CR>")
+map("n", "<leader>ff", "<cmd>Telescope find_files<CR>")
+map("n", "<leader>fg", "<cmd>Telescope live_grep<CR>")
+map("n", "<leader>fb", "<cmd>Telescope buffers<CR>")
+map("n", "<leader>fh", "<cmd>Telescope help_tags<CR>")
+map("n", "<leader>fw", "<cmd>Telescope workspaces<CR>")
+map("n", "<leader>fv", "<cmd>Telescope vim_bookmarks current_file<CR>")
+map("n", "<leader>fV", "<cmd>Telescope vim_bookmarks all<CR>")
+map("n", "<leader>bf", "<cmd>Telescope file_browser<CR>")
+map("n", "<leader>bh", "<cmd>Telescope file_browser hidden=true<CR>")
 
 -- vim-buffet
 map("n", "<leader>1", "<Plug>BuffetSwitch(1)")

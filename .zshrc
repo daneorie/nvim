@@ -1,7 +1,7 @@
 export NVIM_HOME=~/.config/nvim
 export MAVEN_HOME=~/apache-maven-3.8.1
 
-if [[ -e "/usr/local/bin/brew" ]]; then
+if [[ -n "/usr/local/bin/brew" ]]; then
 	export PATH="$PATH:/opt/homebrew/bin"
 fi
 

@@ -89,6 +89,7 @@ return require("packer").startup(function(use)
 
 	-- Fuzzy Finder/Telescope
 	use "nvim-telescope/telescope.nvim"
+	use "nvim-telescope/telescope-ui-select.nvim"
 	use { "nvim-telescope/telescope-fzf-native.nvim", run = "make" }
 	use "nvim-telescope/telescope-file-browser.nvim"
 	use "tom-anders/telescope-vim-bookmarks.nvim"
@@ -113,7 +114,7 @@ return require("packer").startup(function(use)
 	--use "ravenxrz/DAPInstall.nvim"
 
 	-- Tabline
-	--use "bagrat/vim-buffet" -- buffer labeling
+	use "bagrat/vim-buffet" -- buffer labeling
 
 	-- Statusline
 	use "nvim-lualine/lualine.nvim"

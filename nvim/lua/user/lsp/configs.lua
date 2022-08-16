@@ -8,7 +8,7 @@ local lspconfig = require("lspconfig")
 local servers = {
 	"cssls",
 	"html",
-	"jdtls",
+	--"jdtls",
 	"jsonls",
 	"sumneko_lua",
 	"tsserver"

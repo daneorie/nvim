@@ -7,11 +7,15 @@ local hide_in_width = function()
 	return vim.fn.winwidth(0) > 80
 end
 
+local icons = require("user.icons")
 local diagnostics = {
 	"diagnostics",
 	sources = { "nvim_diagnostic" },
 	sections = { "error", "warn" },
-	symbols = { error = " ", warn = " " },
+	symbols = {
+		error = icons.diagnostics.Error .. " ",
+		warn = icons.diagnostics.Warning .. " ",
+	},
 	colored = false,
 	update_in_insert = false,
 	always_visible = true,
@@ -20,7 +24,11 @@ local diagnostics = {
 local diff = {
 	"diff",
 	colored = false,
-	symbols = { added = " ", modified = " ", removed = " " }, -- changes diff symbols
+	symbols = { -- changes diff symbols
+		added = icons.git.Add .. " ",
+		modified = icons.git.Mod .. " ",
+		removed = icons.git.Remove .. " ",
+	},
 	cond = hide_in_width
 }
 
@@ -76,7 +84,8 @@ lualine.setup({
 	sections = {
 		lualine_a = { "mode" },
 		lualine_b = { branch, diagnostics },
-		lualine_c = { navic.get_location, cond = navic.is_available },
+		--lualine_c = { navic.get_location, cond = navic.is_available },
+		lualine_c = { navic.get_location, cond = nil }, 
 		-- lualine_x = { "encoding", "fileformat", "filetype" },
 		lualine_x = { diff, spaces, "encoding", filetype },
 		lualine_y = { location },

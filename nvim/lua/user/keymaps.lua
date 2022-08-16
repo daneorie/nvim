@@ -61,9 +61,13 @@ map({"n", "v"}, "<C-.>", "<C-u>")
 -- move between buffers
 map("n", "<Tab>", ":bn<CR>")
 map("n", "<S-Tab>", ":bp<CR>")
-map("n", "<leader><Tab>", ":Bw<CR>")
-map("n", "<leader><S-Tab>", ":Bw!<CR>")
 map("n", "<C-t>", ":tabnew split<CR>")
+
+-- wipe the current buffer but do not close the window
+map("n", "<leader><Tab>", ":Bw<CR>") -- using vim-buffet
+map("n", "<leader><S-Tab>", ":Bw!<CR>") -- using vim-buffet
+--map("n", "<leader><Tab>", ":bp<CR>:bd #<CR>") -- without vim-buffet
+--map("n", "<leader><S-Tab>", ":bp!<CR>:bd! #<CR>") -- without vim-buffet
 
 -- resize current buffer
 map({"n", "v", "i"}, "<A-Left>", ":vertical resize -2<CR>")  -- decrease width

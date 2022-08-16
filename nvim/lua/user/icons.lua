@@ -7,6 +7,8 @@ if vim.fn.has "mac" == 1 or vim.g.use_nerd_icons then
 	return {
 		kind = {
 			Text = "",
+			Namespace = "",
+			Package = "",
 			-- Method = "m",
 			-- Function = "",
 			-- Constructor = "",
@@ -24,6 +26,7 @@ if vim.fn.has "mac" == 1 or vim.g.use_nerd_icons then
 			Unit = "",
 			Value = "",
 			Enum = "",
+			Key = "",
 			-- Keyword = "",
 			Keyword = "",
 			-- Snippet = "",
@@ -45,6 +48,7 @@ if vim.fn.has "mac" == 1 or vim.g.use_nerd_icons then
 			String = "",
 			Boolean = "蘒",
 			Object = "",
+			Null = "ﳠ",
 		},
 		documents = {
 			File = "",
@@ -118,6 +122,8 @@ else
 	return {
 		kind = {
 			Text = " ",
+			Namespace = "", -- TODO: update for Linux
+			Package = "", -- TODO: update for Linux
 			Method = " ",
 			Function = " ",
 			Constructor = " ",
@@ -130,6 +136,7 @@ else
 			Unit = " ",
 			Value = " ",
 			Enum = " ",
+			Key = " ",
 			Keyword = " ",
 			Snippet = " ",
 			Color = " ",
@@ -150,6 +157,7 @@ else
 			String = " ",
 			Boolean = " ",
 			Object = " ",
+			Null = "ﳠ", -- TODO: update for Linux
 		},
 		documents = {
 			File = " ",

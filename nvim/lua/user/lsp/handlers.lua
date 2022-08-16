@@ -25,7 +25,8 @@ M.setup = function()
 
 	local config = {
 		-- disable virtual text
-		virtual_lines = { only_current_line = true },
+		--virtual_lines = { only_current_line = true },
+		virtual_lines = false,
 		virtual_text = false,
 		-- show signs
 		signs = {
@@ -70,7 +71,7 @@ local function lsp_keymaps(bufnr)
 	--vim.keymap.set("n", "<leader>f", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
 	vim.keymap.set("n", "[d", '<cmd>lua vim.diagnostic.goto_prev({ border = "rounded" })<CR>', opts)
 	vim.keymap.set("n", "gl", '<cmd>lua vim.diagnostic.open_float({ border = "rounded" })<CR>', opts)
-	vim.keymap.set("n", "]d", '<cmd>lua vim.diagnostic.goto_next({ border = "rounded" })<CR>:-1<CR>:+1<CR>', opts) -- -1 +1 accounts for the offset caused by the previous diagnostic lsp_lines
+	vim.keymap.set("n", "]d", '<cmd>lua vim.diagnostic.goto_next({ border = "rounded" })<CR>', opts)
 	vim.keymap.set("n", "<leader>q", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts)
 	vim.cmd([[ command! Format execute 'lua vim.lsp.buf.format{async=true}' ]])
 end

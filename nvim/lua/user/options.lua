@@ -35,6 +35,10 @@ local options = {
 	scrolloff = 8,                             -- 
 	sidescrolloff = 8,                         -- 
 	--guifont = "monospace:h17",                 -- the font used in graphical neovim applications
+	foldcolumn = "3",                          -- space on the left of the buffer that shows the fold status and fold levels
+	foldlevel = 20,                            -- sets the level where folding automatically happens
+	foldmethod = "expr",                       -- `expr` means use a function to determing the folding behavior
+	foldexpr = "nvim_treesitter#foldexpr()",   -- use treesitter for determining the folding behavior
 }
 
 vim.opt.shortmess:append "c"

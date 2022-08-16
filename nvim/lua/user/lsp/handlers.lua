@@ -95,6 +95,14 @@ local function attach_navic(client, bufnr)
 	navic.attach(client, bufnr)
 end
 
+local function attach_folding()
+	local status_ok, folding = pcall(require, "folding")
+	if not status_ok then
+		return
+	end
+	folding.on_attach()
+end
+
 local function lsp_inlayhints(bufnr, client)
 	-- Set autocommands conditional on server_capabilities
 	local status_ok, hints = pcall(require, "lsp-inlayhints")
@@ -109,6 +117,7 @@ M.on_attach = function(client, bufnr)
 	lsp_keymaps(bufnr)
 	lsp_highlight_document(client)
 	attach_navic(client, bufnr)
+	attach_folding()
 
 	if client.name == "tsserver" then
 		client.resolved_capabilities.document_formatting = false

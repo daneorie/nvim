@@ -27,7 +27,12 @@ end
 local extendedClientCapabilities = jdtls.extendedClientCapabilities
 extendedClientCapabilities.resolveAdditionalTextEditsSupport = true
 
+local on_attach = function(client, bufnr)
+	require("folding").on_attach()
+end
+
 local config = {
+	on_attach = on_attach,
 	-- The command that starts the language server
 	-- See: https://github.com/eclipse/eclipse.jdt.ls#running-from-the-command-line
 	cmd = {

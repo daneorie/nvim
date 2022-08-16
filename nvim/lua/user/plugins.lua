@@ -59,6 +59,7 @@ return require("packer").startup(function(use)
 	use "j-hui/fidget.nvim"
 	use "lvimuser/lsp-inlayhints.nvim"
 	use "https://git.sr.ht/~whynothugo/lsp_lines.nvim"
+	use "pierreglaser/folding-nvim"
 
 	-- Completion
 	use "hrsh7th/nvim-cmp" -- The completion plugin

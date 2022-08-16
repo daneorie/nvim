@@ -22,6 +22,7 @@ map({"n", "v"}, "<leader>w", ":w<CR>")
 map({"n", "v"}, "<leader>oo", ":e ")
 map({"n", "v"}, "<leader>nn", ":set number!<CR>") -- toggle line numbers
 map({"n", "v"}, "<leader>nr", ":set relativenumber!<CR>") -- toggle relative numbers
+map("n", "<leader>h", "<cmd>nohlsearch<CR>") -- clear highlights
 
 -- Set keymaps for Colemak navigation.
 --   Here's the circle of mappings: n -> h -> i -> k -> o -> l -> e -> j -> n
@@ -95,9 +96,6 @@ map("n", "<C-n>", "<C-w>h")
 map("n", "<C-e>", "<C-w>j")
 map("n", "<C-i>", "<C-w>k")
 map("n", "<C-o>", "<C-w>l")
-
--- Clear highlights
-map("n", "<leader>h", "<cmd>nohlsearch<CR>")
 
 -- Stay in visual mode after indenting
 map("v", "<", "<gv")

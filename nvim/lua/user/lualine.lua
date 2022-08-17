@@ -85,7 +85,7 @@ lualine.setup({
 		lualine_a = { "mode" },
 		lualine_b = { branch, diagnostics },
 		--lualine_c = { navic.get_location, cond = navic.is_available },
-		lualine_c = { navic.get_location, cond = nil }, 
+		lualine_c = { navic.get_location, cond = nil },
 		-- lualine_x = { "encoding", "fileformat", "filetype" },
 		lualine_x = { diff, spaces, "encoding", filetype },
 		lualine_y = { location },

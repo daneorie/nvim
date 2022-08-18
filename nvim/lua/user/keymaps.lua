@@ -13,9 +13,9 @@ local function silent_map(mode, lhs, rhs, opts)
 	vim.keymap.set(mode, lhs, rhs, options)
 end
 
---Remap space as leader key
-vim.g.mapleader = " "
-vim.g.maplocalleader = " "
+--Remap comma as leader key
+vim.g.mapleader = ","
+vim.g.maplocalleader = ","
 
 -- utility mappings
 map({"n", "v"}, "<leader>w", ":w<CR>")
@@ -79,20 +79,20 @@ map({"n", "v", "i"}, "<A-Right>", ":vertical resize +2<CR>") -- increase width
 --map({"n", "v"}, "<leader>d", ":bprevious<CR>:bdelete #<CR>")
 
 -- move line or visually selected block - alt+j/k (Colemak)
-map("i", "<A-e>", "<Esc>:m .+1<CR>==gi")
-map("i", "<A-i>", "<Esc>:m .-2<CR>==gi")
-map("v", "<A-e>", ":m '>+1<CR>gv=gv")
-map("v", "<A-i>", ":m '<-2<CR>gv=gv")
+--map("i", "<A-e>", "<Esc>:m .+1<CR>==gi")
+--map("i", "<A-i>", "<Esc>:m .-2<CR>==gi")
+--map("v", "<A-e>", ":m '>+1<CR>gv=gv")
+--map("v", "<A-i>", ":m '<-2<CR>gv=gv")
 
 --split the window vertically or horizontally
 map("n", "<Bar>", "<C-w>v<C-w><Right>")
 map("n", "_", "<C-w>s<C-w><Down>")
 
 -- move split panes to left/bottom/top/right (Colemak)
-map("n", "<A-n>", "<C-w>H")
-map("n", "<A-e>", "<C-w>J")
-map("n", "<A-i>", "<C-w>K")
-map("n", "<A-o>", "<C-w>L")
+--map("n", "<A-n>", "<C-w>H")
+--map("n", "<A-e>", "<C-w>J")
+--map("n", "<A-i>", "<C-w>K")
+--map("n", "<A-o>", "<C-w>L")
 
 -- move between panes to left/bottom/top/right (Colemak)
 map("n", "<C-n>", "<C-w>h")

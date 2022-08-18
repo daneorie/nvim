@@ -25,3 +25,10 @@ noremap <c-h> <c-n>
 noremap <c-j> <c-e>
 noremap <c-k> <c-i>
 noremap <c-l> <c-o>
+
+" Enable true colors if available
+set termguicolors
+colorscheme gruvbox
+" Enable italics. Make sure this is immediately after colorscheme
+" https://stackoverflow.com/questions/3494435/vimrc-make-comments-italic
+highlight Comment cterm=italic gui=italic

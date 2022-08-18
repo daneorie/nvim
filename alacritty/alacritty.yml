@@ -5,6 +5,10 @@ env:
   TERM: alacritty
 
 window:
+  padding:
+    x: 0
+    y: 0
+
   # Spread additional padding evenly around the terminal content.
   dynamic_padding: true
 
@@ -80,12 +84,34 @@ live_config_reload: true
 # using Mac's 'command' to control your tmux.
 # A great reference: https://arslan.io/2018/02/05/gpu-accelerated-terminal-alacritty/#make-alacritty-feel-like-iterm2
 key_bindings:
-  # Use command + [ - to go to previous tmux window
-  - { key: LBracket, mods: Command, chars: "\x5c\x70" }
-  # Use command + ] - to go to previous tmux window
-  - { key: RBracket, mods: Command, chars: "\x5c\x6e" }
-  # ctrl-^ doesn't work in some terminals like alacritty
-  - { key: Key6, mods: Control, chars: "\x1e" }
+  - { key: C,        mods: Command,       action: Copy      } #       : Use command + [ - to go to previous tmux windows
+  - { key: V,        mods: Command,       action: Paste     } #       : Use command + [ - to go to previous tmux windows
+  - { key: Q,        mods: Command,       action: Quit      } #       : Use command + [ - to go to previous tmux windows
+  - { key: N,        mods: Command,       command: { program: "open", args: ["-nb", "io.alacritty"] } } # Open another instance of Alacritty
+  - { key: LBracket, mods: Command,       chars: "\x06\x70" } # c-f p : Use command + [ - to go to previous tmux windows
+  - { key: RBracket, mods: Command,       chars: "\x06\x6e" } # c-f n : Use command + ] - to go to previous tmux panes
+  - { key: Key6,     mods: Control,       chars: "\x1e"     } #       : ctrl-^ doesn't work in some terminals like alacritty
+  - { key: D,        mods: Command,       chars: "\x06\x76" } # c-f v : Split pane vertically
+  - { key: D,        mods: Command|Shift, chars: "\x06\x73" } # c-f s : Split pane horizontally
+  - { key: W,        mods: Command,       chars: "\x06\x78" } # c-f x : Close pane; closes window if last pane
+  - { key: N,        mods: Command,       chars: "\x06\x6e" } # c-f n : Select pane - Left
+  - { key: E,        mods: Command,       chars: "\x06\x65" } # c-f e : Select pane - Down
+  - { key: I,        mods: Command,       chars: "\x06\x69" } # c-f i : Select pane - Up
+  - { key: O,        mods: Command,       chars: "\x06\x6f" } # c-f o : Select pane - Right
+  - { key: T,        mods: Command,       chars: "\x06\x63" } # c-f c : Create window (tab)
+  - { key: Key1,     mods: Command,       chars: "\x06\x31" } # c-f 1 : Select window 1
+  - { key: Key2,     mods: Command,       chars: "\x06\x32" } # c-f 2 : Select window 2
+  - { key: Key3,     mods: Command,       chars: "\x06\x33" } # c-f 3 : Select window 3
+  - { key: Key4,     mods: Command,       chars: "\x06\x34" } # c-f 4 : Select window 4
+  - { key: Key5,     mods: Command,       chars: "\x06\x35" } # c-f 5 : Select window 5
+  - { key: Key6,     mods: Command,       chars: "\x06\x36" } # c-f 6 : Select window 6
+  - { key: Key7,     mods: Command,       chars: "\x06\x37" } # c-f 7 : Select window 7
+  - { key: Key8,     mods: Command,       chars: "\x06\x38" } # c-f 8 : Select window 8
+  - { key: Key9,     mods: Command,       chars: "\x06\x39" } # c-f 9 : Select window 9
+  - { key: Left,     mods: Command,       chars: "\x06\x4e" } # c-f N : Resize pane - Left
+  - { key: Down,     mods: Command,       chars: "\x06\x45" } # c-f E : Resize pane - Down
+  - { key: Right,    mods: Command,       chars: "\x06\x49" } # c-f I : Resize pane - Up
+  - { key: Up,       mods: Command,       chars: "\x06\x4f" } # c-f O : Resize pane - Right
 
 
 # Colors (Gruvbox dark)

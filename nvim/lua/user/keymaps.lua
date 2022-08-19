@@ -99,7 +99,7 @@ map("n", "_", "<C-w>s<C-w><Down>")
 --map("n", "\x33[105;5u", "<C-i>")
 map("n", "<C-n>", "<C-w>h")
 map("n", "<C-e>", "<C-w>j")
-map("n", "\x33[105;5u", "<C-w>k") -- This is written this way, because <C-i> and <Tab> or the same thing, but we used Alacritty to sent a diffenent code for <C-i> that we're using here.
+map("n", "\x33[105;5u", "<C-w>k") -- This is written this way, because <C-i> and <Tab> are the same thing, but we used Alacritty to sent a different code for <C-i> to differentiate the two.
 map("n", "<C-o>", "<C-w>l")
 
 -- Clear highlights

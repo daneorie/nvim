@@ -1,6 +1,23 @@
-# nvim
+# Computer Setup
 
 ## Basic Setup
+Symlink a bunch of files and folders
+```
+ln -s ~/dotfiles/.zshrc ~
+ln -s ~/dotfiles/.vimrc ~
+ln -s ~/dotfiles/.exrc ~
+ln -s ~/dotfiles/.inputrc ~
+ln -s ~/dotfiles/.lesskey ~
+ln -s ~/dotfiles/.tmux.conf ~
+ln -s ~/dotfiles/.yabairc ~
+ln -s ~/dotfiles/.skhdrc ~
+ln -s ~/dotfiles/com.example.KeyRemapping.plist ~/Library/LaunchAgents/
+ln -s ~/dotfiles/nvim/ ~/.config/
+ln -s ~/dotfiles/gitui/ ~/.config/
+ln -s ~/dotfiles/alacritty/ ~/.config/
+ln- s ~/dotfiles/ubersicht/widgets/ ~/Library/Application Support/Übersicht/
+```
+
 Install Homebrew
 ```
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -28,6 +45,7 @@ brew install --cask spacelauncher
 brew install --cask topnotch
 brew install --cask discord
 brew install --cask github
+brew install --cask ubersicht
 ```
 
 Install a few commands

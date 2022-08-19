@@ -18,6 +18,7 @@ vim.g.mapleader = ","
 vim.g.maplocalleader = ","
 
 -- utility mappings
+
 map({"n", "v"}, "<leader>w", ":w<CR>")
 map({"n", "v"}, "<leader>oo", ":e ")
 map({"n", "v"}, "<leader>nn", ":set number!<CR>") -- toggle line numbers
@@ -62,7 +63,7 @@ map({"n", "v"}, "<C-.>", "<C-u>")
 map("n", "<Tab>", ":bn<CR>")
 map("n", "<S-Tab>", ":bp<CR>")
 map("n", "<C-t>", ":tabnew split<CR>")
-
+	
 -- wipe the current buffer but do not close the window
 map("n", "<leader><Tab>", ":Bw<CR>") -- using vim-buffet
 map("n", "<leader><S-Tab>", ":Bw!<CR>") -- using vim-buffet
@@ -95,9 +96,10 @@ map("n", "_", "<C-w>s<C-w><Down>")
 --map("n", "<A-o>", "<C-w>L")
 
 -- move between panes to left/bottom/top/right (Colemak)
+--map("n", "\x33[105;5u", "<C-i>")
 map("n", "<C-n>", "<C-w>h")
 map("n", "<C-e>", "<C-w>j")
-map("n", "<C-i>", "<C-w>k")
+map("n", "\x33[105;5u", "<C-w>k") -- This is written this way, because <C-i> and <Tab> or the same thing, but we used Alacritty to sent a diffenent code for <C-i> that we're using here.
 map("n", "<C-o>", "<C-w>l")
 
 -- Clear highlights

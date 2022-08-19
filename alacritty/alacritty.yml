@@ -17,33 +17,20 @@ window:
 
   decorations: buttonless
 
-# Sample Font configuration for font: Monoid.
-# Feel free to use different font configuration family & face for each sections
 font:
   # Normal font face - Also used to draw glyphs on tmux & VIM
-  # NOTE: You may use any font you'd like but make sure the normal fonts
-  # support ligatures/glyphs. That's used by tmux & VIM to provide a better
-  # UI for powerline & tmux bottom bar.
   normal:
-    # Font name
     family: BitstreamVeraSansMono Nerd Font Mono
-    # Font face
     style: Roman
 
-  # Bold font face
   bold:
     family: BitstreamVeraSansMono Nerd Font Mono
     style: Bold
 
-  # Italic font face
   italic:
     family: BitstreamVeraSansMono Nerd Font Mono
     style: Oblique
 
-  # Bold italic font face
-  # Note: Since i don't have a font italic version of this font, I just specified
-  # italic & it just works. You may specifiy the bold italic version if it exists
-  # for your font
   bold_italic:
     family: BitstreamVeraSansMono Nerd Font Mono
     style: Bold Oblique
@@ -80,6 +67,38 @@ selection:
 # Live config reload (changes require restart)
 live_config_reload: true
 
+# Colors (Gruvbox dark)
+colors:
+  # Default colors
+  primary:
+    # hard contrast: background = '#1d2021'
+    background: '#282828'
+    # soft contrast: background = '#32302f'
+    foreground: '#ebdbb2'
+
+  # Normal colors
+  normal:
+    black:   '#282828'
+    red:     '#cc241d'
+    green:   '#98971a'
+    yellow:  '#d79921'
+    blue:    '#458588'
+    magenta: '#b16286'
+    cyan:    '#689d6a'
+    white:   '#a89984'
+
+  # Bright colors
+  bright:
+    black:   '#928374'
+    red:     '#fb4934'
+    green:   '#b8bb26'
+    yellow:  '#fabd2f'
+    blue:    '#83a598'
+    magenta: '#d3869b'
+    cyan:    '#8ec07c'
+    white:   '#ebdbb2'
+
+
 # Setup some amazing custom key bindings here - Best thing is you can setup key bindings
 # using Mac's 'command' to control your tmux.
 # A great reference: https://arslan.io/2018/02/05/gpu-accelerated-terminal-alacritty/#make-alacritty-feel-like-iterm2
@@ -112,35 +131,4 @@ key_bindings:
   - { key: Down,     mods: Command,       chars: "\x06\x45" } # c-f E : Resize pane - Down
   - { key: Right,    mods: Command,       chars: "\x06\x49" } # c-f I : Resize pane - Up
   - { key: Up,       mods: Command,       chars: "\x06\x4f" } # c-f O : Resize pane - Right
-
-
-# Colors (Gruvbox dark)
-colors:
-  # Default colors
-  primary:
-    # hard contrast: background = '#1d2021'
-    background: '#282828'
-    # soft contrast: background = '#32302f'
-    foreground: '#ebdbb2'
-
-  # Normal colors
-  normal:
-    black:   '#282828'
-    red:     '#cc241d'
-    green:   '#98971a'
-    yellow:  '#d79921'
-    blue:    '#458588'
-    magenta: '#b16286'
-    cyan:    '#689d6a'
-    white:   '#a89984'
-
-  # Bright colors
-  bright:
-    black:   '#928374'
-    red:     '#fb4934'
-    green:   '#b8bb26'
-    yellow:  '#fabd2f'
-    blue:    '#83a598'
-    magenta: '#d3869b'
-    cyan:    '#8ec07c'
-    white:   '#ebdbb2'
+  - { key: I,        mods: Control,       chars: "\x33[105;5u" } # Map c-i to something else to differentiate it from <tab>

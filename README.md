@@ -15,7 +15,7 @@ ln -s ~/dotfiles/com.example.KeyRemapping.plist ~/Library/LaunchAgents/
 ln -s ~/dotfiles/nvim/ ~/.config/
 ln -s ~/dotfiles/gitui/ ~/.config/
 ln -s ~/dotfiles/alacritty/ ~/.config/
-ln- s ~/dotfiles/ubersicht/widgets/ ~/Library/Application Support/Übersicht/
+ln -s ~/dotfiles/ubersicht/widgets/ ~/Library/Application Support/Übersicht/
 ```
 
 Install Homebrew

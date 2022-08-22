@@ -15,7 +15,7 @@ sudo yabai --load-sa
 yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
 
 # global settings
-yabai -m config mouse_follows_focus          on
+yabai -m config mouse_follows_focus          off
 yabai -m config focus_follows_mouse          off
 yabai -m config window_origin_display        default
 yabai -m config window_placement             second_child
@@ -39,7 +39,7 @@ yabai -m config mouse_drop_action            swap
 
 # general space settings
 yabai -m config layout                       bsp
-yabai -m config top_padding                  30
+yabai -m config top_padding                  35
 yabai -m config bottom_padding               15
 yabai -m config left_padding                 15
 yabai -m config right_padding                15
@@ -51,5 +51,9 @@ yabai -m rule --add app="^Archive Utility$" manage=off
 yabai -m rule --add app="^Logi Options$" manage=off
 yabai -m rule --add app="^Logitech G HUB$" manage=off
 yabai -m rule --add app="^Alfred Preferences$" manage=off
+yabai -m rule --add app="^RiotClient$" manage=off
+yabai -m rule --add app="^League [Oo]f Legends$" manage=off
+yabai -m rule --add app="^LeagueClient$" manage=off
+yabai -m rule --add app="^Discord$" manage=off
 
 echo "yabai configuration loaded.."

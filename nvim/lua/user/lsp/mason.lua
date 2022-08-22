@@ -9,10 +9,10 @@ if not status_ok_1 then
 end
 
 local servers = {
+	"clangd",
 	"cssls",
 	"cssmodules_ls",
 	"html",
-	--"jdtls",
 	"jsonls",
 	"sumneko_lua",
 	"tsserver",

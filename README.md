@@ -63,7 +63,6 @@ cd alacritty
 sudo tic -xe alacritty,alacritty-direct extra/alacritty.info
 # cleanup
 cd .. && rm -rf alacritty
-For proper devicon support, a patched font must be added to the terminal.
 ```
 
 Download a nerd font

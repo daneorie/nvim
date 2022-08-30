@@ -159,6 +159,7 @@ export const data = {
     fullWidth: true,
   },
   widgets: { label: "Widgets" },
+  notificationWidget: { label: "Notifications", type: "checkbox" },
   processWidget: { label: "Process name", type: "checkbox" },
   zoomWidget: { label: "Zoom", type: "checkbox" },
   timeWidget: { label: "Time", type: "checkbox" },
@@ -220,6 +221,19 @@ export const data = {
     type: "text",
     placeholder: "example: -d",
   },
+
+  notificationWidgetOptions: {
+    label: "Notifications",
+    infos: [
+      "Here you can choose from a select few apps for which you'd like to receive a notification count in the bar.",
+    ],
+  },
+  discordOption: { label: "Discord", type: "checkbox" },
+  mailOption: { label: "Mail", type: "checkbox" },
+  messagesOption: { label: "Messages", type: "checkbox" },
+  microsoftOutlookOption: { label: "Microsoft Outlook", type: "checkbox" },
+  microsoftTeamsOption: { label: "Microsoft Teams", type: "checkbox" },
+  remindersOption: { label: "Reminders", type: "checkbox" },
 
   networkWidgetOptions: {
     label: "Network",
@@ -397,6 +411,7 @@ export const defaultSettings = {
     switchSpacesWithoutYabai: false,
   },
   widgets: {
+    notificationWidget: true,
     processWidget: true,
     weatherWidget: false,
     batteryWidget: true,
@@ -415,6 +430,15 @@ export const defaultSettings = {
     mpdWidget: false,
     dndWidget: false,
     browserTrackWidget: true,
+  },
+  notificationWidgetOptions: {
+    discordOption: false,
+    mailOption: true,
+    messagesOption: true,
+    microsoftOutlookOption: true,
+    microsoftTeamsOption: true,
+    remindersOption: false,
+    refreshFrequency: 20000,
   },
   weatherWidgetOptions: {
     refreshFrequency: 1000 * 60 * 30,

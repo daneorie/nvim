@@ -45,6 +45,7 @@ export const apps = {
   Hyper: Icons.Terminal,
   iTerm2: Icons.Terminal,
   Insomnia: Icons.Insomnia,
+  "Keychain Access": Icons.Key,
   "Keyboard Maestro": Icons.KeyboardMaestro,
   Keynote: Icons.Keynote,
   kitty: Icons.Terminal,

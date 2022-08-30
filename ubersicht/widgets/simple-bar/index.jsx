@@ -7,6 +7,7 @@ import * as Base from "./lib/styles/core/base";
 import * as Zoom from "./lib/components/data/zoom.jsx";
 import * as Time from "./lib/components/data/time.jsx";
 import * as DateDisplay from "./lib/components/data/date-display.jsx";
+import * as Notifications from "./lib/components/data/notifications.jsx";
 import * as Weather from "./lib/components/data/weather.jsx";
 import * as Battery from "./lib/components/data/battery.jsx";
 import * as Sound from "./lib/components/data/sound.jsx";
@@ -60,6 +61,7 @@ Utils.injectStyles("simple-bar-index-styles", [
   Mpd.styles,
   BrowserTrack.styles,
   Dnd.styles,
+  Notifications.styles,
   Specter.styles,
   DataWidgetLoader.styles,
 ]);
@@ -125,6 +127,7 @@ const render = ({ output, error }) => {
         <Stock.Widget />
         <Music.Widget />
         <Mpd.Widget />
+        <Notifications.Widget />
         <Weather.Widget />
         <Battery.Widget />
         <Mic.Widget />

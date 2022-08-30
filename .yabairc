@@ -52,8 +52,19 @@ yabai -m rule --add app="^Logi Options$" manage=off
 yabai -m rule --add app="^Logitech G HUB$" manage=off
 yabai -m rule --add app="^Alfred Preferences$" manage=off
 yabai -m rule --add app="^RiotClient$" manage=off
+yabai -m rule --add app="^Riot Client$" manage=off
 yabai -m rule --add app="^League [Oo]f Legends$" manage=off
 yabai -m rule --add app="^LeagueClient$" manage=off
-yabai -m rule --add app="^Discord$" manage=off
+yabai -m rule --add app="^Keychain Access$" manage=off
+yabai -m rule --add app="^Safari$" title="^General$" manage=off
+yabai -m rule --add app="^Safari$" title="^Tabs$" manage=off
+yabai -m rule --add app="^Safari$" title="^AutoFill$" manage=off
+yabai -m rule --add app="^Safari$" title="^Passwords$" manage=off
+yabai -m rule --add app="^Safari$" title="^Search$" manage=off
+yabai -m rule --add app="^Safari$" title="^Security$" manage=off
+yabai -m rule --add app="^Safari$" title="^Privacy$" manage=off
+yabai -m rule --add app="^Safari$" title="^Websites$" manage=off
+yabai -m rule --add app="^Safari$" title="^Extensions$" manage=off
+yabai -m rule --add app="^Safari$" title="^Advanced$" manage=off
 
 echo "yabai configuration loaded.."

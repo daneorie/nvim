@@ -1,5 +1,5 @@
 M = {}
-local status_ok, _ = pcall(require, "lspconfig")
+local status_ok, lspconfig = pcall(require, "lspconfig")
 if not status_ok then
 	return
 end
@@ -26,6 +26,24 @@ M.server_capabilities = function()
 		end
 	)
 end
+
+local configs = require("lspconfig.configs")
+if not configs.millet then
+	configs.millet = {
+		default_config = {
+			cmd = {"/Users/daneorie/repos/millet/target/release/lang-srv"};
+			filetypes = {"mlb", "sml"};
+			root_dir = function(filename, _)
+				local root
+				root = lspconfig.util.find_git_ancestor(filename)
+				root = root or lspconfig.util.root_pattern("sml.pkg")(filename)
+				return root
+			end;
+			settings = {};
+		};
+	}
+end
+lspconfig.millet.setup{}
 
 require("user.lsp.lsp-signature")
 require("user.lsp.mason")

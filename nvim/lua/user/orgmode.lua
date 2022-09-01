@@ -13,4 +13,10 @@ require("nvim-treesitter.configs").setup {
 require("orgmode").setup({
 	org_agenda_files = {"~/Library/CloudStorage/OneDrive-Personal/org", "~/my-orgs/**/*"},
 	org_default_notes_file = "~/Library/CloudStorage/OneDrive-Personal/org/refile.org",
+	mappings = {
+		org = {
+			org_move_subtree_up = "<Leader>oI",
+			org_move_subtree_down = "<Leader>oE",
+		},
+	},
 })

@@ -21,14 +21,18 @@ done
 export EDITOR=nvim
 export PAGER=less
 export LESSKEY=~/.lesskey
-alias ll='ls -l'
-alias lla='ls -la'
-alias lld='ls -ld'
+alias ll='ls -lH'
+alias lla='ll -a'
+alias lld='ll -d'
 alias v='nvim'
 alias vi='nvim'
 alias vim='nvim'
 alias cdu='cd-gitroot'
 alias less="$(brew --prefix)/Cellar/less/590/bin/less"
+
+cat() {
+	[[ "$(file $1)" =~ ": directory" ]] && ll $1 || /bin/cat $1
+}
 
 export KEYTIMEOUT=1 # this lowers the time it takes to switch from viins to vicmd and vice versa
 eval "$(jenv init -)"

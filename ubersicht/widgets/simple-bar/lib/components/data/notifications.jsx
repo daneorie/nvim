@@ -1,7 +1,6 @@
 import * as Uebersicht from "uebersicht";
 import * as DataWidget from "./data-widget.jsx";
 import * as DataWidgetLoader from "./data-widget-loader.jsx";
-import * as Icons from "../icons.jsx";
 import * as AppIcons from "../../app-icons";
 import * as AppIdentifiers from "../../app-identifiers";
 import * as Settings from "../../settings";
@@ -21,7 +20,7 @@ const REFRESH_FREQUENCY = Settings.getRefreshFrequency(
 );
 
 export const Widget = () => {
-  const [state, setState] = Uebersicht.React.useState();
+  const [state, setState] = Uebersicht.React.useState({});
   const [loading, setLoading] = Uebersicht.React.useState(notificationWidget);
 
   const getNotifications = async () => {
@@ -29,35 +28,13 @@ export const Widget = () => {
       `lsof -p $(ps aux | grep -m1 usernoted | awk '{ print $2 }') | awk '{ print $NF }' | grep 'db2/db$'`
     );
 
-    const [discord, mail, messages, microsoftOutlook, microsoftTeams, reminders] = await Promise.all([
-      Uebersicht.run(
-        `echo "SELECT badge FROM app WHERE identifier = '${AppIdentifiers.apps["Discord"]}';" | sqlite3 ${database}`
-      ),
-      Uebersicht.run(
-        `echo "SELECT badge FROM app WHERE identifier = '${AppIdentifiers.apps["Mail"]}';" | sqlite3 ${database}`
-      ),
-      Uebersicht.run(
-        `echo "SELECT badge FROM app WHERE identifier = '${AppIdentifiers.apps["Messages"]}';" | sqlite3 ${database}`
-      ),
-      Uebersicht.run(
-        `echo "SELECT badge FROM app WHERE identifier = '${AppIdentifiers.apps["Microsoft Outlook"]}';" | sqlite3 ${database}`
-      ),
-      Uebersicht.run(
-        `echo "SELECT badge FROM app WHERE identifier = '${AppIdentifiers.apps["Microsoft Teams"]}';" | sqlite3 ${database}`
-      ),
-      Uebersicht.run(
-        `echo "SELECT badge FROM app WHERE identifier = '${AppIdentifiers.apps["Reminders"]}';" | sqlite3 ${database}`
-      ),
-    ]);
-
-    setState({
-      discord: discord,
-      mail: mail,
-      messages: messages,
-      microsoftOutlook: microsoftOutlook,
-      microsoftTeams: microsoftTeams,
-      reminders: reminders,
-    });
+    await Promise.all(Object.keys(AppIdentifiers.apps).map(async appName => {
+      const appBadge = await Uebersicht.run(
+        `echo "SELECT badge FROM app WHERE identifier = '${AppIdentifiers.apps[appName]}';" | sqlite3 ${database}`
+      );
+		
+      setState(state => ({...state, [appName]: Number(appBadge) }));
+    }))
 
     setLoading(false);
   };
@@ -65,44 +42,19 @@ export const Widget = () => {
   useWidgetRefresh(notificationWidget, getNotifications, REFRESH_FREQUENCY);
 
   if (loading) return <DataWidgetLoader.Widget className="notification" />;
-  if (!state) return (
-    <div>state</div>
-  );
-  const { discord, mail, messages, microsoftOutlook, microsoftTeams, reminders } = state;
+  if (!state) return null;
 
   return (
     <div>
-      {discord > 0 &&
-        <DataWidget.Widget classes="keyboard" Icon={AppIcons.apps["Discord"] || AppIcons.apps["Default"]}>
-          {discord}
-        </DataWidget.Widget>
-      }
-      {mail > 0 &&
-        <DataWidget.Widget classes="keyboard" Icon={AppIcons.apps["Mail"] || AppIcons.apps["Default"]}>
-          {mail}
-        </DataWidget.Widget>
-      }
-      {messages > 0 &&
-        <DataWidget.Widget classes="keyboard" Icon={AppIcons.apps["Messages"] || AppIcons.apps["Default"]}>
-          {messages}
-        </DataWidget.Widget>
-      }
-      {microsoftOutlook > 0 &&
-        <DataWidget.Widget classes="keyboard" Icon={AppIcons.apps["Microsoft Outlook"] || AppIcons.apps["Default"]}>
-          {microsoftOutlook}
-        </DataWidget.Widget>
-      }
-      {microsoftTeams > 0 &&
-        <DataWidget.Widget classes="keyboard" Icon={AppIcons.apps["Microsoft Teams"] || AppIcons.apps["Default"]}>
-          {microsoftTeams}
-        </DataWidget.Widget>
+      {Object.keys(state)
+        .filter(appName => state[appName] > 0)
+        .map((appName, _) =>
+          <DataWidget.Widget classes="keyboard" Icon={AppIcons.apps[appName] || AppIcons.apps["Default"]}>
+            {state[appName]}
+          </DataWidget.Widget>
+        )
       }
     </div>
   )
 
-	  //{reminders > 0 &&
-		//<DataWidget.Widget classes="keyboard" Icon={AppIcons.apps["Reminders"] || AppIcons.apps["Default"]}>
-		  //{reminders}
-		//</DataWidget.Widget>
-	  //}
 }

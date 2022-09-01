@@ -4,5 +4,5 @@ export const apps = {
   "Messages": "com.apple.mobilesms",
   "Microsoft Outlook": "com.microsoft.outlook",
   "Microsoft Teams": "com.microsoft.teams",
-	//"Reminders": "com.apple.reminders"
+	//"Reminders": "com.apple.reminders",
 }

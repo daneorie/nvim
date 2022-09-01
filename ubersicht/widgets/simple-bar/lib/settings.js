@@ -438,7 +438,7 @@ export const defaultSettings = {
     microsoftOutlookOption: true,
     microsoftTeamsOption: true,
     remindersOption: false,
-    refreshFrequency: 20000,
+    refreshFrequency: 1000,
   },
   weatherWidgetOptions: {
     refreshFrequency: 1000 * 60 * 30,

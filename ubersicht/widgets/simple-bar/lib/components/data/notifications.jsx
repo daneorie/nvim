@@ -3,6 +3,7 @@ import * as DataWidget from "./data-widget.jsx";
 import * as DataWidgetLoader from "./data-widget-loader.jsx";
 import * as AppIcons from "../../app-icons";
 import * as AppIdentifiers from "../../app-identifiers";
+import * as AppOptions from "../../app-options";
 import * as Settings from "../../settings";
 import useWidgetRefresh from "../../hooks/use-widget-refresh";
 
@@ -13,7 +14,7 @@ const { widgets, notificationWidgetOptions } = settings;
 const { notificationWidget } = widgets;
 const { refreshFrequency } = notificationWidgetOptions;
 
-const DEFAULT_REFRESH_FREQUENCY = 20000;
+const DEFAULT_REFRESH_FREQUENCY = 1000;
 const REFRESH_FREQUENCY = Settings.getRefreshFrequency(
   refreshFrequency,
   DEFAULT_REFRESH_FREQUENCY
@@ -34,7 +35,7 @@ export const Widget = () => {
       );
 		
       setState(state => ({...state, [appName]: Number(appBadge) }));
-    }))
+    }));
 
     setLoading(false);
   };
@@ -45,11 +46,11 @@ export const Widget = () => {
   if (!state) return null;
 
   return (
-    <div>
+	<div className="notifications">
       {Object.keys(state)
-        .filter(appName => state[appName] > 0)
+        .filter(appName => state[appName] > 0 && notificationWidgetOptions[AppOptions.apps[appName]])
         .map((appName, _) =>
-          <DataWidget.Widget classes="keyboard" Icon={AppIcons.apps[appName] || AppIcons.apps["Default"]}>
+          <DataWidget.Widget classes="notification" Icon={AppIcons.apps[appName] || AppIcons.apps["Default"]}>
             {state[appName]}
           </DataWidget.Widget>
         )

@@ -32,10 +32,11 @@ alias vim='nvim'
 alias cdu='cd-gitroot'
 alias less="$(brew --prefix)/Cellar/less/590/bin/less"
 alias excel="open -a /Applications/Microsoft\ Excel.app"
+alias refresh="exec $SHELL -l"
 
-cat() {
-	[[ "$(file $1)" =~ ": directory" ]] && ll $1 || /bin/cat $1
-}
+#cat() {
+	#[[ "$(file $1)" =~ ": directory" ]] && ll $1 || /bin/cat $1
+#}
 
 export KEYTIMEOUT=1 # this lowers the time it takes to switch from viins to vicmd and vice versa
 eval "$(jenv init -)"

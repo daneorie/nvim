@@ -21,14 +21,17 @@ done
 export EDITOR=nvim
 export PAGER=less
 export LESSKEY=~/.lesskey
-alias ll='ls -lH'
-alias lla='ll -a'
-alias lld='ll -d'
+alias l='ls -lH'
+alias la='ls -a'
+alias ll='l'
+alias lla='l -a'
+alias lld='l -d'
 alias v='nvim'
 alias vi='nvim'
 alias vim='nvim'
 alias cdu='cd-gitroot'
 alias less="$(brew --prefix)/Cellar/less/590/bin/less"
+alias excel="open -a /Applications/Microsoft\ Excel.app"
 
 cat() {
 	[[ "$(file $1)" =~ ": directory" ]] && ll $1 || /bin/cat $1

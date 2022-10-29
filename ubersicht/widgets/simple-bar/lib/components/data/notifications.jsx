@@ -1,13 +1,14 @@
 import * as Uebersicht from "uebersicht";
 import * as DataWidget from "./data-widget.jsx";
 import * as DataWidgetLoader from "./data-widget-loader.jsx";
-import * as AppIcons from "../../app-icons";
+import * as Icons from "../icons.jsx";
+import useWidgetRefresh from "../../hooks/use-widget-refresh";
+import * as Settings from "../../settings";
+import * as Utils from "../../utils";
 import * as AppIdentifiers from "../../app-identifiers";
 import * as AppOptions from "../../app-options";
-import * as Settings from "../../settings";
-import useWidgetRefresh from "../../hooks/use-widget-refresh";
 
-export { notificationsStyles as styles } from "../../styles/components/data/notifications.js";
+export { notificationsStyle as styles } from "../../styles/components/data/notifications.js";
 
 const settings = Settings.get();
 const { widgets, notificationWidgetOptions } = settings;
@@ -19,6 +20,11 @@ const REFRESH_FREQUENCY = Settings.getRefreshFrequency(
   refreshFrequency,
   DEFAULT_REFRESH_FREQUENCY
 );
+
+const openMessages = () =>
+  Uebersicht.run(
+    `open -a Messages`
+  );
 
 export const Widget = () => {
   const [state, setState] = Uebersicht.React.useState({});
@@ -45,17 +51,29 @@ export const Widget = () => {
   if (loading) return <DataWidgetLoader.Widget className="notification" />;
   if (!state) return null;
 
-  return (
-	<div className="notifications">
-      {Object.keys(state)
-        .filter(appName => state[appName] > 0 && notificationWidgetOptions[AppOptions.apps[appName]])
-        .map((appName, _) =>
-          <DataWidget.Widget classes="notification" Icon={AppIcons.apps[appName] || AppIcons.apps["Default"]}>
-            {state[appName]}
-          </DataWidget.Widget>
-        )
-      }
-    </div>
+  const onClick = (e) => {
+    Utils.clickEffect(e);
+    openMessages();
+  };
+
+	console.log({state});
+
+	return (
+		<DataWidget.Widget
+			classes="notifications"
+			onClick={onClick}
+		>
+			{Object.keys(state)
+				.filter(appName => state[appName] > 0 && notificationWidgetOptions[AppOptions.apps[appName]])
+				.map((appName, _) => {
+					const Icon = Icons[appName] || Icons[Default];
+					return <div>
+						<Icon className="notification" />
+						{state[appName]}
+					</div>
+				})
+			}
+		</DataWidget.Widget>
   )
 
 }

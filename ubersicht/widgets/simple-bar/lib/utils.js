@@ -316,10 +316,11 @@ export const switchSpace = async (currentIndex, desiredIndex) => {
   const repeats = Math.abs(currentIndex - desiredIndex);
   const left = currentIndex > desiredIndex;
   for (let i = 0; i < repeats; i++) {
+		console.log({currentIndex, desiredIndex, repeats, left});
     await Uebersicht.run(
-      `osascript -e 'tell app "System Events" to key code ${
-        left ? "123" : "124"
-      } using control down'`
+      `osascript -e 'tell app "System Events" to key code 48 using ${
+        left ? "{shift down, option down}" : "option down"
+      }'`
     );
   }
 };

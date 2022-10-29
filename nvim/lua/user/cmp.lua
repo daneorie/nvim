@@ -53,7 +53,7 @@ cmp.setup {
 	},
 	mapping = {
 --   Here's the circle of mappings: n -> h -> i -> k -> o -> l -> e -> j -> n
-		["<C-i>"] = cmp.mapping.select_prev_item(),
+		["\x33[105;5u"] = cmp.mapping.select_prev_item(),
 		["<C-e>"] = cmp.mapping.select_next_item(),
 		["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-1), { "i", "c" }),
 		["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(1), { "i", "c" }),

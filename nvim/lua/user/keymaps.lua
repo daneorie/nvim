@@ -44,7 +44,7 @@ map({"n", "v"}, "L", "E") -- end of word (space separated)
 map({"n", "v"}, "J", "N") -- previous match
 --map({"n", "v"}, "<C-n>", "<C-h>")
 --map({"n", "v"}, "<C-e>", "<C-j>")
---map({"n", "v"}, "<C-i>", "<C-k>")
+--map({"n", "v"}, "\x33[105;5u", "<C-k>") -- <C-i>
 --map({"n", "v"}, "<C-o>", "<C-l>")
 --map({"n", "v"}, "<C-h>", "<C-i>")
 --map({"n", "v"}, "<C-k>", "<C-o>")
@@ -96,7 +96,6 @@ map("n", "_", "<C-w>s<C-w><Down>")
 --map("n", "<A-o>", "<C-w>L")
 
 -- move between panes to left/bottom/top/right (Colemak)
---map("n", "\x33[105;5u", "<C-i>")
 map("n", "<C-n>", "<C-w>h")
 map("n", "<C-e>", "<C-w>j")
 map("n", "\x33[105;5u", "<C-w>k") -- This is written this way, because <C-i> and <Tab> are the same thing, but we used Alacritty to sent a different code for <C-i> to differentiate the two.

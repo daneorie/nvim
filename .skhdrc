@@ -91,10 +91,10 @@ meh - r: brew services restart yabai
 meh - s: brew services restart skhd
 
 # change the sound input and output
-hyper - 3: open "/Users/daneorie/Library/Mobile Documents/com~apple~ScriptEditor2/Documents/Set Sound Control Output Device - Turtle Beach USB Audio.app"
-hyper - 4: open "/Users/daneorie/Library/Mobile Documents/com~apple~ScriptEditor2/Documents/Set Sound Control Output Device - Realtek USB2.0 Audio.app"
-meh - 7: open "/Users/daneorie/Library/Mobile Documents/com~apple~ScriptEditor2/Documents/Set Sound Control Input Device - Turtle Beach USB Audio.app"
-meh - 8: open "/Users/daneorie/Library/Mobile Documents/com~apple~ScriptEditor2/Documents/Set Sound Control Input Device - Dane’s iPhone Microphone.app"
+hyper - 3: open "/Users/daneorie/Library/Mobile Documents/com~apple~ScriptEditor2/Documents/Set Sound Control Output Device - Output1.app"
+hyper - 4: open "/Users/daneorie/Library/Mobile Documents/com~apple~ScriptEditor2/Documents/Set Sound Control Output Device - Output2.app"
+meh - 7: open "/Users/daneorie/Library/Mobile Documents/com~apple~ScriptEditor2/Documents/Set Sound Control Input Device - Input1.app"
+meh - 8: open "/Users/daneorie/Library/Mobile Documents/com~apple~ScriptEditor2/Documents/Set Sound Control Input Device - Input2.app"
 
 # open Alacritty from anywhere
 meh - a: open -nb io.alacritty

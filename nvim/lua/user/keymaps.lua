@@ -113,7 +113,6 @@ map("v", ">", ">gv")
 
 -- which-key
 map({"n", "v"}, "<C-h>", ":WhichKey<CR>")
-map("i", "<C-h>", ":WhichKey<CR>")
 
 -- nvim-tree
 map("n", "<leader>l", "<cmd>lua require('lsp_lines').toggle()<CR>")

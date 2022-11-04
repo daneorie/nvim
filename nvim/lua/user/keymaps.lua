@@ -77,7 +77,7 @@ map({"n", "v", "i"}, "<A-Up>", ":resize +2<CR>")             -- increase height
 map({"n", "v", "i"}, "<A-Right>", ":vertical resize +2<CR>") -- increase width
 
 -- delete current buffer and move to previous buffer
---map({"n", "v"}, "<leader>d", ":bprevious<CR>:bdelete #<CR>")
+map({"n", "v"}, "<leader><Tab>", ":bp|bd #<CR>")
 
 -- move line or visually selected block - alt+j/k (Colemak)
 --map("i", "<A-e>", "<Esc>:m .+1<CR>==gi")

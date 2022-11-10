@@ -4,5 +4,5 @@ export const apps = {
   "Messages": "messagesOption",
   "Microsoft Outlook": "microsoftOutlookOption",
   "Microsoft Teams": "microsoftTeamsOption",
-	//"Reminders": "remindersOption",
+	"Reminders": "remindersOption",
 }

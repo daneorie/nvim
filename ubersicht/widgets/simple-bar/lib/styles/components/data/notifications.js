@@ -19,4 +19,7 @@ export const notificationsStyle = /* css */ `
   margin: 0 1px 0 4px;
   transform: translateZ(0);
 }
+.notification:hover {
+  fill: var(--blue);
+}
 `;

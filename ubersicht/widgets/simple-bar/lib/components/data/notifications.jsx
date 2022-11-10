@@ -21,9 +21,9 @@ const REFRESH_FREQUENCY = Settings.getRefreshFrequency(
   DEFAULT_REFRESH_FREQUENCY
 );
 
-const openMessages = () =>
+const openApp = (bundleIdentifier) =>
   Uebersicht.run(
-    `open -a Messages`
+    `open -b ${bundleIdentifier}`
   );
 
 export const Widget = () => {
@@ -51,23 +51,18 @@ export const Widget = () => {
   if (loading) return <DataWidgetLoader.Widget className="notification" />;
   if (!state) return null;
 
-  const onClick = (e) => {
+  const onClick = (bundleIdentifier) => (e) => {
     Utils.clickEffect(e);
-    openMessages();
+		openApp(bundleIdentifier);
   };
 
-	console.log({state});
-
 	return (
-		<DataWidget.Widget
-			classes="notifications"
-			onClick={onClick}
-		>
+		<DataWidget.Widget classes="notifications">
 			{Object.keys(state)
 				.filter(appName => state[appName] > 0 && notificationWidgetOptions[AppOptions.apps[appName]])
 				.map((appName, _) => {
 					const Icon = Icons[appName] || Icons[Default];
-					return <div>
+					return <div onClick={onClick(AppIdentifiers.apps[appName])}>
 						<Icon className="notification" />
 						{state[appName]}
 					</div>

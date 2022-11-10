@@ -41,11 +41,50 @@
     }
 } ;; profile
 
-:layers {
-    :space-mode {:key :spacebar :alone {:key :spacebar}}
+:applications {
+    :league [
+        ;"^com\\.riotgames\\.leagueoflegends$" ;; League of Legends.app
+        ;"^com\\.riotgames\\.LeagueofLegends\\.LeagueClientUx$" ;; League of Legends.app/Contents/LoL/League of Legends.app
+        ;"^org\\.chromium\\.ContentShell\\.framework$" ;; League of Legends.app/Contents/LoL/League of Legends.app/Contents/Frameworks/Chromium Embedded Framework.framework
+        ;"^com\\.riotgames\\.LeagueofLegends\\.LeagueClientUxHelper$" ;; League of Legends.app/Contents/LoL/League of Legends.app/Contents/Frameworks/LeagueClientUx Helper (GPU).app
+        ;"^com\\.riotgames\\.LeagueofLegends\\.LeagueClientUxHelper$" ;; League of Legends.app/Contents/LoL/League of Legends.app/Contents/Frameworks/LeagueClientUx Helper (Renderer).app
+        ;"^com\\.riotgames\\.LeagueofLegends\\.LeagueClientUxHelper$" ;; League of Legends.app/Contents/LoL/League of Legends.app/Contents/Frameworks/LeagueClientUx Helper.app
+        ;"^com\\.riotgames\\.LeagueofLegends\\.LeagueClient$" ;; League of Legends.app/Contents/LoL/LeagueClient.app
+        ;"^com\\.riotgames\\.pp\\.sdk\\.RiotGamesApi" ;; League of Legends.app/Contents/LoL/LeagueClient.app/Contents/Frameworks/RiotGamesApi.framework
+        "^com\\.riotgames\\.LeagueofLegends\\.GameClient$" ;; League of Legends.app/Contents/LoL/Game/League Of Legends.app
+        ;"^com\\.riotgames\\.LeagueofLegends\\.GameClient$"
+        ;"^com\\.nvidia\\.cg$" ;; League of Legends.app/Contents/LoL/Game/League Of Legends.app/Contents/Frameworks/Cg.framework
+        ;"^com\\.riotgames\\.RiotGames\\.RiotClient$"
+    ]
 }
 
-:simlayer-threshold 500 ;; (def: 250)
+:templates {
+    :open "open -a '%s'"                                ;; :open "Safari"
+    :openApp "open \"%s\""                              ;; :open "/Applications/Safari.app"
+    :openFinder "open \"/System/Library/CoreServices/Finder.app\"" ;; "openFinder" to switch to the Finder
+    :screen_capture_clipboard "screencapture -ixc"      ;; Capture screen interactive and silent to clipboard
+    :screen_capture_preview "screencapture -ixP"        ;; Capture screen interactive and silent to Preview.
+                                                        ;; Note: Allow 'karabiner_console_user_server'
+                                                        ;; to record the screen in 'System Preferences' /
+                                                        ;; 'Security & Privacy' / 'Privacy' / 'Screen Recording'.
+    :applescript "osascript '~/Library/Mobile Documents/com~apple~ScriptEditor2/Documents/%s'"
+                                                        ;; Full path to user's 'iCloud Drive/Script Editor'
+                                                        ;; You can't use '~' for the users home directory
+    :notification "osascript -e 'display notification \"%s\" with title \"%s\"'"
+                                                        ;; Display notification
+                                                        ;; notifcation "text" "title"
+    :type "osascript -e 'tell application \"System Events\" to keystroke \"%s\" as text'"
+    :snippet "cat '~/Library/Mobile Documents/com~apple~CloudDocs/Snippets/%s' | pbcopy -pboard general"
+    :beep "osascript -e 'beep'"                         ;; Play default beep
+    :purr "afplay /System/Library/Sounds/Purr.aiff"     ;; Play the Purr sound
+    :tink "afplay /System/Library/Sounds/Tink.aiff"     ;; Play the Tink sound
+} ;; templates
+
+;:layers {
+    ;:space-mode {:key :spacebar :alone {:key :spacebar}}
+;} ;; layers
+
+;:simlayer-threshold 500 ;; (def: 250)
 ;:simlayers {
     ;:space-mode {:key :spacebar}
 ;} ;; simlayers

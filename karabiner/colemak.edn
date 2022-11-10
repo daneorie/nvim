@@ -17,7 +17,7 @@
         [:##l :i]
         [:##semicolon :o]
         [:##n :k]
-        [:caps_lock :delete_or_backspace]
-        [:delete_or_backspace :caps_lock]
+        [:##caps_lock :delete_or_backspace]
+        [:##delete_or_backspace :caps_lock]
       ]
      }

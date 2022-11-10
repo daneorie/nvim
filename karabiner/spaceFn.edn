@@ -1,51 +1,89 @@
-    {:des "SpaceFN: Space+[a-z] to match Moonlander Symbol-layer setup (https://configure.zsa.io/moonlander/layouts/BPZEx/latest/1)"
-     :rules [:space-mode ;; this is defined before Colemak due to limitations, so I'll note the Colemak keys
-        [:##q :!S1]                    ;; q   -> !
-        [:##w :!S2]                    ;; w   -> @
-        [:##e :!Sopen_bracket]         ;; f   -> {
-        [:##r :!Sclose_bracket]        ;; p   -> }
-        [:##t :!Sbackslash]            ;; g   -> |
-        [:##y :!S5]                    ;; j   -> %
-        [:##u :7]                      ;; l   -> 7
-        [:##i :8]                      ;; u   -> 8
-        [:##o :9]                      ;; y   -> 9
-        [:##p :!S8]                    ;; ;   -> *
-        [:##a :equal_sign]             ;; a   -> =
-        [:##s :!S4]                    ;; r   -> $
-        [:##d :!S9]                    ;; s   -> (
-        [:##f :!S0]                    ;; t   -> )
-        [:##g :grave_accent_and_tilde] ;; d   -> `
-        [:##h :!S7]                    ;; h   -> &
-        [:##j :4]                      ;; n   -> 4
-        [:##k :5]                      ;; e   -> 5
-        [:##l :6]                      ;; i   -> 6
-        [:##semicolon :hyphen]         ;; o   -> -
-        [:##z :!S3]                    ;; z   -> #
-        [:##x :!S6]                    ;; x   -> ^
-        [:##c :open_bracket]           ;; c   -> [
-        [:##v :close_bracket]          ;; v   -> ]
-        [:##b :comma]                  ;; b   -> ,
-        [:##n :escape]                 ;; k   -> <ESC>
-        [:##m :1]                      ;; m   -> 1
-        [:##comma :2]                  ;; ,   -> 2
-        [:##period :3]                 ;; .   -> 3
-        [:##slash :backslash]          ;; /   -> \
-        [:##right_command :0]          ;; cmd -> 0
+    ;;
+    ;; –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––  ;; –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––  ;;
+    ;; | ` |F1 |F2 |F3 |F4 |F5 |F6 |F7 |F8 |F9 |F10|F11|F12| caps|  ;; |   |F1 |F2 |F3 |F4 |F5 |F6 |F7 |F8 |F9 |F10|F11|F12|     |  ;;   `  F1  F2  F3  F4  F5  F6  F7  F8  F9  F10 F11 F12  caps
+    ;; –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––  ;; –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––  ;;
+    ;; |esc  | ! | @ | { | } | | | % | 7 | 8 | 9 | * | [ | ] | \ |  ;; |esc  | ! | @ | { | } | | | % | 7 | 8 | 9 | * |   |   |   |  ;;  esc    !   @   {   }   |   %   7   8   9   *   [   ]   \
+    ;; –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––  ;; –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––  ;;
+    ;; |delete| = | $ | ( | ) | ` | & | 4 | 5 | 6 | - | ' | enter|  ;; |      | = | $ | ( | ) | ` | & | 4 | 5 | 6 | - | ' |      |  ;;  delete  =   $   (   )   `   &   4   5   6   -   '   enter
+    ;; –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––  ;; –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––  ;;
+    ;; |shift   | # | ^ | [ | ] | , |sp.| 1 | 2 | 3 | \ |   shift|  ;; |        | # | ^ | [ | ] | , |sp.| 1 | 2 | 3 | \ |        |  ;;  shift     #   ^   [   ]   ,  sp.  1   2   3   \     shift
+    ;; –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––  ;; –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––  ;;
+    ;; |fn|ctrl|opt|cmd |       space       | 0  |meh|     arrows|  ;; |  |    |   |    |       space       | 0  |   |           |  ;;  fn ctrl opt cmd         space         0   meh      arrows
+    ;; –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––  ;; –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––  ;;
+    ;;
+    {:des "SpaceFN layer"
+     :rules [
+        [:spacebar ["space-mode" 1] [:!league] {:afterup ["space-mode" 0] :alone :spacebar}]
      ]
     }
-    {:des "SpaceFN: Space+[1234567890-=] to F[1-12]"
-     :rules [:space-mode
-        [:##1 :f1]           ;; F1
-        [:##2 :f2]           ;; F2
-        [:##3 :f3]           ;; F3
-        [:##4 :f4]           ;; F4
-        [:##5 :f5]           ;; F5
-        [:##6 :f6]           ;; F6
-        [:##7 :f7]           ;; F7
-        [:##8 :f8]           ;; F8
-        [:##9 :f9]           ;; F9
-        [:##0 :f10]          ;; F10
-        [:##hyphen :f11]     ;; F11
-        [:##equal_sign :f12] ;; F12
+
+    {:des "SpaceFN: Space+<key> to match Moonlander Symbol-layer setup (https://configure.zsa.io/moonlander/layouts/BPZEx/latest/1)"
+     :rules [
+        ;; this is defined before Colemak due to limitations, so I'll note the Colemak keys
+        ;[:##grave_accent_and_tilde :grave_accent_and_tilde ["space-mode" 1]]    ;; `     -> `
+        [:##1 :f1 ["space-mode" 1]]                                             ;; 1     -> F1
+        [:##2 :f2 ["space-mode" 1]]                                             ;; 2     -> F2
+        [:##3 :f3 ["space-mode" 1]]                                             ;; 3     -> F3
+        [:##4 :f4 ["space-mode" 1]]                                             ;; 4     -> F4
+        [:##5 :f5 ["space-mode" 1]]                                             ;; 5     -> F5
+        [:##6 :f6 ["space-mode" 1]]                                             ;; 6     -> F6
+        [:##7 :f7 ["space-mode" 1]]                                             ;; 7     -> F7
+        [:##8 :f8 ["space-mode" 1]]                                             ;; 8     -> F8
+        [:##9 :f9 ["space-mode" 1]]                                             ;; 9     -> F9
+        [:##0 :f10 ["space-mode" 1]]                                            ;; 0     -> F10
+        [:##hyphen :f11 ["space-mode" 1]]                                       ;; -     -> F11
+        [:##equal_sign :f12 ["space-mode" 1]]                                   ;; =     -> F12
+        ;[:##delete_or_backspace :delete_or_backspace ["space-mode" 1]]          ;; BS    -> BS
+        [:##tab :escape ["space-mode" 1]]                                       ;; TAB   -> ESCAPE
+        [:##q :!S1 ["space-mode" 1]]                                            ;; q     -> !
+        [:##w :!S2 ["space-mode" 1]]                                            ;; w     -> @
+        [:##e :!Sopen_bracket ["space-mode" 1]]                                 ;; f     -> {
+        [:##r :!Sclose_bracket ["space-mode" 1]]                                ;; p     -> }
+        [:##t :!Sbackslash ["space-mode" 1]]                                    ;; g     -> |
+        [:##y :!S5 ["space-mode" 1]]                                            ;; j     -> %
+        [:##u :7 ["space-mode" 1]]                                              ;; l     -> 7
+        [:##i :8 ["space-mode" 1]]                                              ;; u     -> 8
+        [:##o :9 ["space-mode" 1]]                                              ;; y     -> 9
+        [:##p :!S8 ["space-mode" 1]]                                            ;; ;     -> *
+        ;[:##open_bracket :open_bracket ["space-mode" 1]                        ;; [     -> [
+        ;[:##close_bracket :close_bracket ["space-mode" 1]                      ;; ]     -> ]
+        ;[:##backslack :backslash ["space-mode" 1]]                              ;; \     -> \
+        [:##caps_lock :!Odelete_or_backspace ["space-mode" 1]]                   ;; CAPS  -> DTWRD
+        [:##a :equal_sign ["space-mode" 1]]                                     ;; a     -> =
+        [:##s :!S4 ["space-mode" 1]]                                            ;; r     -> $
+        [:##d :!S9 ["space-mode" 1]]                                            ;; s     -> (
+        [:##f :!S0 ["space-mode" 1]]                                            ;; t     -> )
+        [:##g :grave_accent_and_tilde ["space-mode" 1]]                         ;; d     -> `
+        [:##h :!S7 ["space-mode" 1]]                                            ;; h     -> &
+        [:##j :4 ["space-mode" 1]]                                              ;; n     -> 4
+        [:##k :5 ["space-mode" 1]]                                              ;; e     -> 5
+        [:##l :6 ["space-mode" 1]]                                              ;; i     -> 6
+        [:##semicolon :hyphen ["space-mode" 1]]                                 ;; o     -> -
+        ;[:##apostrophe :apostrophe ["space-mode" 1]]                            ;; '     -> '
+        ;[:##return_or_enter :return_or_enter ["space-mode" 1]]                  ;; RET   -> RET
+        ;[:##left_shift :left_shift ["space-mode" 1]]                            ;; LSHFT -> LSHFT
+        [:##z :!S3 ["space-mode" 1]]                                            ;; z     -> #
+        [:##x :!S6 ["space-mode" 1]]                                            ;; x     -> ^
+        [:##c :open_bracket ["space-mode" 1]]                                   ;; c     -> [
+        [:##v :close_bracket ["space-mode" 1]]                                  ;; v     -> ]
+        [:##b :comma ["space-mode" 1]]                                          ;; b     -> ,
+        [:##n :spacebar ["space-mode" 1]]                                       ;; k     -> SPACE
+        [:##m :1 ["space-mode" 1]]                                              ;; m     -> 1
+        [:##comma :2 ["space-mode" 1]]                                          ;; ,     -> 2
+        [:##period :3 ["space-mode" 1]]                                         ;; .     -> 3
+        [:##slash :backslash ["space-mode" 1]]                                  ;; /     -> \
+        ;[:##right_shift :right_shift ["space-mode" 1]]                          ;; RSHFT -> RSHFT
+        ;[:##fn :fn ["space-mode" 1]]                                            ;; FN    -> FN
+        ;[:##left_control :left_control ["space-mode" 1]]                        ;; LCTRL -> LCTRL
+        ;[:##left_option :left_option ["space-mode" 1]]                          ;; LOPT  -> LOPT
+        ;[:##left_command :left_command ["space-mode" 1]]                        ;; LCMD  -> LCMD
+        ;[:##space :space ["space-mode" 1]]                                      ;; SPACE -> SPACE
+        [:##right_command :0 ["space-mode" 1]]                                  ;; RCMD  -> 0
+        ;[:##right_option :right_option ["space-mode" 1]]                        ;; ROPT  -> ROPT
+        ;[:##right_control :right_control ["space-mode" 1]]                      ;; RCTRL -> RCTRL
+        ;[:##up_arrow :up_arrow ["space-mode" 1]]                                ;; UP    -> UP
+        ;[:##down_arrow :down_arrow ["space-mode" 1]]                            ;; DOWN  -> DOWN
+        ;[:##left_arrow :left_arrow ["space-mode" 1]]                            ;; LEFT  -> LEFT
+        ;[:##right_arrow :right_arrow ["space-mode" 1]]                          ;; RIGHT -> RIGHT
      ]
     }

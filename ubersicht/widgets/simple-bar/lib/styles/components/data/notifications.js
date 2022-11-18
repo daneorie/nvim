@@ -12,7 +12,7 @@ export const notificationsStyle = /* css */ `
 .simple-bar--no-color-in-data .notifications {
   background-color: var(--foreground);
 }
-.notification {
+.notification svg {
   width: 14px;
   height: 14px;
   fill: var(--foreground);
@@ -20,6 +20,9 @@ export const notificationsStyle = /* css */ `
   transform: translateZ(0);
 }
 .notification:hover {
+  color: var(--blue);
+}
+.notification:hover svg {
   fill: var(--blue);
 }
 `;

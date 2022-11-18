@@ -62,8 +62,8 @@ export const Widget = () => {
 				.filter(appName => state[appName] > 0 && notificationWidgetOptions[AppOptions.apps[appName]])
 				.map((appName, _) => {
 					const Icon = Icons[appName] || Icons[Default];
-					return <div onClick={onClick(AppIdentifiers.apps[appName])}>
-						<Icon className="notification" />
+					return <div onClick={onClick(AppIdentifiers.apps[appName])} className="notification">
+						<Icon />
 						{state[appName]}
 					</div>
 				})

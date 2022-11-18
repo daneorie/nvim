@@ -52,11 +52,10 @@
         ;"^com\\.riotgames\\.LeagueofLegends\\.LeagueClient$" ;; League of Legends.app/Contents/LoL/LeagueClient.app
         ;"^com\\.riotgames\\.pp\\.sdk\\.RiotGamesApi" ;; League of Legends.app/Contents/LoL/LeagueClient.app/Contents/Frameworks/RiotGamesApi.framework
         "^com\\.riotgames\\.LeagueofLegends\\.GameClient$" ;; League of Legends.app/Contents/LoL/Game/League Of Legends.app
-        ;"^com\\.riotgames\\.LeagueofLegends\\.GameClient$"
         ;"^com\\.nvidia\\.cg$" ;; League of Legends.app/Contents/LoL/Game/League Of Legends.app/Contents/Frameworks/Cg.framework
         ;"^com\\.riotgames\\.RiotGames\\.RiotClient$"
     ]
-}
+} ;; applications
 
 :templates {
     :open "open -a '%s'"                                ;; :open "Safari"
@@ -80,11 +79,11 @@
     :tink "afplay /System/Library/Sounds/Tink.aiff"     ;; Play the Tink sound
 } ;; templates
 
-;:layers {
-    ;:space-mode {:key :spacebar :alone {:key :spacebar}}
-;} ;; layers
+:layers {
+    :space-mode {:key :spacebar :condi :!league :alone {:key :spacebar}}
+} ;; layers
 
 ;:simlayer-threshold 500 ;; (def: 250)
 ;:simlayers {
-    ;:space-mode {:key :spacebar}
+    ;:space-mode {:key :spacebar :condi :!league}
 ;} ;; simlayers

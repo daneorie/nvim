@@ -74,7 +74,6 @@ yabai -m rule --add app="^League [Oo]f Legends$" manage=off
 yabai -m rule --add app="^LeagueClient$" manage=off
 yabai -m rule --add app="^Keychain Access$" manage=off
 yabai -m rule --add app="^Wally$" manage=off
-yabai -m rule --add app="^Alacritty$" manage=off
 yabai -m rule --add app="^Microsoft Teams$" title="^Microsoft Teams Notification$" manage=off
 yabai -m rule --add app="^Safari$" title="^General$" manage=off
 yabai -m rule --add app="^Safari$" title="^Tabs$" manage=off
@@ -87,4 +86,7 @@ yabai -m rule --add app="^Safari$" title="^Websites$" manage=off
 yabai -m rule --add app="^Safari$" title="^Extensions$" manage=off
 yabai -m rule --add app="^Safari$" title="^Advanced$" manage=off
 
-echo "yabai configuration loaded.."
+# apps to not manage added programmatically
+yabai -m rule --add app="^Discord$" title="^Discord Updater$" manage=off label="Discord|Discord Updater"
+
+echo "yabai configuration loaded..."

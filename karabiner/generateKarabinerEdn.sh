@@ -15,6 +15,8 @@ echo >> $karabiner
 cat colemak.edn >> $karabiner
 echo >> $karabiner
 cat hyperMeh.edn >> $karabiner
+echo >> $karabiner
+cat misc.edn >> $karabiner
 echo "] ;; main" >> $karabiner
 echo "} ;; EOF">> $karabiner
 

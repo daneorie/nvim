@@ -154,6 +154,7 @@ export const apps = {
   Setapp: Icons.Setapp,
   Matlab: Icons.Matlab,
   "Parallels Desktop": Icons.Parallels,
+	YouTube: Icons.YouTube,
 
   // German app names
   Nachrichten: Icons.Messages,

@@ -34,6 +34,7 @@ alt - g : yabai -m space --toggle padding; yabai -m space --toggle gap
 # float / unfloat window and center on screen
 alt - t : yabai -m window --toggle float;\
           yabai -m window --grid 4:4:1:1:2:2
+#shift + alt - t : yabai -m rule --add app="^$(yabai -m query --windows --window | jq -re '.app')$" title="^$(yabai -m query --windows --window | jq -re '.title')$" manage=off
 
 # toggle window split type
 alt - h : yabai -m window --toggle split
@@ -79,7 +80,8 @@ alt + cmd - e : yabai -m window --focus stack.prev || yabai -m window --focus st
 alt + cmd - i : yabai -m window --focus stack.next || yabai -m window --focus stack.first
 
 # fast focus desktop: cmd - `
-cmd - 0x32 : yabai -m display --focus recent
+cmd - 0x32 : yabai -m display --focus "$(yabai -m query --spaces | jq -re 'max_by(.display).display as $max | .[] | (select(."has-focus").display + $max) % $max + 1')"
+shift + cmd - 0x32 : yabai -m display --focus "$(yabai -m query --spaces | jq -re 'max_by(.display).display as $max | .[] | (select(."has-focus").display + $max + 1) % $max + 1')"
 
 # send window to monitor and follow focus
 shift + alt - l : yabai -m window --display next; yabai -m display --focus next
@@ -97,8 +99,12 @@ meh - 7: open "/Users/daneorie/Library/Mobile Documents/com~apple~ScriptEditor2/
 meh - 8: open "/Users/daneorie/Library/Mobile Documents/com~apple~ScriptEditor2/Documents/Set Sound Control Input Device - Input2.app"
 
 # open applications
+#hyper - q: open -a 
+#hyper - w: open -a 
+#hyper - f: open -a 
+#hyper - p: open -a 
 hyper - a: open -nb io.alacritty # Alacritty
-#hyper - r: 
+hyper - r: open -a Mail
 hyper - s: osascript -e 'tell application "Safari" to make new document'
 hyper - t: osascript -e 'tell application "Notes" to make new document'
 #hyper - t: open -n -a Notes

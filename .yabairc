@@ -45,20 +45,36 @@ yabai -m config left_padding                 15
 yabai -m config right_padding                15
 yabai -m config window_gap                   15
 
+check_displays() {
+	no_of_displays=$(yabai -m query --displays | jq 'length')
+	if [ $no_of_displays -eq 3 ]; then
+		a=0
+		no_of_spaces=$(yabai -m query --spaces --display 1 | jq 'length')
+		while [ $a -lt $no_of_spaces ]; do
+			a=$(expr $a + 1)
+			yabai -m config --space $a bottom_padding 90
+		done
+	else
+		yabai -m config bottom_padding 15
+	fi
+}
+check_displays
+
+yabai -m signal --add event=display_added action="check_displays" label="Change bottom padding depending on display setup."
+yabai -m signal --add event=display_removed action="check_displays" label="Change bottom padding depending on display setup."
+
 # apps to not manage (ignore)
-yabai -m rule --add app="^System Settings$" manage=off
-yabai -m rule --add app="^System Preferences$" manage=off
+yabai -m rule --add app="^System (Settings|Preferences)$" manage=off
 yabai -m rule --add app="^Archive Utility$" manage=off
-yabai -m rule --add app="^Logi Options$" manage=off
-yabai -m rule --add app="^Logi Options\+$" manage=off
+yabai -m rule --add app="^Logi Options[+]?$" manage=off
 yabai -m rule --add app="^Logitech G HUB$" manage=off
 yabai -m rule --add app="^Alfred Preferences$" manage=off
-yabai -m rule --add app="^RiotClient$" manage=off
-yabai -m rule --add app="^Riot Client$" manage=off
+yabai -m rule --add app="^Riot ?Client$" manage=off
 yabai -m rule --add app="^League [Oo]f Legends$" manage=off
 yabai -m rule --add app="^LeagueClient$" manage=off
 yabai -m rule --add app="^Keychain Access$" manage=off
 yabai -m rule --add app="^Wally$" manage=off
+yabai -m rule --add app="^Alacritty$" manage=off
 yabai -m rule --add app="^Microsoft Teams$" title="^Microsoft Teams Notification$" manage=off
 yabai -m rule --add app="^Safari$" title="^General$" manage=off
 yabai -m rule --add app="^Safari$" title="^Tabs$" manage=off

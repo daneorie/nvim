@@ -86,7 +86,7 @@ yabai -m rule --add app="^Safari$" title="^Websites$" manage=off
 yabai -m rule --add app="^Safari$" title="^Extensions$" manage=off
 yabai -m rule --add app="^Safari$" title="^Advanced$" manage=off
 
-# apps to not manage added programmatically
-yabai -m rule --add app="^Discord$" title="^Discord Updater$" manage=off label="Discord|Discord Updater"
+# app/window management added programmatically
+yabai -m rule --add app="^Discord$" title="^Discord Updater$" manage=off label="off:Discord|Discord Updater"
 
 echo "yabai configuration loaded..."

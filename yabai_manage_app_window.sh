@@ -6,46 +6,74 @@ trunc_bottom="$(grep -n "" $file | sort -nr | sed '1,2d' | sort -n | sed 's/^[0-
 app=$(yabai -m query --windows --window | jq -re '.app')
 title=$(yabai -m query --windows --window | jq -re '.title')
 
+# backup the file
+cp $file $file.old
+
 # Does the rule already exist?
 if [ -n "$toggle_app" ]; then
-	egrep -q -- "label=\"$app(\|$title)?\"" $file
+	egrep -q -- "label=\"off:$app?\"" $file.old
 	if [ $? -eq 0 ]; then
-		echo "Removing the existing rule."
+		egrep -v "label=\"(off|on):$app(\|$title)?\"" $file.old > $file
 
-		sed "/label=\"$app\(\|$title\)*\"/d" $file > $file.new
-		mv $file.new $file
+		# Reset the management state of the app
+		yabai -m rule --add app="^$app$" manage=on label="on:$app"
+		yabai -m rule --remove "on:$app"
 
-		yabai -m rule --add app="^$app$" manage=on label="$app"
-		yabai -m rule --remove "$app"
+		echo "Managing the app again."
 	else
-		echo "Adding the new rule."
-
-		echo "$trunc_bottom" > $file
-		echo "yabai -m rule --add app=\"^$app\$\" manage=off label=\"$app\"" >> $file
+		echo "$trunc_bottom" | egrep -v "label=\"(on|off):$app(\|$title)?\"" > $file
+		echo "yabai -m rule --add app=\"^$app\$\" manage=off label=\"off:$app\"" >> $file
 		echo "" >> $file
 		echo "echo \"yabai configuration loaded...\"" >> $file
 
-		yabai -m rule --add app="^$app$" manage=off label="$app"
+		yabai -m rule --add app="^$app$" manage=off label="off:$app"
+
+		echo "No longer managing the app."
 	fi
 else
-	egrep -q -- "label=\"$app(\|$title)?\"" $file
+	egrep -q -- "label=\"off:$app(\|$title)?\"" $file.old
 	if [ $? -eq 0 ]; then
-		echo "Removing the existing rule."
+		egrep -q -- "label=\"off:$app\"" $file.old
+		if [ $? -eq 0 ]; then
+			egrep -q -- "label=\"on:$app\|$title\"" $file.old
+			if [ $? -eq 0 ]; then
+				egrep -v "label=\"on:$app|$title\"" $file.old > $file
 
-		sed "/label=\"$app\(\|$title\)*\"/d" $file > $file.new
-		mv $file.new $file
+				# Reset the management state of the window combination
+				yabai -m rule --add app="^$app$" title="^$title$" manage=off label="off:$app|$title"
+				yabai -m rule --remove "off:$app|$title"
 
-		yabai -m rule --add app="^$app$" title="^$title$" manage=on label="$app|$title"
-		yabai -m rule --remove "$app|$title"
+				echo "No longer managing the window."
+			else
+				echo "$trunc_bottom" | egrep -v "label=\"off:$app(\|$title)?\"" > $file
+				echo "yabai -m rule --add app=\"^$app\$\" title=\"^$title\$\" manage=on label=\"on:$app|$title\"" >> $file
+				#managing the app must always be last in order for the window management to also work
+				echo "yabai -m rule --add app=\"^$app\$\" manage=off label=\"off:$app\"" >> $file
+				echo "" >> $file
+				echo "echo \"yabai configuration loaded...\"" >> $file
+
+				yabai -m rule --add app="^$app$" title="^$title$" manage=on label="on:$app|$title"
+
+				echo "Managing the window again."
+			fi
+		else
+			egrep -v "label=\"off:$app(\|$title)?\"" $file.old > $file
+
+			# Reset the management state of the window combination
+			yabai -m rule --add app="^$app$" title="^$title$" manage=on label="on:$app|$title"
+			yabai -m rule --remove "on:$app|$title"
+
+			echo "Managing the window again."
+		fi
 	else
-		echo "Adding the new rule."
-
-		echo "$trunc_bottom" > $file
-		echo "yabai -m rule --add app=\"^$app\$\" title=\"^$title\$\" manage=off label=\"$app|$title\"" >> $file
+		echo "$trunc_bottom" | egrep -v "label=\"on:$app\|$title\"" > $file
+		echo "yabai -m rule --add app=\"^$app\$\" title=\"^$title\$\" manage=off label=\"off:$app|$title\"" >> $file
 		echo "" >> $file
 		echo "echo \"yabai configuration loaded...\"" >> $file
 
-		yabai -m rule --add app="^$app$" title="^$title$" manage=off label="$app|$title"
+		yabai -m rule --add app="^$app$" title="^$title$" manage=off label="off:$app|$title"
+
+		echo "No longer managing the window."
 	fi
 fi
 

@@ -48,8 +48,9 @@ yabai -m config window_gap                   15
 check_displays() {
 	no_of_displays=$(yabai -m query --displays | jq 'length')
 	if [ $no_of_displays -eq 3 ]; then
-		a=0
-		no_of_spaces=$(yabai -m query --spaces --display 1 | jq 'length')
+		display=2
+		a=$(yabai -m query --spaces --display $display | jq 'min_by(.index).index - 1')
+		no_of_spaces=$(yabai -m query --spaces --display $display | jq 'length')
 		while [ $a -lt $no_of_spaces ]; do
 			a=$(expr $a + 1)
 			yabai -m config --space $a bottom_padding 90
@@ -88,5 +89,7 @@ yabai -m rule --add app="^Safari$" title="^Advanced$" manage=off
 
 # app/window management added programmatically
 yabai -m rule --add app="^Discord$" title="^Discord Updater$" manage=off label="off:Discord|Discord Updater"
+yabai -m rule --add app="^bzbmenu$" title="^Backblaze Notification$" manage=off label="off:bzbmenu|Backblaze Notification"
+yabai -m rule --add app="^Microsoft Teams$" title="^Loading Microsoft Teams$" manage=off label="off:Microsoft Teams|Loading Microsoft Teams"
 
 echo "yabai configuration loaded..."

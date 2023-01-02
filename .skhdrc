@@ -33,7 +33,7 @@ alt - g : yabai -m space --toggle padding; yabai -m space --toggle gap
 
 # float / unfloat window and center on screen
 alt - t : yabai -m window --toggle float;\
-          yabai -m window --grid 4:4:1:1:2:2
+		  yabai -m window --grid 4:4:1:1:2:2
 shift + alt - d : ~/dotfiles/yabai_manage_app_window.sh
 shift + alt - h : ~/dotfiles/yabai_manage_app_window.sh toggle_app
 
@@ -67,9 +67,9 @@ shift + alt - 0 : yabai -m window --space 10; yabai -m space --focus 10
 
 # create desktop, move window and follow focus - uses jq for parsing json (brew install jq)
 shift + alt - c : yabai -m space --create && \
-                  index="$(yabai -m query --spaces --display | jq 'map(select(."native-fullscreen" == 0))[-1].index')" && \
-                  yabai -m window --space "${index}" && \
-                  yabai -m space --focus "${index}"
+				  index="$(yabai -m query --spaces --display | jq 'map(select(."native-fullscreen" == 0))[-1].index')" && \
+				  yabai -m window --space "${index}" && \
+				  yabai -m space --focus "${index}"
 
 
 # cycle through stack and floating windows

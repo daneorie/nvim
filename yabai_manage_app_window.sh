@@ -11,8 +11,7 @@ cp $file $file.old
 
 # Does the rule already exist?
 if [ -n "$toggle_app" ]; then
-	egrep -q -- "label=\"off:$app?\"" $file.old
-	if [ $? -eq 0 ]; then
+	if egrep -q -- "label=\"off:$app\"" $file.old; then
 		egrep -v "label=\"(off|on):$app(\|$title)?\"" $file.old > $file
 
 		# Reset the management state of the app
@@ -31,12 +30,9 @@ if [ -n "$toggle_app" ]; then
 		echo "No longer managing the app."
 	fi
 else
-	egrep -q -- "label=\"off:$app(\|$title)?\"" $file.old
-	if [ $? -eq 0 ]; then
-		egrep -q -- "label=\"off:$app\"" $file.old
-		if [ $? -eq 0 ]; then
-			egrep -q -- "label=\"on:$app\|$title\"" $file.old
-			if [ $? -eq 0 ]; then
+	if egrep -q -- "label=\"off:$app(\|$title)?\"" $file.old; then
+		if egrep -q -- "label=\"off:$app\"" $file.old; then
+			if egrep -q -- "label=\"on:$app\|$title\"" $file.old; then
 				egrep -v "label=\"on:$app|$title\"" $file.old > $file
 
 				# Reset the management state of the window combination

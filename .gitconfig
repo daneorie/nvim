@@ -1,0 +1,15 @@
+[filter "lfs"]
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+[user]
+	name = daneorie
+	email = 588451+daneorie@users.noreply.github.com
+[alias]
+	s = status
+	co = checkout
+	cob 
+	del = branch -D
+	br = branch --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) %(color:green)(%(committerdate:relative)) [%(authorname)]' --sort=-committerdate
+	lg = log --oneline --decorate --graph

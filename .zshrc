@@ -34,6 +34,25 @@ alias less="$(brew --prefix)/Cellar/less/590/bin/less"
 alias excel="open -a /Applications/Microsoft\ Excel.app"
 alias refresh="exec $SHELL -l"
 
+# git aliases
+alias g='git'
+alias gu='gitui'
+
+# yabai aliases
+alias yq='yabai -m query'
+alias yqd='yq --displays'
+alias yqs='yq --spaces'
+alias yqw='yq --windows'
+alias yqdw='yqd --window'
+alias yqds='yqd --space'
+alias yqdd='yqd --display'
+alias yqsw='yqs --window'
+alias yqss='yqs --space'
+alias yqsd='yqs --display'
+alias yqww='yqw --window'
+alias yqws='yqw --space'
+alias yqwd='yqw --display'
+
 #cat() {
 	#[[ "$(file $1)" =~ ": directory" ]] && ll $1 || /bin/cat $1
 #}

@@ -114,7 +114,8 @@ return require("packer").startup(function(use)
 	--use "ravenxrz/DAPInstall.nvim"
 
 	-- Tabline
-	use "bagrat/vim-buffet" -- buffer labeling
+	--use "bagrat/vim-buffet" -- buffer labeling
+	use "kdheepak/tabline.nvim"
 
 	-- Statusline
 	use "nvim-lualine/lualine.nvim"

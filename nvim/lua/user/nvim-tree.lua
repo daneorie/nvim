@@ -13,6 +13,7 @@ local list = {
 	{ key = "H",                              action = "toggle_git_ignored" },
 	{ key = "N",                              action = "toggle_dotfiles" },
 	{ key = "L",                              action = "expand_all" },
+	{ key = "e",                              action = ""} -- defaults to `rename_basename`
 }
 
 require("nvim-tree").setup({

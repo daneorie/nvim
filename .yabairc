@@ -50,7 +50,7 @@ check_displays() {
 	if [ $no_of_displays -eq 3 ]; then
 		display=2
 		a=$(yabai -m query --spaces --display $display | jq 'min_by(.index).index - 1')
-		no_of_spaces=$(yabai -m query --spaces --display $display | jq 'length')
+		no_of_spaces=$(yabai -m query --spaces --display $display | jq 'max_by(.index).index')
 		while [ $a -lt $no_of_spaces ]; do
 			a=$(expr $a + 1)
 			yabai -m config --space $a bottom_padding 90

@@ -53,6 +53,8 @@ alias yqww='yqw --window'
 alias yqws='yqw --space'
 alias yqwd='yqw --display'
 
+alias testGithub='ssh -T git@github.com'
+
 #cat() {
 	#[[ "$(file $1)" =~ ": directory" ]] && ll $1 || /bin/cat $1
 #}

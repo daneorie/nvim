@@ -19,7 +19,16 @@ export const zoomStyles = /* css */ `
   margin: 0 1px 0 4px;
   transform: translateZ(0);
 }
+.zoom__icon:hover {
+  fill: var(--blue);
+}
 .zoom__icon--on {
+  fill: var(--green);
+}
+.zoom__icon--on .toggle {
+  fill: var(--red);
+}
+.zoom__icon--off .toggle {
   fill: var(--green);
 }
 `;

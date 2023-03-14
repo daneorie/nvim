@@ -47,10 +47,22 @@ export const Widget = () => {
   const { mic, video } = state;
   const VideoIcon = video === "off" ? Icons.CameraOff : Icons.Camera;
   const MicIcon = mic === "off" ? Icons.MicOff : Icons.MicOn;
+
+	const toggleVideo = async () => {
+		await Uebersicht.run(
+			`osascript -e 'tell app "System Events" to keystroke "V" using {shift down, command down}'`
+		);
+	}
+	const toggleMic = async () => {
+		await Uebersicht.run(
+			`osascript -e 'tell app "System Events" to keystroke "A" using {shift down, command down}'`
+		);
+	}
+
   return (
     <DataWidget.Widget classes="zoom">
-      {showVideo && <VideoIcon className={`zoom__icon zoom__icon--${video}`} />}
-      {showMic && <MicIcon className={`zoom__icon zoom__icon--${mic}`} />}
+      {showVideo && <VideoIcon onClick={toggleVideo} className={`zoom__icon zoom__icon--${video}`} />}
+      {showMic && <MicIcon onClick={toggleMic} className={`zoom__icon zoom__icon--${mic}`} />}
     </DataWidget.Widget>
   );
 };

@@ -55,9 +55,6 @@ font:
    # Keeping this as half of offset to vertically align the text in cursor
    y: 0
 
-  # Better font rendering for mac
-  use_thin_strokes: true
-
 selection:
   semantic_escape_chars: ",│`|:\"' ()[]{}<>\t"
 
@@ -99,13 +96,14 @@ colors:
     white:   '#ebdbb2'
 
 
-# Setup some amazing custom key bindings here - Best thing is you can setup key bindings
+# Setup some custom key bindings here - Best thing is you can setup key bindings
 # using Mac's 'command' to control your tmux.
 # Use `xxd -psd` to get the hex codes for various keys.
 # A great reference: https://arslan.io/2018/02/05/gpu-accelerated-terminal-alacritty/#make-alacritty-feel-like-iterm2
 # Other useful links for decoupling escape sequences, like how <C-i> and <Tab> are the same (^I).
 #   https://unix.stackexchange.com/questions/631241/mapping-otherwise-conflicting-or-unmappable-keys-in-terminal-vim
 #   http://www.leonerd.org.uk/hacks/fixterms/
+#   https://en.wikipedia.org/wiki/ASCII#Printable_characters
 key_bindings:
   - { key: C,        mods: Command,       action: Copy      } # 
   - { key: V,        mods: Command,       action: Paste     } # 
@@ -136,3 +134,9 @@ key_bindings:
   - { key: Right,    mods: Command,       chars: "\x06\x49" } # c-f I : Resize pane - Up
   - { key: Up,       mods: Command,       chars: "\x06\x4f" } # c-f O : Resize pane - Right
   - { key: I,        mods: Control,       chars: "\x33[105;5u" } # Map c-i to something else to differentiate it from <tab>
+  - { key: Tab,      mods: Control,       chars: "\x33[9;5u" } # Map c-tab to something
+  - { key: Tab,      mods: Control|Shift, chars: "\x33[1;5Z" } # Map s-c-tab to something
+  - { key: Comma,    mods: Control,       chars: "\x33[44;5u" } # Map c-, to something
+  - { key: Period,   mods: Control,       chars: "\x33[46;5u" } # Map c-. to something
+  - { key: Comma,    mods: Control|Shift, chars: "\x33[44;6u" } # Map c-< to something
+  - { key: Period,   mods: Control|Shift, chars: "\x33[46;6u" } # Map c-> to something

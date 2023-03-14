@@ -17,9 +17,10 @@ end
 vim.g.mapleader = ","
 vim.g.maplocalleader = ","
 
--- utility mappings
+-- Some mappings are written using some \x33 format, because we use Alacritty to send different codes to differentiate the some keys being pressed with and without modifier keys.
 
-map({"n", "v"}, "<leader>w", ":w<CR>")
+-- utility mappings
+map({"n", "v"}, "<leader>s", ":w<CR>")
 map({"n", "v"}, "<leader>oo", ":e ")
 map({"n", "v"}, "<leader>nn", ":set number!<CR>") -- toggle line numbers
 map({"n", "v"}, "<leader>nr", ":set relativenumber!<CR>") -- toggle relative numbers
@@ -56,28 +57,25 @@ map({"n", "v"}, "J", "N") -- previous match
 map({"n", "v"}, "<C-u>", "<C-e>")
 
 -- page scrolling. Similar to the vertical scrolling, these keys are right below E and I.
-map({"n", "v"}, "<C-,>", "<C-d>")
-map({"n", "v"}, "<C-.>", "<C-u>")
+map({"n", "v"}, "\x33[44;5u", "<C-d>") -- <C-,>
+map({"n", "v"}, "\x33[46;5u", "<C-u>") -- <C-.>
 
 -- move between buffers
-map("n", "<Tab>", ":bn<CR>")
-map("n", "<S-Tab>", ":bp<CR>")
+map("n", "\x33[9;5u", ":bn<CR>") -- <C-Tab>
+map("n", "\x33[1;5Z", ":bp<CR>") -- <S-C-Tab>
+map("n", "\x33[44;6u", ":bp<CR>") -- <S-C-,> OR <C-<>
+map("n", "\x33[46;6u", ":bn<CR>") -- <S-C-.> OR <C->>
 map("n", "<C-t>", ":tabnew split<CR>")
 	
--- wipe the current buffer but do not close the window
-map("n", "<leader><Tab>", ":Bw<CR>") -- using vim-buffet
-map("n", "<leader><S-Tab>", ":Bw!<CR>") -- using vim-buffet
---map("n", "<leader><Tab>", ":bp<CR>:bd #<CR>") -- without vim-buffet
---map("n", "<leader><S-Tab>", ":bp!<CR>:bd! #<CR>") -- without vim-buffet
+-- delete current buffer and move to previous buffer
+map({"n", "v"}, "<leader>\x33[9;5u", ":bp|bd #<CR>") -- <C-Tab>
+map({"n", "v"}, "<leader>\x33[1;5Z", ":bp!|bd! #<CR>") -- <S-C-Tab>
 
 -- resize current buffer
 map({"n", "v", "i"}, "<A-Left>", ":vertical resize -2<CR>")  -- decrease width
 map({"n", "v", "i"}, "<A-Down>", ":resize -2<CR>")           -- decrease height
 map({"n", "v", "i"}, "<A-Up>", ":resize +2<CR>")             -- increase height
 map({"n", "v", "i"}, "<A-Right>", ":vertical resize +2<CR>") -- increase width
-
--- delete current buffer and move to previous buffer
-map({"n", "v"}, "<leader><Tab>", ":bp|bd #<CR>")
 
 -- move line or visually selected block - alt+j/k (Colemak)
 --map("i", "<A-e>", "<Esc>:m .+1<CR>==gi")
@@ -98,7 +96,7 @@ map("n", "_", "<C-w>s<C-w><Down>")
 -- move between panes to left/bottom/top/right (Colemak)
 map("n", "<C-n>", "<C-w>h")
 map("n", "<C-e>", "<C-w>j")
-map("n", "\x33[105;5u", "<C-w>k") -- This is written this way, because <C-i> and <Tab> are the same thing, but we used Alacritty to sent a different code for <C-i> to differentiate the two.
+map("n", "\x33[105;5u", "<C-w>k") -- <C-i>
 map("n", "<C-o>", "<C-w>l")
 
 -- Clear highlights
@@ -107,6 +105,9 @@ map("n", "<leader>h", ":nohlsearch<CR>")
 -- Stay in visual mode after indenting
 map("v", "<", "<gv")
 map("v", ">", ">gv")
+
+-- Just Build for a project-agnostic buil command that can be configured as needed
+map("n", "<leader>jb", ":!just build<CR>")
 
 --------------------------
 -- Plugin-specific keymaps
@@ -143,6 +144,18 @@ map("n", "<leader>7", "<Plug>BuffetSwitch(7)")
 map("n", "<leader>8", "<Plug>BuffetSwitch(8)")
 map("n", "<leader>9", "<Plug>BuffetSwitch(9)")
 map("n", "<leader>0", "<Plug>BuffetSwitch(10)")
+
+-- vim-easy-align
+-- Start interactive EasyAlign for a motion/text object (e.g. gaip)
+map("n", "ga", "<Plug>(EasyAlign)");
+-- Start interactive EasyAlign in visual mode (e.g. vipga)
+map("x", "ga", "<Plug>(EasyAlign)");
+
+-- vim-swoop
+map("n", "<leader>l", "<cmd>call Swoop()<CR>")
+map("v", "<leader>l", "<cmd>call SwoopSelection()<CR>")
+map("n", "<leader>ml", "<cmd>call SwoopMulti()<CR>")
+map("v", "<leader>ml", "<cmd>call SwoopMultiSelection()<CR>")
 
 -- DAP
 map("n", "<leader>db", "<cmd>lua require'dap'.toggle_breakpoint()<CR>")

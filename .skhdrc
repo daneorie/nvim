@@ -94,21 +94,30 @@ meh - y: brew services restart yabai
 meh - s: brew services restart skhd
 
 # change the sound input and output
-hyper - 3: open "/Users/daneorie/Library/Mobile Documents/com~apple~ScriptEditor2/Documents/Set Sound Control Output Device - Output1.app"
-hyper - 4: open "/Users/daneorie/Library/Mobile Documents/com~apple~ScriptEditor2/Documents/Set Sound Control Output Device - Output2.app"
-meh - 7: open "/Users/daneorie/Library/Mobile Documents/com~apple~ScriptEditor2/Documents/Set Sound Control Input Device - Input1.app"
-meh - 8: open "/Users/daneorie/Library/Mobile Documents/com~apple~ScriptEditor2/Documents/Set Sound Control Input Device - Input2.app"
+hyper - 3: open "~/Library/Mobile Documents/com~apple~ScriptEditor2/Documents/Set Sound Control Output Device - Output1.app"
+hyper - 4: open "~/Library/Mobile Documents/com~apple~ScriptEditor2/Documents/Set Sound Control Output Device - Output2.app"
+meh - 7: open "~/Library/Mobile Documents/com~apple~ScriptEditor2/Documents/Set Sound Control Input Device - Input1.app"
+meh - 8: open "~/Library/Mobile Documents/com~apple~ScriptEditor2/Documents/Set Sound Control Input Device - Input2.app"
 
 # open applications
-#hyper - q: open -a 
-#hyper - w: open -a 
-#hyper - f: open -a 
-#hyper - p: open -a 
-hyper - a: open -nb io.alacritty # Alacritty
+hyper - q: open -a "Activity Monitor"
+hyper - w: open -nb org.alacritty --args --config-file ~/.config/alacritty/alacritty.yml --title WikiIndex -e $SHELL -lc "export NVIM_HOME=~/.config/nvim;tmux new -A -s 'WikiIndex' -n 'Index' 'nvim +WikiIndex'"
+hyper - f: open -a Finder
+#hyper - f: osascript -e 'tell application "Finder" to make new document' && open -a Finder
+hyper - p: open -a Photos
+hyper - g: open -nb org.alacritty --args --config-file ~/.config/alacritty/alacritty.yml --title WikiJournal -e $SHELL -lc "export NVIM_HOME=~/.config/nvim;tmux new -A -s 'WikiJournal' -n 'Journal' 'nvim +WikiJournal'"
+#------------------
+hyper - a: open -nb org.alacritty
 hyper - r: open -a Mail
-hyper - s: osascript -e 'tell application "Safari" to make new document'
-hyper - t: osascript -e 'tell application "Notes" to make new document'
-#hyper - t: open -n -a Notes
+hyper - s: osascript -e 'tell application "Safari" to make new document' -e 'delay 0.2' && open -a Safari # In testing, 1.08 is the minimum delay, but it's not consistent.
+hyper - t: osascript -e 'tell application "Notes" to make new document' && open -a Notes
+hyper - d: open -n -a Discord
+#------------------
+hyper - z: open -b "com.apple.systempreferences"
+hyper - x: open -a "Microsoft Excel"
+hyper - c: open -a Calendar
+#hyper - v: open -a 
+#hyper - b: open -a 
 
 # increase window size
 shift + alt - w : yabai -m window --resize top:0:-20

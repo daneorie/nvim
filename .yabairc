@@ -53,7 +53,7 @@ check_displays() {
 		no_of_spaces=$(yabai -m query --spaces --display $display | jq 'max_by(.index).index')
 		while [ $a -lt $no_of_spaces ]; do
 			a=$(expr $a + 1)
-			yabai -m config --space $a bottom_padding 90
+			yabai -m config --space $a bottom_padding 25
 		done
 	else
 		yabai -m config bottom_padding 15
@@ -65,31 +65,50 @@ yabai -m signal --add event=display_added action="check_displays" label="Change 
 yabai -m signal --add event=display_removed action="check_displays" label="Change bottom padding depending on display setup."
 
 # apps to not manage (ignore)
-yabai -m rule --add app="^System (Settings|Preferences)$" manage=off
-yabai -m rule --add app="^Archive Utility$" manage=off
-yabai -m rule --add app="^Logi Options[+]?$" manage=off
-yabai -m rule --add app="^Logitech G HUB$" manage=off
-yabai -m rule --add app="^Alfred Preferences$" manage=off
-yabai -m rule --add app="^Riot ?Client$" manage=off
-yabai -m rule --add app="^League [Oo]f Legends$" manage=off
-yabai -m rule --add app="^LeagueClient$" manage=off
-yabai -m rule --add app="^Keychain Access$" manage=off
-yabai -m rule --add app="^Wally$" manage=off
-yabai -m rule --add app="^Microsoft Teams$" title="^Microsoft Teams Notification$" manage=off
-yabai -m rule --add app="^Safari$" title="^General$" manage=off
-yabai -m rule --add app="^Safari$" title="^Tabs$" manage=off
-yabai -m rule --add app="^Safari$" title="^AutoFill$" manage=off
-yabai -m rule --add app="^Safari$" title="^Passwords$" manage=off
-yabai -m rule --add app="^Safari$" title="^Search$" manage=off
-yabai -m rule --add app="^Safari$" title="^Security$" manage=off
-yabai -m rule --add app="^Safari$" title="^Privacy$" manage=off
-yabai -m rule --add app="^Safari$" title="^Websites$" manage=off
-yabai -m rule --add app="^Safari$" title="^Extensions$" manage=off
-yabai -m rule --add app="^Safari$" title="^Advanced$" manage=off
+yabai -m rule --add manage=off label="off:System Preferences" app="^System Preferences$"
+yabai -m rule --add manage=off label="off:System Settings" app="^System Settings$"
+yabai -m rule --add manage=off label="off:Archive Utility" app="^Archive Utility$"
+yabai -m rule --add manage=off label="off:Logi Options+" app="^Logi Options\+$"
+yabai -m rule --add manage=off label="off:Logitech G HUB" app="^Logitech G HUB$"
+yabai -m rule --add manage=off label="off:Alfred Preferences" app="^Alfred Preferences$"
+yabai -m rule --add manage=off label="off:Riot Client" app="^Riot Client$"
+yabai -m rule --add manage=off label="off:RiotClient" app="^RiotClient$"
+yabai -m rule --add manage=off label="off:League of Legends" app="^League of Legends$"
+yabai -m rule --add manage=off label="off:League Of Legends" app="^League Of Legends$"
+yabai -m rule --add manage=off label="off:LeagueClient" app="^LeagueClient$"
+yabai -m rule --add manage=off label="off:Keychain Access" app="^Keychain Access$"
+yabai -m rule --add manage=off label="off:Wally" app="^Wally$"
+yabai -m rule --add manage=off label="off:Discord|Discord Updater" app="^Microsoft Teams$" title="^Microsoft Teams Notification$"
+yabai -m rule --add manage=off label="off:Discord|Discord Updater" app="^Discord$" title="^Discord Updater$"
+yabai -m rule --add manage=off label="off:bzbmenu|Backblaze Notification" app="^bzbmenu$" title="^Backblaze Notification$"
+yabai -m rule --add manage=off label="off:Microsoft Teams|Loading Microsoft Teams" app="^Microsoft Teams$" title="^Loading Microsoft Teams$"
+yabai -m rule --add manage=off label="off:Calendar|" app="^Calendar$" title="^$" # This is the autocomplete pop-up for event titles. Not sure if it will catch other things.
+yabai -m rule --add manage=off label="off:Safari|General" app="^Safari$" title="^General$"
+yabai -m rule --add manage=off label="off:Safari|Tabs" app="^Safari$" title="^Tabs$"
+yabai -m rule --add manage=off label="off:Safari|AutoFill" app="^Safari$" title="^AutoFill$"
+yabai -m rule --add manage=off label="off:Safari|Passwords" app="^Safari$" title="^Passwords$"
+yabai -m rule --add manage=off label="off:Safari|Search" app="^Safari$" title="^Search$"
+yabai -m rule --add manage=off label="off:Safari|Security" app="^Safari$" title="^Security$"
+yabai -m rule --add manage=off label="off:Safari|Privacy" app="^Safari$" title="^Privacy$"
+yabai -m rule --add manage=off label="off:Safari|Websites" app="^Safari$" title="^Websites$"
+yabai -m rule --add manage=off label="off:Safari|Extensions" app="^Safari$" title="^Extensions$"
+yabai -m rule --add manage=off label="off:Safari|Advanced" app="^Safari$" title="^Advanced$"
 
 # app/window management added programmatically
-yabai -m rule --add app="^Discord$" title="^Discord Updater$" manage=off label="off:Discord|Discord Updater"
-yabai -m rule --add app="^bzbmenu$" title="^Backblaze Notification$" manage=off label="off:bzbmenu|Backblaze Notification"
-yabai -m rule --add app="^Microsoft Teams$" title="^Loading Microsoft Teams$" manage=off label="off:Microsoft Teams|Loading Microsoft Teams"
+yabai -m rule --add manage=off label="off:Microsoft Excel|What's New in Excel" app="^Microsoft Excel$" title="^What's New in Excel$"
+yabai -m rule --add manage=off label="off:zoom.us|Zoom" app="^zoom.us$" title="^Zoom$"
+yabai -m rule --add manage=off label="off:Diagnostics Reporter|" app="^Diagnostics Reporter$" title="^$"
+yabai -m rule --add manage=off label="off:Problem Reporter" app="^Problem Reporter$"
+yabai -m rule --add manage=off label="off:Steam" app="^Steam$"
+yabai -m rule --add manage=off label="off:Shortcuts|" app="^Shortcuts$" title="^$"
+yabai -m rule --add manage=off label="off:Finder|Trash" app="^Finder$" title="^Trash$"
+yabai -m rule --add manage=off label="off:PrinterProxy|HP DeskJet 3700 series – 1 Job" app="^PrinterProxy$" title="^HP DeskJet 3700 series – 1 Job$"
+yabai -m rule --add manage=off label="off:Microsoft Outlook|Reading" app="^Microsoft Outlook$" title="^Reading$"
+yabai -m rule --add manage=off label="off:Barony|Barony" app="^Barony$" title="^Barony$"
+yabai -m rule --add manage=off label="off:NetNewsWire|General" app="^NetNewsWire$" title="^General$"
+yabai -m rule --add manage=off label="off:Microsoft Outlook|New Event • Calendar • dorie@captechconsulting.com" app="^Microsoft Outlook$" title="^New Event • Calendar • dorie@captechconsulting.com$"
+yabai -m rule --add manage=off label="off:Chromium|YouTube - Chromium" app="^Chromium$" title="^YouTube - Chromium$"
+yabai -m rule --add manage=off label="off:Stickies" app="^Stickies$"
+yabai -m rule --add manage=off label="off:Wineskin Winery|Wineskin Winery" app="^Wineskin Winery$" title="^Wineskin Winery$"
 
 echo "yabai configuration loaded..."

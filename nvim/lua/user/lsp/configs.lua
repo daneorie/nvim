@@ -10,8 +10,9 @@ local servers = {
 	"cssls",
 	"html",
 	"jsonls",
-	"sumneko_lua",
-	"tsserver"
+	"tsserver",
+	"ruby_ls",
+	"lua_ls",
 }
 
 lsp_installer.setup({

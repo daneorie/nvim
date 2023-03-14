@@ -14,8 +14,9 @@ local servers = {
 	"cssmodules_ls",
 	"html",
 	"jsonls",
-	"sumneko_lua",
 	"tsserver",
+	"ruby_ls",
+	"lua_ls",
 }
 
 local settings = {

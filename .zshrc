@@ -59,6 +59,7 @@ alias yqwd='yqw --display'
 
 export KEYTIMEOUT=1 # this lowers the time it takes to switch from viins to vicmd and vice versa
 eval "$(jenv init -)"
+eval "$(rbenv init - zsh)"
 
 # Plugins (Antigen)
 source /usr/local/share/antigen/antigen.zsh

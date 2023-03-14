@@ -95,7 +95,15 @@ return require("packer").startup(function(use)
 	use "tom-anders/telescope-vim-bookmarks.nvim"
 
 	-- Note Taking
-	use "nvim-orgmode/orgmode"
+	--use "nvim-orgmode/orgmode"
+	use "lervag/wiki.vim"
+	use "lervag/lists.vim"
+	use "dhruvasagar/vim-table-mode"
+	use "junegunn/vim-easy-align"
+	use "itchyny/calendar.vim"
+
+	-- Multi-buffer Editing
+	use "pelodelfuego/vim-swoop"
 
 	-- Colorschemes
 	use "EdenEast/nightfox.nvim" -- theme
@@ -121,7 +129,7 @@ return require("packer").startup(function(use)
 	use "nvim-lualine/lualine.nvim"
 
 	-- Startup
-	use "mhinz/vim-startify" -- a really handy start page with lots of customizations
+	--use "mhinz/vim-startify" -- a really handy start page with lots of customizations
 
 	-- Indent
 	use "lukas-reineke/indent-blankline.nvim"
@@ -137,6 +145,7 @@ return require("packer").startup(function(use)
 
 	-- Git
 	use "lewis6991/gitsigns.nvim" -- show git decorations in buffers
+	use "tpope/vim-fugitive" -- git commands
 
 	-- Editing Support
 	use "windwp/nvim-autopairs" -- Autopairs, integrates with both cmp and treesitter

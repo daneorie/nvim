@@ -117,7 +117,7 @@ hyper - z: open -b "com.apple.systempreferences"
 hyper - x: open -a "Microsoft Excel"
 hyper - c: open -a Calendar
 #hyper - v: open -a 
-#hyper - b: open -a 
+hyper - b: open -a Obsidian
 
 # increase window size
 shift + alt - w : yabai -m window --resize top:0:-20

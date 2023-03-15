@@ -18,6 +18,8 @@ for path_to_add in "${paths_to_add[@]}"; do
 	fi
 done
 
+setopt interactivecomments
+
 export EDITOR=nvim
 export PAGER=less
 export LESSKEY=~/.lesskey

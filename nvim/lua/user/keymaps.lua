@@ -52,6 +52,9 @@ map({"n", "v"}, "J", "N") -- previous match
 --map({"n", "v"}, "<C-l>", "<C-e>")
 --map({"n", "v"}, "<C-j>", "<C-n>")
 
+-- create link from selected text - does not use Colemak bindings
+--map("v", "<leader><leader>l", "s[<C-r>\"]<CR>(<C-r>\".md)<Esc>^lvf)h:!tr ' ' '-'<CR>kJx")
+
 -- vertical scrolling. <C-y> is scroll up by default, so using <C-u> for scroll down works
 --   very nicely in Colemak, since U and Y are above E and I (up and down in Colemak).
 map({"n", "v"}, "<C-u>", "<C-e>")
@@ -77,11 +80,11 @@ map({"n", "v", "i"}, "<A-Down>", ":resize -2<CR>")           -- decrease height
 map({"n", "v", "i"}, "<A-Up>", ":resize +2<CR>")             -- increase height
 map({"n", "v", "i"}, "<A-Right>", ":vertical resize +2<CR>") -- increase width
 
--- move line or visually selected block - alt+j/k (Colemak)
---map("i", "<A-e>", "<Esc>:m .+1<CR>==gi")
---map("i", "<A-i>", "<Esc>:m .-2<CR>==gi")
---map("v", "<A-e>", ":m '>+1<CR>gv=gv")
---map("v", "<A-i>", ":m '<-2<CR>gv=gv")
+-- move line or visually selected block - ctrl+alt+j/k (Colemak)
+map("i", "<C-A-e>", "<Esc>:m .+1<CR>==gi")
+map("i", "<C-A-i>", "<Esc>:m .-2<CR>==gi")
+map("v", "<C-A-e>", ":m '>+1<CR>gv=gv")
+map("v", "<C-A-i>", ":m '<-2<CR>gv=gv")
 
 --split the window vertically or horizontally
 map("n", "<Bar>", "<C-w>v<C-w><Right>")

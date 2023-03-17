@@ -11,14 +11,16 @@ g.wiki_journal = {
 g.wiki_link_extension = '.md'
 g.wiki_link_target_type = 'md'
 g.wiki_map_text_to_link = function(x)
+	local spaceToDash = string.gsub(x:lower(), " ", "-")
+	local spaceToDashAndColonsRemoved = string.gsub(spaceToDash, ":", "")
 	if string.find(x, "/") then
-		return { string.gsub(x:lower(), " ", "-"), string.gsub(x, "^.*/", "") or x  }
+		return { spaceToDashAndColonsRemoved, string.gsub(x, "^.*/", "") or x  }
 	end
 
 	local dir = vim.fn.expand('%:t:r')
 	if dir == "index" then
-		return { string.gsub(x:lower(), " ", "-"), x }
+		return { spaceToDashAndColonsRemoved, x }
 	end
 
-	return { dir .. "/" .. string.gsub(x:lower(), " ", "-"), x }
+	return { dir .. "/" .. spaceToDashAndColonsRemoved, x }
 end

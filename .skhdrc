@@ -101,11 +101,11 @@ meh - 8: open "~/Library/Mobile Documents/com~apple~ScriptEditor2/Documents/Set 
 
 # open applications
 hyper - q: open -a "Activity Monitor"
-hyper - w: open -nb org.alacritty --args --config-file ~/.config/alacritty/alacritty.yml --title WikiIndex -e $SHELL -lc "export NVIM_HOME=~/.config/nvim;tmux new -A -s 'WikiIndex' -n 'Index' 'nvim +WikiIndex'"
+hyper - w: open -nb org.alacritty --args --config-file ~/.config/alacritty/alacritty.yml --title WikiIndex -e $SHELL -lc "export NVIM_HOME=~/.config/nvim; tmux new -A -s 'WikiIndex' -n 'Index' 'cd ~/Documents/iCloud/iCloud~md~obsidian/Documents/wiki; nvim +WikiIndex'"
 hyper - f: open -a Finder
 #hyper - f: osascript -e 'tell application "Finder" to make new document' && open -a Finder
 hyper - p: open -a Photos
-hyper - g: open -nb org.alacritty --args --config-file ~/.config/alacritty/alacritty.yml --title WikiJournal -e $SHELL -lc "export NVIM_HOME=~/.config/nvim;tmux new -A -s 'WikiJournal' -n 'Journal' 'nvim +WikiJournal'"
+hyper - g: open -nb org.alacritty --args --config-file ~/.config/alacritty/alacritty.yml --title WikiJournal -e $SHELL -lc "export NVIM_HOME=~/.config/nvim; tmux new -A -s 'WikiJournal' -n 'Journal' 'cd ~/Documents/iCloud/iCloud~md~obsidian/Documents/wiki; nvim +WikiJournal'"
 #------------------
 hyper - a: open -nb org.alacritty
 hyper - r: open -a Mail

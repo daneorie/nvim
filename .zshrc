@@ -23,6 +23,7 @@ setopt interactivecomments
 export EDITOR=nvim
 export PAGER=less
 export LESSKEY=~/.lesskey
+export FZF_DEFAULT_OPTS='--bind=ctrl-e:down,ctrl-u:down,ctrl-y:up'
 alias l='ls -lH'
 alias la='ls -a'
 alias ll='l'

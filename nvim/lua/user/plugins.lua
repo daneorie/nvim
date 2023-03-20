@@ -88,6 +88,7 @@ return require("packer").startup(function(use)
 	use "natecraddock/workspaces.nvim"
 
 	-- Fuzzy Finder/Telescope
+	use { "junegunn/fzf.vim", requires = { "junegunn/fzf", run = ":call fzf#install()" } }
 	use "nvim-telescope/telescope.nvim"
 	use "nvim-telescope/telescope-ui-select.nvim"
 	use { "nvim-telescope/telescope-fzf-native.nvim", run = "make" }
@@ -95,7 +96,6 @@ return require("packer").startup(function(use)
 	use "tom-anders/telescope-vim-bookmarks.nvim"
 
 	-- Note Taking
-	--use "nvim-orgmode/orgmode"
 	use "lervag/wiki.vim"
 	use "lervag/lists.vim"
 	use "dhruvasagar/vim-table-mode"
@@ -110,7 +110,7 @@ return require("packer").startup(function(use)
 
 	-- Ulility
 	use "lewis6991/impatient.nvim"
-	--use { "neoclide/coc.nvim", branch = "release" } -- a fast code completion engine
+	use { "neoclide/coc.nvim", branch = "release" } -- a fast code completion engine
 	use { "mg979/vim-visual-multi", branch = "master" }
 
 	-- Icon
@@ -122,14 +122,10 @@ return require("packer").startup(function(use)
 	--use "ravenxrz/DAPInstall.nvim"
 
 	-- Tabline
-	--use "bagrat/vim-buffet" -- buffer labeling
 	use "kdheepak/tabline.nvim"
 
 	-- Statusline
 	use "nvim-lualine/lualine.nvim"
-
-	-- Startup
-	--use "mhinz/vim-startify" -- a really handy start page with lots of customizations
 
 	-- Indent
 	use "lukas-reineke/indent-blankline.nvim"
@@ -155,6 +151,12 @@ return require("packer").startup(function(use)
 
 	-- Java
 	use "mfussenegger/nvim-jdtls" -- Java LSP
+
+	-- Tagging
+	use "ludovicchabant/vim-gutentags"
+
+	-- Code Structure
+	use "liuchengxu/vista.vim"
 
 	-- Markdown
 	use {

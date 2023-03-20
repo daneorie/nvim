@@ -116,13 +116,16 @@ map("n", "<leader>jb", ":!just build<CR>")
 -- Plugin-specific keymaps
 
 -- which-key
-map({"n", "v"}, "<C-h>", ":WhichKey<CR>")
+silent_map({"n", "v"}, "<C-h>", ":WhichKey<CR>")
 
 -- nvim-tree
-map("n", "<leader>l", "<cmd>lua require('lsp_lines').toggle()<CR>")
+silent_map("n", "<leader>l", "<cmd>lua require('lsp_lines').toggle()<CR>")
 
 -- nvim-tree
-map("n", "<leader>nt", ":NvimTreeToggle<CR>")
+silent_map("n", "<leader>nt", ":NvimTreeToggle<CR>")
+
+-- Vista
+map("n", "<leader>ft", ":Vista finder fzf<CR>")
 
 -- Telescope
 silent_map("n", "<leader>qr", "<cmd>lua require('user.telescope').reload()<CR>")

@@ -139,18 +139,6 @@ map("n", "<leader>fV", "<cmd>Telescope vim_bookmarks all<CR>")
 map("n", "<leader>bf", "<cmd>Telescope file_browser<CR>")
 map("n", "<leader>bh", "<cmd>Telescope file_browser hidden=true<CR>")
 
--- vim-buffet
-map("n", "<leader>1", "<Plug>BuffetSwitch(1)")
-map("n", "<leader>2", "<Plug>BuffetSwitch(2)")
-map("n", "<leader>3", "<Plug>BuffetSwitch(3)")
-map("n", "<leader>4", "<Plug>BuffetSwitch(4)")
-map("n", "<leader>5", "<Plug>BuffetSwitch(5)")
-map("n", "<leader>6", "<Plug>BuffetSwitch(6)")
-map("n", "<leader>7", "<Plug>BuffetSwitch(7)")
-map("n", "<leader>8", "<Plug>BuffetSwitch(8)")
-map("n", "<leader>9", "<Plug>BuffetSwitch(9)")
-map("n", "<leader>0", "<Plug>BuffetSwitch(10)")
-
 -- vim-easy-align
 -- Start interactive EasyAlign for a motion/text object (e.g. gaip)
 map("n", "ga", "<Plug>(EasyAlign)");

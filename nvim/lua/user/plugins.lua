@@ -94,6 +94,17 @@ return require("packer").startup(function(use)
 	use { "nvim-telescope/telescope-fzf-native.nvim", run = "make" }
 	use "nvim-telescope/telescope-file-browser.nvim"
 	use "tom-anders/telescope-vim-bookmarks.nvim"
+	use "LinArcX/telescope-env.nvim"
+	use "adoyle-h/lsp-toggle.nvim"
+	use {
+		"AckslD/nvim-neoclip.lua",
+		requires = {
+			{'nvim-telescope/telescope.nvim'},
+		},
+		--config = function()
+			--require('neoclip').setup()
+		--end,
+	}
 
 	-- Note Taking
 	use "lervag/wiki.vim"

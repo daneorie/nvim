@@ -82,6 +82,7 @@ yabai -m rule --add manage=off label="off:Discord|Discord Updater" app="^Microso
 yabai -m rule --add manage=off label="off:Discord|Discord Updater" app="^Discord$" title="^Discord Updater$"
 yabai -m rule --add manage=off label="off:bzbmenu|Backblaze Notification" app="^bzbmenu$" title="^Backblaze Notification$"
 yabai -m rule --add manage=off label="off:Microsoft Teams|Loading Microsoft Teams" app="^Microsoft Teams$" title="^Loading Microsoft Teams$"
+yabai -m rule --add manage=off label="off:Microsoft Teams|Microsoft Teams Notification" app="^Microsoft Teams$" title="^Microsoft Teams Notification$"
 yabai -m rule --add manage=off label="off:Calendar|" app="^Calendar$" title="^$" # This is the autocomplete pop-up for event titles. Not sure if it will catch other things.
 yabai -m rule --add manage=off label="off:Safari|General" app="^Safari$" title="^General$"
 yabai -m rule --add manage=off label="off:Safari|Tabs" app="^Safari$" title="^Tabs$"

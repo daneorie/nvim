@@ -159,6 +159,7 @@ return require("packer").startup(function(use)
 
 	-- Keybinding
 	use "folke/which-key.nvim"
+	use "mrjones2014/legendary.nvim"
 
 	-- Java
 	use "mfussenegger/nvim-jdtls" -- Java LSP
@@ -176,6 +177,9 @@ return require("packer").startup(function(use)
 		setup = function() vim.g.mkdp_filetypes = { "markdown" } end,
 		ft = { "markdown" },
 	}
+
+	-- Scrollbar
+	use "dstein64/nvim-scrollview"
 
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the end after all plugins

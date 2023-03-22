@@ -118,6 +118,9 @@ map("n", "<leader>jb", ":!just build<CR>")
 -- which-key
 silent_map({"n", "v"}, "<C-h>", ":WhichKey<CR>")
 
+-- legendary
+silent_map({"n", "v"}, "<C-p>", ":Legendary<CR>")
+
 -- nvim-tree
 silent_map("n", "<leader>l", "<cmd>lua require('lsp_lines').toggle()<CR>")
 

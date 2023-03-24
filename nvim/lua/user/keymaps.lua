@@ -142,6 +142,10 @@ map("n", "<leader>fV", "<cmd>Telescope vim_bookmarks all<CR>")
 map("n", "<leader>bf", "<cmd>Telescope file_browser<CR>")
 map("n", "<leader>bh", "<cmd>Telescope file_browser hidden=true<CR>")
 
+-- nvim-surround: create a link on selected text using text saved to the clipboard
+map("v", "<leader><leader>l", "<Plug>(nvim-surround-visual)]%a(<C-r>+)<Esc>")
+
+
 -- vim-easy-align
 -- Start interactive EasyAlign for a motion/text object (e.g. gaip)
 map("n", "ga", "<Plug>(EasyAlign)");

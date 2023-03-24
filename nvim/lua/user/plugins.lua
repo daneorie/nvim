@@ -79,7 +79,7 @@ return require("packer").startup(function(use)
 		run = function() require("nvim-treesitter.install").update({ with_sync = true }) end,
 	}
 	use "nvim-treesitter/nvim-treesitter-textobjects"
-	--use "kylechui/nvim-surround"
+	use "kylechui/nvim-surround"
 
 	-- Marks
 	use "christianchiarulli/harpoon"
@@ -101,9 +101,6 @@ return require("packer").startup(function(use)
 		requires = {
 			{'nvim-telescope/telescope.nvim'},
 		},
-		--config = function()
-			--require('neoclip').setup()
-		--end,
 	}
 
 	-- Note Taking

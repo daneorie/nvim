@@ -70,6 +70,8 @@ eval "$(rbenv init - zsh)"
 source /usr/local/share/antigen/antigen.zsh
 
 antigen bundle mollifier/cd-gitroot # type "cd-gitroot<CR>" to get to the root directory of a git repo; aliased above
+antigen bundle zsh-users/zsh-autosuggestions
+antigen bundle zsh-users/zsh-syntax-highlighting
 
 antigen apply
 
@@ -150,3 +152,5 @@ set-prompt() {
 		RPS1="%{$(echotc UP 1)%}${vcs_info_msg_0_} %K{white}%F{black} %D{%T} %f%k%{$(echotc DO 1)%}"
 	fi
 }
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

@@ -1,1 +1,4 @@
-require('telescope').load_extension('env')
+local status_ok, telescope = pcall(require, "telescope")
+if status_ok then
+	telescope.load_extension("env")
+end

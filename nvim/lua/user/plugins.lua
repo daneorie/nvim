@@ -71,7 +71,7 @@ return require("packer").startup(function(use)
 
 	-- Snippets
 	use "L3MON4D3/LuaSnip" -- snippet engine
-	use "rafamadriz/friendly-snippets" -- a bunch of snippets to use
+	--use "rafamadriz/friendly-snippets" -- a bunch of snippets to use
 
 	-- Syntax/Treesitter
 	use {
@@ -94,6 +94,7 @@ return require("packer").startup(function(use)
 	use { "nvim-telescope/telescope-fzf-native.nvim", run = "make" }
 	use "nvim-telescope/telescope-file-browser.nvim"
 	use "tom-anders/telescope-vim-bookmarks.nvim"
+	use "kiyoon/telescope-insert-path.nvim"
 	use "LinArcX/telescope-env.nvim"
 	use "adoyle-h/lsp-toggle.nvim"
 	use {

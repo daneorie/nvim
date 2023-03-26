@@ -136,6 +136,14 @@ key_bindings:
   - { key: I,        mods: Control,       chars: "\x33[105;5u" } # Map c-i to something else to differentiate it from <tab>
   - { key: Tab,      mods: Control,       chars: "\x33[9;5u" } # Map c-tab to something
   - { key: Tab,      mods: Control|Shift, chars: "\x33[1;5Z" } # Map s-c-tab to something
+  - { key: Minus,    mods: Control,       chars: "\x33[45;5u" } # Map c-- to something
+  - { key: Equals,   mods: Control,       chars: "\x33[61;5u" } # Map c-= to something
+  - { key: Minus,    mods: Control|Shift, chars: "\x33[45;6u" } # Map c-_ to something
+  - { key: Equals,   mods: Control|Shift, chars: "\x33[61;6u" } # Map c-+ to something
+  - { key: LBracket, mods: Control,       chars: "\x33[91;5u" } # Map c-[ to something
+  - { key: RBracket, mods: Control,       chars: "\x33[93;5u" } # Map c-] to something
+  - { key: LBracket, mods: Control|Shift, chars: "\x33[91;6u" } # Map c-{ to something
+  - { key: RBracket, mods: Control|Shift, chars: "\x33[93;6u" } # Map c-} to something
   - { key: Comma,    mods: Control,       chars: "\x33[44;5u" } # Map c-, to something
   - { key: Period,   mods: Control,       chars: "\x33[46;5u" } # Map c-. to something
   - { key: Comma,    mods: Control|Shift, chars: "\x33[44;6u" } # Map c-< to something

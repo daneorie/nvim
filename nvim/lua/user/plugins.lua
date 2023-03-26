@@ -94,7 +94,7 @@ return require("packer").startup(function(use)
 	use { "nvim-telescope/telescope-fzf-native.nvim", run = "make" }
 	use "nvim-telescope/telescope-file-browser.nvim"
 	use "tom-anders/telescope-vim-bookmarks.nvim"
-	use "kiyoon/telescope-insert-path.nvim"
+	use "daneorie/telescope-insert-path.nvim"
 	use "LinArcX/telescope-env.nvim"
 	use "adoyle-h/lsp-toggle.nvim"
 	use {

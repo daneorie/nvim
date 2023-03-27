@@ -56,6 +56,9 @@ end
 
 require("telescope").setup({
 	defaults = {
+		file_ignore_patterns = {
+			"^.git/",
+		},
 		mappings = {
 			n = n_mappings,
 			i = i_mappings,

@@ -103,7 +103,7 @@ colors:
 # Other useful links for decoupling escape sequences, like how <C-i> and <Tab> are the same (^I).
 #   https://unix.stackexchange.com/questions/631241/mapping-otherwise-conflicting-or-unmappable-keys-in-terminal-vim
 #   http://www.leonerd.org.uk/hacks/fixterms/
-#   https://en.wikipedia.org/wiki/ASCII#Printable_characters
+#   https://en.wikipedia.org/wiki/ASCII#Printable_characters # Use the DEC version
 key_bindings:
   - { key: C,        mods: Command,       action: Copy      } # 
   - { key: V,        mods: Command,       action: Paste     } # 
@@ -133,7 +133,6 @@ key_bindings:
   - { key: Down,     mods: Command,       chars: "\x06\x45" } # c-f E : Resize pane - Down
   - { key: Right,    mods: Command,       chars: "\x06\x49" } # c-f I : Resize pane - Up
   - { key: Up,       mods: Command,       chars: "\x06\x4f" } # c-f O : Resize pane - Right
-  - { key: I,        mods: Control,       chars: "\x33[105;5u" } # Map c-i to something else to differentiate it from <tab>
   - { key: Tab,      mods: Control,       chars: "\x33[9;5u" } # Map c-tab to something
   - { key: Tab,      mods: Control|Shift, chars: "\x33[1;5Z" } # Map s-c-tab to something
   - { key: Minus,    mods: Control,       chars: "\x33[45;5u" } # Map c-- to something
@@ -148,3 +147,8 @@ key_bindings:
   - { key: Period,   mods: Control,       chars: "\x33[46;5u" } # Map c-. to something
   - { key: Comma,    mods: Control|Shift, chars: "\x33[44;6u" } # Map c-< to something
   - { key: Period,   mods: Control|Shift, chars: "\x33[46;6u" } # Map c-> to something
+  - { key: N,        mods: Control|Shift, chars: "\x33[110;6u" } # Map c-s-n to something
+  - { key: E,        mods: Control|Shift, chars: "\x33[101;6u" } # Map c-s-e to something
+  - { key: I,        mods: Control,       chars: "\x33[105;5u" } # Map c-i to something else to differentiate it from <tab>
+  - { key: I,        mods: Control|Shift, chars: "\x33[105;6u" } # Map c-s-i to something
+  - { key: O,        mods: Control|Shift, chars: "\x33[111;6u" } # Map c-s-o to something

@@ -52,6 +52,10 @@ map({"n", "v"}, "J", "N") -- previous match
 --map({"n", "v"}, "<C-l>", "<C-e>")
 --map({"n", "v"}, "<C-j>", "<C-n>")
 
+-- Navigate through the jumplist
+map({"n", "v"}, "\x33[105;6u", "<C-o>") -- <C-S-i> previous jump
+map({"n", "v"}, "\x33[101;6u", "<C-i>") -- <C-S-e> next jump
+
 -- create link from selected text - does not use Colemak bindings
 --map("v", "<leader><leader>l", "s[<C-r>\"]<CR>(<C-r>\".md)<Esc>^lvf)h:!tr ' ' '-'<CR>kJx")
 
@@ -132,7 +136,7 @@ map("n", "<leader>ft", ":Vista finder fzf<CR>")
 
 -- Telescope
 silent_map("n", "<leader>qr", "<cmd>lua require('user.telescope').reload()<CR>")
-map("n", "<leader>ff", "<cmd>Telescope find_files<CR>")
+map("n", "<leader>ff", "<cmd>Telescope find_files hidden=true<CR>")
 map("n", "<leader>fg", "<cmd>Telescope live_grep<CR>")
 map("n", "<leader>fb", "<cmd>Telescope buffers<CR>")
 map("n", "<leader>fh", "<cmd>Telescope help_tags<CR>")
@@ -145,6 +149,9 @@ map("n", "<leader>bh", "<cmd>Telescope file_browser hidden=true<CR>")
 -- nvim-surround: create a link on selected text using text saved to the clipboard
 map("v", "<leader><leader>l", "<Plug>(nvim-surround-visual)]%a(<C-r>+)<Esc>")
 
+-- wiki.vim
+map("n", "\x33[110;6u", "<Plug>(wiki-journal-prev)")
+map("n", "\x33[111;6u", "<Plug>(wiki-journal-next)")
 
 -- vim-easy-align
 -- Start interactive EasyAlign for a motion/text object (e.g. gaip)

@@ -10,16 +10,16 @@ if a_status_ok then
 		["i"]     = actions.move_selection_previous,
 		["<C-u>"] = actions.results_scrolling_down,
 		["<C-y>"] = actions.results_scrolling_up,
-		["\x33[44;5u"] = actions.preview_scrolling_down,
-		["\x33[46;5u"] = actions.preview_scrolling_up,
+		["<C-,>"] = actions.preview_scrolling_down,
+		["<C-.>"] = actions.preview_scrolling_up,
 	}
 	local action_i_mappings = {
 		["<C-e>"] = actions.move_selection_next,
 		["\x33[105;5u"] = actions.move_selection_previous,
 		["<C-u>"] = actions.results_scrolling_down,
 		["<C-y>"] = actions.results_scrolling_up,
-		["\x33[44;5u"] = actions.preview_scrolling_down,
-		["\x33[46;5u"] = actions.preview_scrolling_up,
+		["<C-,>"] = actions.preview_scrolling_down,
+		["<C-.>"] = actions.preview_scrolling_up,
 	}
 	n_mappings = vim.tbl_extend("force", n_mappings, action_n_mappings)
 	i_mappings = vim.tbl_extend("force", i_mappings, action_i_mappings)

@@ -129,12 +129,13 @@ key_bindings:
   - { key: Key7,     mods: Command,       chars: "\x06\x37" } # cmd-f 7 : Select window 7
   - { key: Key8,     mods: Command,       chars: "\x06\x38" } # cmd-f 8 : Select window 8
   - { key: Key9,     mods: Command,       chars: "\x06\x39" } # cmd-f 9 : Select window 9
-  - { key: Left,     mods: Command,       chars: "\x06\x4e" } # cmd-f N : Resize pane - Left
-  - { key: Down,     mods: Command,       chars: "\x06\x45" } # cmd-f E : Resize pane - Down
-  - { key: Right,    mods: Command,       chars: "\x06\x49" } # cmd-f I : Resize pane - Up
-  - { key: Up,       mods: Command,       chars: "\x06\x4f" } # cmd-f O : Resize pane - Right
-  - { key: Tab,      mods: Control,       chars: "\x33[9;5u" } # Map ctrl-tab to something
-  - { key: Tab,      mods: Control|Shift, chars: "\x33[1;5Z" } # Map ctrl-s-tab to something
+  - { key: Left,     mods: Command,       chars: "\x06\x4e" } # cmd-f n : Resize pane - Left
+  - { key: Down,     mods: Command,       chars: "\x06\x45" } # cmd-f e : Resize pane - Down
+  - { key: Right,    mods: Command,       chars: "\x06\x49" } # cmd-f i : Resize pane - Up
+  - { key: Up,       mods: Command,       chars: "\x06\x4f" } # cmd-f o : Resize pane - Right
+  #- { key: Tab,                           chars: "\x09" } # Map tab to something
+  - { key: Tab,      mods: Control,       chars: "\x1b[9;5u" } # Map ctrl-tab to something
+  - { key: Tab,      mods: Control|Shift, chars: "\x1b[1;5Z" } # Map shirt-ctrl-tab to something
   - { key: Minus,    mods: Control,       chars: "\x33[45;5u" } # Map ctrl-- to something
   - { key: Equals,   mods: Control,       chars: "\x33[61;5u" } # Map ctrl-= to something
   - { key: Minus,    mods: Control|Shift, chars: "\x33[45;6u" } # Map ctrl-_ to something
@@ -143,12 +144,13 @@ key_bindings:
   - { key: RBracket, mods: Control,       chars: "\x33[93;5u" } # Map ctrl-] to something
   - { key: LBracket, mods: Control|Shift, chars: "\x33[91;6u" } # Map ctrl-{ to something
   - { key: RBracket, mods: Control|Shift, chars: "\x33[93;6u" } # Map ctrl-} to something
-  - { key: Comma,    mods: Control,       chars: "\x33[44;5u" } # Map ctrl-, to something
-  - { key: Period,   mods: Control,       chars: "\x33[46;5u" } # Map ctrl-. to something
-  - { key: Comma,    mods: Control|Shift, chars: "\x33[44;6u" } # Map ctrl-< to something
-  - { key: Period,   mods: Control|Shift, chars: "\x33[46;6u" } # Map ctrl-> to something
-  - { key: N,        mods: Control|Shift, chars: "\x33[110;6u" } # Map ctrl-s-n to something
-  - { key: E,        mods: Control|Shift, chars: "\x33[101;6u" } # Map ctrl-s-e to something
+  - { key: Comma,    mods: Control,       chars: "\x1b[44;5u" } # Map ctrl-, to something
+  - { key: Period,   mods: Control,       chars: "\x1b[46;5u" } # Map ctrl-. to something
+  - { key: Comma,    mods: Control|Shift, chars: "\x1b[44;6u" } # Map ctrl-< to something
+  - { key: Period,   mods: Control|Shift, chars: "\x1b[46;6u" } # Map ctrl-> to something
+  - { key: E,        mods: Control|Shift, chars: "\x33[101;6u" } # Map shift-ctrl-e to something
   - { key: I,        mods: Control,       chars: "\x33[105;5u" } # Map ctrl-i to something else to differentiate it from <tab>
-  - { key: I,        mods: Control|Shift, chars: "\x33[105;6u" } # Map ctrl-s-i to something
-  - { key: O,        mods: Control|Shift, chars: "\x33[111;6u" } # Map ctrl-s-o to something
+  - { key: I,        mods: Control|Shift, chars: "\x33[105;6u" } # Map shift-ctrl-i to something
+  - { key: M,        mods: Control|Shift, chars: "\x1b[109;6u" } # Map shift-ctrl-m to something
+  - { key: N,        mods: Control|Shift, chars: "\x33[110;6u" } # Map shift-ctrl-n to something
+  - { key: O,        mods: Control|Shift, chars: "\x33[111;6u" } # Map shift-ctrl-o to something

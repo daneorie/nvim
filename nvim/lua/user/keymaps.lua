@@ -5,6 +5,13 @@ local function map(mode, lhs, rhs, opts)
 	end
 	vim.keymap.set(mode, lhs, rhs, options)
 end
+local function remap(mode, lhs, rhs, opts)
+	local options = { noremap = false }
+	if opts then
+		options = vim.tbl_extend('force', options, opts)
+	end
+	vim.keymap.set(mode, lhs, rhs, options)
+end
 local function silent_map(mode, lhs, rhs, opts)
 	local options = { noremap = true, silent = true }
 	if opts then
@@ -17,7 +24,7 @@ end
 vim.g.mapleader = ","
 vim.g.maplocalleader = ","
 
--- Some mappings are written using some \x33 format, because we use Alacritty to send different codes to differentiate the some keys being pressed with and without modifier keys.
+-- Some mappings are written using some \x33 format, because I use Alacritty to send different codes to differentiate the some keys being pressed with and without modifier keys.
 
 -- utility mappings
 map({"n", "v"}, "<leader>s", ":w<CR>")
@@ -64,19 +71,19 @@ map({"n", "v"}, "\x33[101;6u", "<C-i>") -- <C-S-e> next jump
 map({"n", "v"}, "<C-u>", "<C-e>")
 
 -- page scrolling. Similar to the vertical scrolling, these keys are right below E and I.
-map({"n", "v"}, "\x33[44;5u", "<C-d>") -- <C-,>
-map({"n", "v"}, "\x33[46;5u", "<C-u>") -- <C-.>
+map({"n", "v"}, "<C-,>", "<C-d>")
+map({"n", "v"}, "<C-.>", "<C-u>")
 
 -- move between buffers
-map("n", "\x33[9;5u", ":bn<CR>") -- <C-Tab>
-map("n", "\x33[1;5Z", ":bp<CR>") -- <S-C-Tab>
-map("n", "\x33[44;6u", ":bp<CR>") -- <S-C-,> OR <C-<>
-map("n", "\x33[46;6u", ":bn<CR>") -- <S-C-.> OR <C->>
-map("n", "<C-t>", ":tabnew split<CR>")
+map("n", "<C-Tab>", ":bn<CR>")
+map("n", "<S-C-Tab>", ":bp<CR>")
+map("n", "<S-C-,>", ":bp<CR>")
+map("n", "<S-C-.>", ":bn<CR>")
+--map("n", "<C-t>", ":tabnew split<CR>")
 	
 -- delete current buffer and move to previous buffer
-map({"n", "v"}, "<leader>\x33[9;5u", ":bp|bd #<CR>") -- <C-Tab>
-map({"n", "v"}, "<leader>\x33[1;5Z", ":bp!|bd! #<CR>") -- <S-C-Tab>
+map({"n", "v"}, "<leader><C-Tab>", ":bp|bd #<CR>")
+map({"n", "v"}, "<leader><S-C-Tab>", ":bp!|bd! #<CR>")
 
 -- resize current buffer
 map({"n", "v", "i"}, "<A-Left>", ":vertical resize -2<CR>")  -- decrease width
@@ -150,8 +157,8 @@ map("n", "<leader>bh", "<cmd>Telescope file_browser hidden=true<CR>")
 map("v", "<leader><leader>l", "<Plug>(nvim-surround-visual)]%a(<C-r>+)<Esc>")
 
 -- wiki.vim
-map("n", "\x33[110;6u", "<Plug>(wiki-journal-prev)")
-map("n", "\x33[111;6u", "<Plug>(wiki-journal-next)")
+map("n", "\x33[110;6u", "<Plug>(wiki-journal-prev)") -- <S-C-n>
+map("n", "\x33[111;6u", "<Plug>(wiki-journal-next)") -- <S-C-o>
 
 -- vim-easy-align
 -- Start interactive EasyAlign for a motion/text object (e.g. gaip)

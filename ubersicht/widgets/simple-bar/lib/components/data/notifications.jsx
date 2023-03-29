@@ -17,44 +17,44 @@ const { refreshFrequency } = notificationWidgetOptions;
 
 const DEFAULT_REFRESH_FREQUENCY = 1000;
 const REFRESH_FREQUENCY = Settings.getRefreshFrequency(
-  refreshFrequency,
-  DEFAULT_REFRESH_FREQUENCY
+	refreshFrequency,
+	DEFAULT_REFRESH_FREQUENCY
 );
 
 const openApp = (bundleIdentifier) =>
-  Uebersicht.run(
-    `open -b ${bundleIdentifier}`
-  );
+	Uebersicht.run(
+		`open -b ${bundleIdentifier}`
+	);
 
 export const Widget = () => {
-  const [state, setState] = Uebersicht.React.useState({});
-  const [loading, setLoading] = Uebersicht.React.useState(notificationWidget);
+	const [state, setState] = Uebersicht.React.useState({});
+	const [loading, setLoading] = Uebersicht.React.useState(notificationWidget);
 
-  const getNotifications = async () => {
-    const database = await Uebersicht.run(
-      `lsof -p $(ps aux | grep -m1 usernoted | awk '{ print $2 }') | awk '{ print $NF }' | grep 'db2/db$'`
-    );
+	const getNotifications = async () => {
+		const database = await Uebersicht.run(
+			`lsof -p $(ps aux | grep -m1 usernoted | awk '{ print $2 }') | awk '{ print $NF }' | grep 'db2/db$'`
+		);
 
-    await Promise.all(Object.keys(AppIdentifiers.apps).map(async appName => {
-      const appBadge = await Uebersicht.run(
-        `echo "SELECT badge FROM app WHERE identifier = '${AppIdentifiers.apps[appName]}';" | sqlite3 ${database}`
-      );
+		await Promise.all(Object.keys(AppIdentifiers.apps).map(async appName => {
+			const appBadge = await Uebersicht.run(
+				`echo "SELECT badge FROM app WHERE identifier = '${AppIdentifiers.apps[appName]}';" | sqlite3 ${database}`
+			);
 		
-      setState(state => ({...state, [appName]: Number(appBadge) }));
-    }));
+			setState(state => ({...state, [appName]: Number(appBadge) }));
+		}));
 
-    setLoading(false);
-  };
+		setLoading(false);
+	};
 
-  useWidgetRefresh(notificationWidget, getNotifications, REFRESH_FREQUENCY);
+	useWidgetRefresh(notificationWidget, getNotifications, REFRESH_FREQUENCY);
 
-  if (loading) return <DataWidgetLoader.Widget className="notification" />;
-  if (!state) return null;
+	if (loading) return <DataWidgetLoader.Widget className="notification" />;
+	if (!state) return null;
 
-  const onClick = (bundleIdentifier) => (e) => {
-    Utils.clickEffect(e);
+	const onClick = (bundleIdentifier) => (e) => {
+		Utils.clickEffect(e);
 		openApp(bundleIdentifier);
-  };
+	};
 
 	return (
 		<DataWidget.Widget classes="notifications">
@@ -69,6 +69,6 @@ export const Widget = () => {
 				})
 			}
 		</DataWidget.Widget>
-  )
+	)
 
 }

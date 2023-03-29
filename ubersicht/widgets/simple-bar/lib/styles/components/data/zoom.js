@@ -25,10 +25,4 @@ export const zoomStyles = /* css */ `
 .zoom__icon--on {
   fill: var(--green);
 }
-.zoom__icon--on .toggle {
-  fill: var(--red);
-}
-.zoom__icon--off .toggle {
-  fill: var(--green);
-}
 `;

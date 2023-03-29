@@ -16,7 +16,9 @@ g.wiki_map_text_to_link = function(x)
 
 	-- This is not truly exhaustive as it should be, but for most of my use cases, I will only have spaces and/or colons.
 	path = string.gsub(path, " ", "-") -- replace spaces with dashes
+	path = string.gsub(path, "&", "and") -- replace ampersand with the word "and"
 	path = string.gsub(path, ":", "") -- remove colons
+	path = string.gsub(path, ",", "") -- remove commas
 
 	-- Remove the .md extension if it exists, because it will be automatically added later.
 	path = string.gsub(path, ".md$", "")

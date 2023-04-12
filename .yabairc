@@ -111,5 +111,6 @@ yabai -m rule --add manage=off label="off:Microsoft Outlook|New Event • Calend
 yabai -m rule --add manage=off label="off:Chromium|YouTube - Chromium" app="^Chromium$" title="^YouTube - Chromium$"
 yabai -m rule --add manage=off label="off:Stickies" app="^Stickies$"
 yabai -m rule --add manage=off label="off:Wineskin Winery|Wineskin Winery" app="^Wineskin Winery$" title="^Wineskin Winery$"
+yabai -m rule --add manage=off label="off:Microsoft Outlook|Outlook Preferences" app="^Microsoft Outlook$" title="^Outlook Preferences$"
 
 echo "yabai configuration loaded..."

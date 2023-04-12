@@ -80,6 +80,7 @@ return require("packer").startup(function(use)
 	}
 	use "nvim-treesitter/nvim-treesitter-textobjects"
 	use "kylechui/nvim-surround"
+	use "windwp/nvim-ts-autotag"
 
 	-- Marks
 	use "christianchiarulli/harpoon"
@@ -131,7 +132,7 @@ return require("packer").startup(function(use)
 	--use "ravenxrz/DAPInstall.nvim"
 
 	-- Tabline
-	use "kdheepak/tabline.nvim"
+	--use "kdheepak/tabline.nvim"
 
 	-- Statusline
 	use "nvim-lualine/lualine.nvim"

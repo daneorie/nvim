@@ -31,6 +31,7 @@ map({"n", "v"}, "<leader>s", ":w<CR>")
 map({"n", "v"}, "<leader>oo", ":e ")
 map({"n", "v"}, "<leader>nn", ":set number!<CR>") -- toggle line numbers
 map({"n", "v"}, "<leader>nr", ":set relativenumber!<CR>") -- toggle relative numbers
+map("n", "<leader>al", "o- [ ] ") -- add a new markdown list item
 
 -- Set keymaps for Colemak navigation.
 --   Here's the circle of mappings: n -> h -> i -> k -> o -> l -> e -> j -> n
@@ -59,6 +60,17 @@ map({"n", "v"}, "J", "N") -- previous match
 --map({"n", "v"}, "<C-l>", "<C-e>")
 --map({"n", "v"}, "<C-j>", "<C-n>")
 
+-- Paste over text without replacing the register
+map("x", "<leader>p", [["_dP]])
+
+-- Copy something into the "+" register
+map({"n", "v"}, "<leader>y", [["+y]])
+map({"n", "v"}, "<leader>Y", [["+Y]])
+
+-- Delete something without replacing the register
+map({"n", "v"}, "<leader>d", [["_d]])
+map({"n", "v"}, "<leader>D", [["_D]])
+
 -- Navigate through the jumplist
 map({"n", "v"}, "\x33[105;6u", "<C-o>") -- <S-C-i> previous jump
 map({"n", "v"}, "\x33[101;6u", "<C-i>") -- <S-C-e> next jump
@@ -70,9 +82,13 @@ map({"n", "v"}, "\x33[101;6u", "<C-i>") -- <S-C-e> next jump
 --   very nicely in Colemak, since U and Y are above E and I (up and down in Colemak).
 map({"n", "v"}, "<C-u>", "<C-e>")
 
--- page scrolling. Similar to the vertical scrolling, these keys are right below E and I.
-map({"n", "v"}, "<C-,>", "<C-d>")
-map({"n", "v"}, "<C-.>", "<C-u>")
+-- page scrolling while maintaining cursor in the center of the screen. Similar to the vertical scrolling, these keys are right below E and I.
+map({"n", "v"}, "<C-,>", "<C-d>zz")
+map({"n", "v"}, "<C-.>", "<C-u>zz")
+
+-- searching while maintaining cursor in the center of the screen
+map({"n", "v"}, "j", "nzzzv")
+map({"n", "v"}, "J", "Nzzzv")
 
 -- move between buffers
 map("n", "<C-Tab>", ":bn<CR>")

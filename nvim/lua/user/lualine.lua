@@ -61,13 +61,13 @@ lualine.setup({
 	},
 	sections = {
 		lualine_a = { "mode" },
-		lualine_b = { branch, diagnostics },
+		lualine_b = { diff },
 		lualine_c = { {
 			"filename",
 			file_status = true,
 			path = 0
 		} },
-		lualine_x = { diff, spaces, "encoding", filetype },
+		lualine_x = { spaces, "encoding", filetype },
 		lualine_y = { "progress" },
 		lualine_z = { "location" },
 	},
@@ -84,7 +84,8 @@ lualine.setup({
 		lualine_z = {},
 	},
 	tabline = {
-		lualine_a = { {
+		lualine_a = { branch, diagnostics },
+		lualine_b = { {
 			function()
 				return navic.get_location()
 			end,
@@ -92,7 +93,6 @@ lualine.setup({
 				return navic.is_available()
 			end
 		} },
-		lualine_b = {},
 		lualine_c = {},
 		lualine_x = {},
 		lualine_y = {},

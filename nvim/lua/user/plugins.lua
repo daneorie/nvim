@@ -131,9 +131,6 @@ return require("packer").startup(function(use)
 	use "rcarriga/nvim-dap-ui"
 	--use "ravenxrz/DAPInstall.nvim"
 
-	-- Tabline
-	--use "kdheepak/tabline.nvim"
-
 	-- Statusline
 	use "nvim-lualine/lualine.nvim"
 

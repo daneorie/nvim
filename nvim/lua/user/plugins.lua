@@ -122,6 +122,7 @@ return require("packer").startup(function(use)
 	use "lewis6991/impatient.nvim"
 	use { "neoclide/coc.nvim", branch = "release" } -- a fast code completion engine
 	use { "mg979/vim-visual-multi", branch = "master" }
+	use "folke/zen-mode.nvim"
 
 	-- Icon
 	use "kyazdani42/nvim-web-devicons"
@@ -149,6 +150,7 @@ return require("packer").startup(function(use)
 	-- Git
 	use "lewis6991/gitsigns.nvim" -- show git decorations in buffers
 	use "tpope/vim-fugitive" -- git commands
+	use "mbbill/undotree"
 
 	-- Editing Support
 	use "windwp/nvim-autopairs" -- Autopairs, integrates with both cmp and treesitter
@@ -176,6 +178,9 @@ return require("packer").startup(function(use)
 
 	-- Scrollbar
 	use "dstein64/nvim-scrollview"
+
+	-- Games
+	use "ThePrimeagen/vim-be-good"
 
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the end after all plugins

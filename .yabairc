@@ -113,5 +113,6 @@ yabai -m rule --add manage=off label="off:Stickies" app="^Stickies$"
 yabai -m rule --add manage=off label="off:Wineskin Winery|Wineskin Winery" app="^Wineskin Winery$" title="^Wineskin Winery$"
 yabai -m rule --add manage=off label="off:Microsoft Outlook|Outlook Preferences" app="^Microsoft Outlook$" title="^Outlook Preferences$"
 yabai -m rule --add manage=off label="off:Arc|Dane" app="^Arc$" title="^Dane$"
+yabai -m rule --add manage=off label="off:Sound Control|Sound Control Preferences" app="^Sound Control$" title="^Sound Control Preferences$"
 
 echo "yabai configuration loaded..."

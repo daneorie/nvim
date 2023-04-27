@@ -74,7 +74,7 @@ shift + alt - c : yabai -m space --create && \
 
 # cycle through stack and floating windows
 alt + cmd - 0x32 : yabai -m window --focus "$(yabai -m query --windows --space | jq -re 'map(select(."stack-index" == 1 or ."is-visible" and ."stack-index" == 0)) | sort_by(.frame.x, .frame.y, .id) | nth((index(map(select(."has-focus"))) + length - 1) % length).id')"
-
+ 
 # cycle within a stack
 alt - 0x32 : yabai -m window --focus stack.prev || yabai -m window --focus stack.last
 alt + cmd - e : yabai -m window --focus stack.prev || yabai -m window --focus stack.last
@@ -94,10 +94,10 @@ meh - y: brew services restart yabai
 meh - s: brew services restart skhd
 
 # change the sound input and output
-hyper - 3: open "~/Library/Mobile Documents/com~apple~ScriptEditor2/Documents/Set Sound Control Output Device - Output1.app"
-hyper - 4: open "~/Library/Mobile Documents/com~apple~ScriptEditor2/Documents/Set Sound Control Output Device - Output2.app"
-meh - 7: open "~/Library/Mobile Documents/com~apple~ScriptEditor2/Documents/Set Sound Control Input Device - Input1.app"
-meh - 8: open "~/Library/Mobile Documents/com~apple~ScriptEditor2/Documents/Set Sound Control Input Device - Input2.app"
+#hyper - 3: open "~/Library/Mobile Documents/com~apple~ScriptEditor2/Documents/Set Sound Control Output Device - Output1.app"
+#hyper - 4: open "~/Library/Mobile Documents/com~apple~ScriptEditor2/Documents/Set Sound Control Output Device - Output2.app"
+#meh - 7: open "~/Library/Mobile Documents/com~apple~ScriptEditor2/Documents/Set Sound Control Input Device - Input1.app"
+#meh - 8: open "~/Library/Mobile Documents/com~apple~ScriptEditor2/Documents/Set Sound Control Input Device - Input2.app"
 
 # open applications
 hyper - q: open -a "Activity Monitor"

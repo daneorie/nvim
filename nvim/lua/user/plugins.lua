@@ -60,6 +60,13 @@ return require("packer").startup(function(use)
 	use "lvimuser/lsp-inlayhints.nvim"
 	use "https://git.sr.ht/~whynothugo/lsp_lines.nvim"
 	use "pierreglaser/folding-nvim"
+	use {
+		"ThePrimeagen/refactoring.nvim",
+		requires = {
+			{"nvim-lua/plenary.nvim"},
+			{"nvim-treesitter/nvim-treesitter"}
+		}
+	}
 
 	-- Completion
 	use "hrsh7th/nvim-cmp" -- The completion plugin
@@ -83,7 +90,7 @@ return require("packer").startup(function(use)
 	use "windwp/nvim-ts-autotag"
 
 	-- Marks
-	use "christianchiarulli/harpoon"
+	use "ThePrimeagen/harpoon"
 	use "MattesGroeger/vim-bookmarks"
 	use "natecraddock/sessions.nvim"
 	use "natecraddock/workspaces.nvim"
@@ -178,9 +185,6 @@ return require("packer").startup(function(use)
 
 	-- Scrollbar
 	use "dstein64/nvim-scrollview"
-
-	-- Games
-	use "ThePrimeagen/vim-be-good"
 
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the end after all plugins

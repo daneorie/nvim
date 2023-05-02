@@ -104,6 +104,7 @@ return require("packer").startup(function(use)
 	use "tom-anders/telescope-vim-bookmarks.nvim"
 	use "daneorie/telescope-insert-path.nvim"
 	use "LinArcX/telescope-env.nvim"
+	use "LukasPietzschmann/telescope-tabs"
 	use "adoyle-h/lsp-toggle.nvim"
 	use {
 		"AckslD/nvim-neoclip.lua",

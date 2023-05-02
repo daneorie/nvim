@@ -71,6 +71,9 @@ map({"n", "v"}, "<leader>Y", [["+Y]])
 map({"n", "v"}, "<leader>d", [["_d]])
 map({"n", "v"}, "<leader>D", [["_D]])
 
+-- Necessary
+map("n", "\x33[93;5u", "<C-]>") -- <C-]>
+
 -- Navigate through the jumplist
 map({"n", "v"}, "\x33[105;6u", "<C-o>") -- <S-C-i> previous jump
 map({"n", "v"}, "\x33[101;6u", "<C-i>") -- <S-C-e> next jump
@@ -136,7 +139,7 @@ map("n", "<leader>h", ":nohlsearch<CR>")
 map("v", "<", "<gv")
 map("v", ">", ">gv")
 
--- Just Build for a project-agnostic buil command that can be configured as needed
+-- Just Build for a project-agnostic build command that can be configured as needed
 map("n", "<leader>jb", ":!just build<CR>")
 
 --------------------------
@@ -155,7 +158,10 @@ silent_map("n", "<leader>l", "<cmd>lua require('lsp_lines').toggle()<CR>")
 silent_map("n", "<leader>nt", ":NvimTreeToggle<CR>")
 
 -- Vista
-map("n", "<leader>ft", ":Vista finder fzf<CR>")
+map("n", "<leader>fa", ":Vista finder fzf<CR>")
+
+-- harpoon - Just Build in the third tmux pane
+map("n", "<leader>tb", '<cmd>lua require("harpoon.tmux").sendCommand("3", "just build")<CR>')
 
 -- Telescope
 silent_map("n", "<leader>qr", "<cmd>lua require('user.telescope').reload()<CR>")
@@ -166,6 +172,7 @@ map("n", "<leader>fh", "<cmd>Telescope help_tags<CR>")
 map("n", "<leader>fw", "<cmd>Telescope workspaces<CR>")
 map("n", "<leader>fv", "<cmd>Telescope vim_bookmarks current_file<CR>")
 map("n", "<leader>fV", "<cmd>Telescope vim_bookmarks all<CR>")
+map("n", "<leader>ft", "<cmd>Telescope telescope-tabs list_tabs<CR>")
 map("n", "<leader>bf", "<cmd>Telescope file_browser<CR>")
 map("n", "<leader>bh", "<cmd>Telescope file_browser hidden=true<CR>")
 

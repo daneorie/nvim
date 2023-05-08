@@ -45,6 +45,7 @@ return require("packer").startup(function(use)
 	use "nvim-lua/plenary.nvim" -- Useful lua functions used by lots of plugins
 	use "nvim-lua/popup.nvim"
 	use "folke/lua-dev.nvim"
+	use "folke/neodev.nvim"
 
 	-- LSP
 	use "neovim/nvim-lspconfig" -- enable LSP
@@ -127,6 +128,7 @@ return require("packer").startup(function(use)
 	use "EdenEast/nightfox.nvim" -- theme
 
 	-- Ulility
+	use "christoomey/vim-tmux-navigator"
 	use "lewis6991/impatient.nvim"
 	use { "neoclide/coc.nvim", branch = "release" } -- a fast code completion engine
 	use { "mg979/vim-visual-multi", branch = "master" }

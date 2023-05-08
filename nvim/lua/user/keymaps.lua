@@ -127,10 +127,10 @@ map("n", "_", "<C-w>s<C-w><Down>")
 --map("n", "<A-o>", "<C-w>L")
 
 -- move between panes to left/bottom/top/right (Colemak)
-map("n", "<C-n>", "<C-w>h")
-map("n", "<C-e>", "<C-w>j")
-map("n", "\x33[105;5u", "<C-w>k") -- <C-i>
-map("n", "<C-o>", "<C-w>l")
+--map("n", "<C-n>", "<C-w>h")
+--map("n", "<C-e>", "<C-w>j")
+--map("n", "\x33[105;5u", "<C-w>k") -- <C-i>
+--map("n", "<C-o>", "<C-w>l")
 
 -- Clear highlights
 map("n", "<leader>h", ":nohlsearch<CR>")
@@ -140,6 +140,7 @@ map("v", "<", "<gv")
 map("v", ">", ">gv")
 
 -- Just Build for a project-agnostic build command that can be configured as needed
+map("n", "<leader>jd", ":!just test<CR>")
 map("n", "<leader>jb", ":!just build<CR>")
 
 --------------------------
@@ -161,6 +162,7 @@ silent_map("n", "<leader>nt", ":NvimTreeToggle<CR>")
 map("n", "<leader>fa", ":Vista finder fzf<CR>")
 
 -- harpoon - Just Build in the third tmux pane
+map("n", "<leader>td", '<cmd>lua require("harpoon.tmux").sendCommand("3", "just test")<CR>')
 map("n", "<leader>tb", '<cmd>lua require("harpoon.tmux").sendCommand("3", "just build")<CR>')
 
 -- Telescope

@@ -44,6 +44,36 @@ local branch = {
 	icon = "",
 }
 
+local tabs = {
+	"tabs",
+	max_length = vim.o.columns / 3, -- Maximum width of tabs component.
+	                                -- Note:
+	                                -- It can also be a function that returns
+	                                -- the value of `max_length` dynamically.
+	mode = 0, -- 0: Shows tab_nr
+	          -- 1: Shows tab_name
+	          -- 2: Shows tab_nr + tab_name
+
+	-- Automatically updates active tab color to match color of other components (will be overidden if buffers_color is set)
+	use_mode_colors = false,
+
+	tabs_color = {
+		-- Same values as the general color option can be used here.
+		active = 'lualine_{section}_normal',     -- Color for active tab.
+		inactive = 'lualine_{section}_inactive', -- Color for inactive tab.
+	},
+
+	fmt = function(name, context)
+		-- Show + if buffer is modified in tab
+		local buflist = vim.fn.tabpagebuflist(context.tabnr)
+		local winnr = vim.fn.tabpagewinnr(context.tabnr)
+		local bufnr = buflist[winnr]
+		local mod = vim.fn.getbufvar(bufnr, '&mod')
+
+		return name .. (mod == 1 and ' +' or '')
+	end
+}
+
 -- cool function for progress
 local spaces = function()
 	return "spaces: " .. vim.api.nvim_buf_get_option(0, "shiftwidth")
@@ -96,7 +126,7 @@ lualine.setup({
 		lualine_c = {},
 		lualine_x = {},
 		lualine_y = {},
-		lualine_z = { "tabs" },
+		lualine_z = { { "tabs", mode = 2 } },
 	},
 	extensions = {},
 })

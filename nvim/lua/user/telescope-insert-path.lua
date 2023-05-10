@@ -15,11 +15,11 @@ if i_status_ok then
 	}
 	insert_path_i_mappings = {
 		["\x33[91;5u"] = path_actions.insert_reltobufpath_visual, -- <C-[>
-		["\x33[93;5u"] = path_actions.insert_abspath_visual, -- <C-]>
-		["\x33[91;6u"] = path_actions.insert_reltobufpath_insert, -- <C-{>
-		["\x33[93;6u"] = path_actions.insert_abspath_insert, -- <C-}>
-		["\x33[45;5u"] = path_actions.insert_reltobufpath_normal, -- <C-->
-		["\x33[61;5u"] = path_actions.insert_abspath_normal, -- <C-=>
+		["<C-]>"] = path_actions.insert_abspath_visual, -- <C-]>
+		["<C-{>"] = path_actions.insert_reltobufpath_insert, -- <C-{>
+		["<C-}>"] = path_actions.insert_abspath_insert, -- <C-}>
+		["<C-->"] = path_actions.insert_reltobufpath_normal, -- <C-->
+		["<C-=>"] = path_actions.insert_abspath_normal, -- <C-=>
 	}
 end
 

@@ -14,7 +14,7 @@ local list = {
 	{ key = "N",                              action = "toggle_dotfiles" },
 	{ key = "L",                              action = "expand_all" },
 	{ key = "e",                              action = "" }, -- defaults to `rename_basename`
-	{ key = "\x33[93;5u",                     action = "cd" },
+	{ key = "<C-e>",                          action = "" }, -- defaults to `open_in_place`
 }
 
 require("nvim-tree").setup({

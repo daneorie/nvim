@@ -132,38 +132,42 @@ key_bindings:
   - { key: Down,     mods: Command,       chars: "\x06\x45" } # ctrl-f e : Resize pane - Down
   - { key: Up,       mods: Command,       chars: "\x06\x49" } # ctrl-f i : Resize pane - Up
   - { key: Right,    mods: Command,       chars: "\x06\x4f" } # ctrl-f o : Resize pane - Right
-  - { key: Tab,                           chars: "\x1b[9;u" } # Map tab to something
   - { key: Tab,      mods: Control,       chars: "\x1b[9;5u"   } # Map ctrl-tab to something
   - { key: Tab,      mods: Control|Shift, chars: "\x1b[9;6u"   } # Map shirt-ctrl-tab to something
-  - { key: Minus,    mods: Control,       chars: "\x33[45;5u"  } # Map ctrl-- to something
-  - { key: Equals,   mods: Control,       chars: "\x33[61;5u"  } # Map ctrl-= to something
-  - { key: Minus,    mods: Control|Shift, chars: "\x33[45;6u"  } # Map ctrl-_ to something
-  - { key: Equals,   mods: Control|Shift, chars: "\x33[61;6u"  } # Map ctrl-+ to something
-  - { key: LBracket, mods: Control,       chars: "\x33[91;5u"  } # Map ctrl-[ to something
-  - { key: RBracket, mods: Control,       chars: "\x33[93;5u"  } # Map ctrl-] to something
-  - { key: LBracket, mods: Control|Shift, chars: "\x33[91;6u"  } # Map ctrl-{ to something
-  - { key: RBracket, mods: Control|Shift, chars: "\x33[93;6u"  } # Map ctrl-} to something
+  - { key: Minus,    mods: Control,       chars: "\x1b[45;5u"  } # Map ctrl-- to something
+  - { key: Equals,   mods: Control,       chars: "\x1b[61;5u"  } # Map ctrl-= to something
+  - { key: Minus,    mods: Control|Shift, chars: "\x1b[45;6u"  } # Map ctrl-_ to something
+  - { key: Equals,   mods: Control|Shift, chars: "\x1b[61;6u"  } # Map ctrl-+ to something
+  - { key: LBracket, mods: Control,       chars: "\x33[91;5u"  } # Map ctrl-[ to something - overlaps ESC
+  - { key: RBracket, mods: Control,       chars: "\x1b[93;5u"  } # Map ctrl-] to something
+  - { key: LBracket, mods: Control|Shift, chars: "\x1b[91;6u"  } # Map ctrl-{ to something
+  - { key: RBracket, mods: Control|Shift, chars: "\x1b[93;6u"  } # Map ctrl-} to something
   - { key: Comma,    mods: Control,       chars: "\x1b[44;5u"  } # Map ctrl-, to something
   - { key: Period,   mods: Control,       chars: "\x1b[46;5u"  } # Map ctrl-. to something
-  - { key: Comma,    mods: Control|Shift, chars: "\x33[44;6u"  } # Map ctrl-< to something
-  - { key: Period,   mods: Control|Shift, chars: "\x33[46;6u"  } # Map ctrl-> to something
+  - { key: Comma,    mods: Control|Shift, chars: "\x1b[44;6u"  } # Map ctrl-< to something
+  - { key: Period,   mods: Control|Shift, chars: "\x1b[46;6u"  } # Map ctrl-> to something
   - { key: A,        mods: Control|Shift, chars: "\x1b[97;6u"  } # Map shift-ctrl-a to something
   - { key: B,        mods: Control|Shift, chars: "\x1b[98;6u"  } # Map shift-ctrl-b to something
   - { key: C,        mods: Control|Shift, chars: "\x1b[99;6u"  } # Map shift-ctrl-c to something
   - { key: D,        mods: Control|Shift, chars: "\x1b[100;6u" } # Map shift-ctrl-d to something
-  - { key: E,        mods: Control|Shift, chars: "\x33[101;6u" } # Map shift-ctrl-e to something
+  - { key: E,        mods: Control|Shift, chars: "\x1b[101;6u" } # Map shift-ctrl-e to something
+  - { key: E,        mods: Command,       chars: "\x1b[101;9u" } # Map cmd-e to something
   - { key: F,        mods: Control|Shift, chars: "\x1b[102;6u" } # Map shift-ctrl-f to something
   - { key: G,        mods: Control|Shift, chars: "\x1b[103;6u" } # Map shift-ctrl-g to something
+  - { key: H,        mods: Control,       chars: "\x33[104;5u" } # Map shift-ctrl-h to something - overlaps BS/Backspace
   - { key: H,        mods: Control|Shift, chars: "\x1b[104;6u" } # Map shift-ctrl-h to something
   - { key: I,        mods: Control,       chars: "\x33[105;5u" } # Map ctrl-i to something else to differentiate it from <tab>
-  - { key: I,        mods: Control|Shift, chars: "\x33[105;6u" } # Map shift-ctrl-i to something
+  - { key: I,        mods: Control|Shift, chars: "\x1b[105;6u" } # Map shift-ctrl-i to something
+  - { key: I,        mods: Command,       chars: "\x1b[105;9u" } # Map cmd-i to something
   - { key: J,        mods: Control|Shift, chars: "\x1b[106;6u" } # Map shift-ctrl-j to something
-  - { key: J,        mods: Control|Shift, chars: "\x1b[74;5u" } # Map shift-ctrl-j to something
   - { key: K,        mods: Control|Shift, chars: "\x1b[107;6u" } # Map shift-ctrl-k to something
   - { key: L,        mods: Control|Shift, chars: "\x1b[108;6u" } # Map shift-ctrl-l to something
+  - { key: M,        mods: Control,       chars: "\x33[109;5u" } # Map shift-ctrl-m to something - overlaps CR/Enter
   - { key: M,        mods: Control|Shift, chars: "\x1b[109;6u" } # Map shift-ctrl-m to something
-  - { key: N,        mods: Control|Shift, chars: "\x33[110;6u" } # Map shift-ctrl-n to something
-  - { key: O,        mods: Control|Shift, chars: "\x33[111;6u" } # Map shift-ctrl-o to something
+  - { key: N,        mods: Control|Shift, chars: "\x1b[110;6u" } # Map shift-ctrl-n to something
+  - { key: N,        mods: Command,       chars: "\x1b[110;9u" } # Map cmd-n to something
+  - { key: O,        mods: Control|Shift, chars: "\x1b[111;6u" } # Map shift-ctrl-o to something
+  - { key: O,        mods: Command,       chars: "\x1b[111;9u" } # Map cmd-o to something
   - { key: P,        mods: Control|Shift, chars: "\x1b[112;6u" } # Map shift-ctrl-p to something
   - { key: Q,        mods: Control|Shift, chars: "\x1b[113;6u" } # Map shift-ctrl-q to something
   - { key: R,        mods: Control|Shift, chars: "\x1b[114;6u" } # Map shift-ctrl-r to something
@@ -175,29 +179,3 @@ key_bindings:
   - { key: X,        mods: Control|Shift, chars: "\x1b[120;6u" } # Map shift-ctrl-x to something
   - { key: Y,        mods: Control|Shift, chars: "\x1b[121;6u" } # Map shift-ctrl-y to something
   - { key: Z,        mods: Control|Shift, chars: "\x1b[122;6u" } # Map shift-ctrl-z to something
-  #- { key: A,        mods: Control|Shift, chars: "\x1b[65;5u" } # Map shift-ctrl-a to something
-  #- { key: B,        mods: Control|Shift, chars: "\x1b[66;5u" } # Map shift-ctrl-b to something
-  #- { key: C,        mods: Control|Shift, chars: "\x1b[67;5u" } # Map shift-ctrl-c to something
-  #- { key: D,        mods: Control|Shift, chars: "\x1b[68;5u" } # Map shift-ctrl-d to something
-  #- { key: E,        mods: Control|Shift, chars: "\x1b[69;5u" } # Map shift-ctrl-e to something
-  #- { key: F,        mods: Control|Shift, chars: "\x1b[70;5u" } # Map shift-ctrl-f to something
-  #- { key: G,        mods: Control|Shift, chars: "\x1b[71;5u" } # Map shift-ctrl-g to something
-  #- { key: H,        mods: Control|Shift, chars: "\x1b[72;5u" } # Map shift-ctrl-h to something
-  #- { key: I,        mods: Control|Shift, chars: "\x1b[73;5u" } # Map shift-ctrl-i to something
-  #- { key: J,        mods: Control|Shift, chars: "\x1b[74;5u" } # Map shift-ctrl-j to something
-  #- { key: K,        mods: Control|Shift, chars: "\x1b[75;5u" } # Map shift-ctrl-k to something
-  #- { key: L,        mods: Control|Shift, chars: "\x1b[76;5u" } # Map shift-ctrl-l to something
-  #- { key: M,        mods: Control|Shift, chars: "\x1b[77;5u" } # Map shift-ctrl-m to something
-  #- { key: N,        mods: Control|Shift, chars: "\x1b[78;5u" } # Map shift-ctrl-n to something
-  #- { key: O,        mods: Control|Shift, chars: "\x1b[79;5u" } # Map shift-ctrl-o to something
-  #- { key: P,        mods: Control|Shift, chars: "\x1b[80;5u" } # Map shift-ctrl-p to something
-  #- { key: Q,        mods: Control|Shift, chars: "\x1b[81;5u" } # Map shift-ctrl-q to something
-  #- { key: R,        mods: Control|Shift, chars: "\x1b[82;5u" } # Map shift-ctrl-r to something
-  #- { key: S,        mods: Control|Shift, chars: "\x1b[83;5u" } # Map shift-ctrl-s to something
-  #- { key: T,        mods: Control|Shift, chars: "\x1b[84;5u" } # Map shift-ctrl-t to something
-  #- { key: U,        mods: Control|Shift, chars: "\x1b[85;5u" } # Map shift-ctrl-u to something
-  #- { key: V,        mods: Control|Shift, chars: "\x1b[86;5u" } # Map shift-ctrl-v to something
-  #- { key: W,        mods: Control|Shift, chars: "\x1b[87;5u" } # Map shift-ctrl-w to something
-  #- { key: X,        mods: Control|Shift, chars: "\x1b[88;5u" } # Map shift-ctrl-x to something
-  #- { key: Y,        mods: Control|Shift, chars: "\x1b[89;5u" } # Map shift-ctrl-y to something
-  #- { key: Z,        mods: Control|Shift, chars: "\x1b[90;5u" } # Map shift-ctrl-z to something

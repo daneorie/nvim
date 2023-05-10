@@ -110,6 +110,21 @@ key_bindings:
   - { key: Q,        mods: Command,       action: Quit         } # 
   - { key: N,        mods: Command|Shift, action: SpawnNewInstance }
 
+  # alacritty vi-mode
+  - { key: H,                           mode: Vi|~Search, action: ToggleViMode            } # Colemak
+  - { key: H,                           mode: Vi|~Search, action: ScrollToBottom          } # Colemak
+  - { key: L,      mods: Control,       mode: Vi|~Search, action: ScrollLineDown          } # Colemak
+  - { key: N,                           mode: Vi|~Search, action: Left                    } # Colemak
+  - { key: E,                           mode: Vi|~Search, action: Down                    } # Colemak
+  - { key: I,                           mode: Vi|~Search, action: Up                      } # Colemak
+  - { key: O,                           mode: Vi|~Search, action: Right                   } # Colemak
+  - { key: N,      mods: Shift,         mode: Vi|~Search, action: High                    } # Colemak
+  - { key: O,      mods: Shift,         mode: Vi|~Search, action: Low                     } # Colemak
+  - { key: L,                           mode: Vi|~Search, action: SemanticRightEnd        } # Colemak
+  - { key: L,      mods: Shift,         mode: Vi|~Search, action: WordRightEnd            } # Colemak
+  - { key: J,                           mode: Vi|~Search, action: SearchNext              } # Colemak
+  - { key: J,      mods: Shift,         mode: Vi|~Search, action: SearchPrevious          } # Colemak
+
   # tmux
   - { key: LBracket, mods: Command,       chars: "\x06\x5b"    } # ctrl-f [ : Use command + [ to cycle through windows left
   - { key: RBracket, mods: Command,       chars: "\x06\x5d"    } # ctrl-f ] : Use command + ] to cycle through windows right

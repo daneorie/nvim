@@ -140,6 +140,12 @@ return require("packer").startup(function(use)
 	-- Debugging
 	use "mfussenegger/nvim-dap"
 	use "rcarriga/nvim-dap-ui"
+	use "mxsdev/nvim-dap-vscode-js"
+	use {
+		"microsoft/vscode-js-debug",
+		opt = true,
+		run = "npm install --legacy-peer-deps && npx gulp vsDebugServerBundle && mv dist out" 
+	}
 	--use "ravenxrz/DAPInstall.nvim"
 
 	-- Statusline

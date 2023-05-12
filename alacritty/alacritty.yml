@@ -201,7 +201,9 @@ key_bindings:
   - { key: N,        mods: Command,       chars: "\x06\x6e" } # ctrl-f n
   - { key: O,        mods: Command,       chars: "\x06\x6f" } # ctrl-f o
   # Actual bindings
+  - { key: A,        mods: Command,       chars: "\x1b[97;9u"  } # cmd-a
   - { key: E,        mods: Command,       chars: "\x1b[101;9u" } # cmd-e
   - { key: I,        mods: Command,       chars: "\x1b[105;9u" } # cmd-i
   - { key: N,        mods: Command,       chars: "\x1b[110;9u" } # cmd-n
   - { key: O,        mods: Command,       chars: "\x1b[111;9u" } # cmd-o
+  - { key: S,        mods: Command,       chars: "\x1b[115;9u" } # cmd-s

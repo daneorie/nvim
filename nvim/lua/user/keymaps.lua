@@ -27,30 +27,32 @@ vim.g.maplocalleader = ","
 -- Some mappings are written using some \x33 format, because I use Alacritty to send different codes to differentiate the some keys being pressed with and without modifier keys.
 
 -- utility mappings
-map({"n", "v"}, "<leader>s", ":w<CR>")
-map({"n", "v"}, "<leader>oo", ":e ")
-map({"n", "v"}, "<leader>nn", ":set number!<CR>") -- toggle line numbers
-map({"n", "v"}, "<leader>nr", ":set relativenumber!<CR>") -- toggle relative numbers
+map({"n", "v"}, "<M-a>", "<Esc>ggVG") -- select all
+map({"n", "v"}, "<M-s>", "<Esc>:w<CR>") -- save file
+map({"n", "x"}, "<leader>s", ":w<CR>") -- save file
+map({"n", "x"}, "<leader>oo", ":e ")
+map({"n", "x"}, "<leader>nn", ":set number!<CR>") -- toggle line numbers
+map({"n", "x"}, "<leader>nr", ":set relativenumber!<CR>") -- toggle relative numbers
 map("n", "<leader>al", "o- [ ] ") -- add a new markdown list item
 
 -- Set keymaps for Colemak navigation.
 --   Here's the circle of mappings: n -> h -> i -> k -> o -> l -> e -> j -> n
-map({"n", "v"}, "n", "h") -- arrow: left
-map({"n", "v"}, "e", "j") -- arrow: down
-map({"n", "v"}, "i", "k") -- arrow: up
+map({"n", "x"}, "n", "h") -- arrow: left
+map({"n", "x"}, "e", "j") -- arrow: down
+map({"n", "x"}, "i", "k") -- arrow: up
 map({"n", "v"}, "o", "l") -- arrow: right
-map({"n", "v"}, "h", "i") -- insert
-map({"n", "v"}, "k", "o") -- newline insert
-map({"n", "v"}, "l", "e") -- end of word
-map({"n", "v"}, "j", "n") -- next match
-map({"n", "v"}, "N", "H") -- top of page
-map({"n", "v"}, "E", "J") -- join line below to current line
-map({"n", "v"}, "I", "K") -- <unset>?
-map({"n", "v"}, "O", "L") -- bottom of page
-map({"n", "v"}, "H", "I") -- insert at beginning of line
-map({"n", "v"}, "K", "O") -- insert newline
-map({"n", "v"}, "L", "E") -- end of word (space separated)
-map({"n", "v"}, "J", "N") -- previous match
+map({"n", "x"}, "h", "i") -- insert
+map({"n", "x"}, "k", "o") -- newline insert
+map({"n", "x"}, "l", "e") -- end of word
+map({"n", "x"}, "j", "n") -- next match
+map({"n", "x"}, "N", "H") -- top of page
+map({"n", "x"}, "E", "J") -- join line below to current line
+map({"n", "x"}, "I", "K") -- <unset>?
+map({"n", "x"}, "O", "L") -- bottom of page
+map({"n", "x"}, "H", "I") -- insert at beginning of line
+map({"n", "x"}, "K", "O") -- insert newline
+map({"n", "x"}, "L", "E") -- end of word (space separated)
+map({"n", "x"}, "J", "N") -- previous match
 --map({"n", "v"}, "<C-n>", "<C-h>")
 --map({"n", "v"}, "<C-e>", "<C-j>")
 --map({"n", "v"}, "\x33[105;5u", "<C-k>") -- <C-i>
@@ -60,26 +62,27 @@ map({"n", "v"}, "J", "N") -- previous match
 --map({"n", "v"}, "<C-l>", "<C-e>")
 --map({"n", "v"}, "<C-j>", "<C-n>")
 
+-- This weird mapping fixes `vi_` (viw, vi", vi{, etc.) functionality not working due to the Colemak neio->arrow mappings
+-- This works due to setting these mappings using `noremap = true`
+map("n", "vi", "vi")
+
 -- Paste over text without replacing the register
 map("x", "<leader>p", [["_dP]])
 
 -- Copy something into the "+" register
-map({"n", "v"}, "<leader>y", [["+y]])
-map({"n", "v"}, "<leader>Y", [["+Y]])
+map({"n", "x"}, "<leader>y", [["+y]])
+map({"n", "x"}, "<leader>Y", [["+Y]])
 
 -- Delete something without replacing the register
-map({"n", "v"}, "<leader>d", [["_d]])
-map({"n", "v"}, "<leader>D", [["_D]])
-
--- Necessary
-map("n", "\x33[93;5u", "<C-]>") -- <C-]>
+map("x", "<leader>d", [["_d]])
+map("x", "<leader>D", [["_D]])
 
 -- Navigate through the jumplist
 map({"n", "v"}, "<S-C-i>", "<C-o>") -- previous jump
 map({"n", "v"}, "<S-C-e>", "<C-i>") -- next jump
 
--- create link from selected text - does not use Colemak bindings
---map("v", "<leader><leader>l", "s[<C-r>\"]<CR>(<C-r>\".md)<Esc>^lvf)h:!tr ' ' '-'<CR>kJx")
+-- create link from selected text
+--map("x", "<leader><leader>l", "s[<C-r>\"]<CR>(<C-r>\".md)<Esc>^lvf)h:!tr ' ' '-'<CR>kJx")
 
 -- vertical scrolling. <C-y> is scroll up by default, so using <C-u> for scroll down works
 --   very nicely in Colemak, since U and Y are above E and I (up and down in Colemak).
@@ -90,19 +93,29 @@ map({"n", "v"}, "<C-,>", "<C-d>zz")
 map({"n", "v"}, "<C-.>", "<C-u>zz")
 
 -- searching while maintaining cursor in the center of the screen
-map({"n", "v"}, "j", "nzzzv")
-map({"n", "v"}, "J", "Nzzzv")
+map({"n", "x"}, "j", "nzzzv")
+map({"n", "x"}, "J", "Nzzzv")
 
 -- move between buffers
 map("n", "<C-Tab>", ":bn<CR>")
 map("n", "<S-C-Tab>", ":bp<CR>")
 map("n", "<S-C-,>", ":bp<CR>")
 map("n", "<S-C-.>", ":bn<CR>")
---map("n", "<C-t>", ":tabnew split<CR>")
+
+-- create and close tabs
+map("n", "<C-t>n", ":0tabnew<CR>")
+map("n", "<C-t>e", ":-tabnew<CR>")
+map("n", "<C-t>i", ":tabnew<CR>")
+map("n", "<C-t>o", ":$tabnew<CR>")
+map("n", "<C-t>sn", ":0tabnew split<CR>")
+map("n", "<C-t>se", ":-tabnew split<CR>")
+map("n", "<C-t>si", ":tabnew split<CR>")
+map("n", "<C-t>so", ":$tabnew split<CR>")
+map("n", "<C-t><C-w>", ":tabclose<CR>")
 	
 -- delete current buffer and move to previous buffer
-map({"n", "v"}, "<leader><C-Tab>", ":bp|bd #<CR>")
-map({"n", "v"}, "<leader><S-C-Tab>", ":bp!|bd! #<CR>")
+map({"n", "x"}, "<leader><C-Tab>", ":bp|bd #<CR>")
+map({"n", "x"}, "<leader><S-C-Tab>", ":bp!|bd! #<CR>")
 
 -- resize current buffer
 map({"n", "v", "i"}, "<A-Left>", ":vertical resize -2<CR>")  -- decrease width
@@ -136,8 +149,8 @@ map("n", "_", "<C-w>s<C-w><Down>")
 map("n", "<leader>h", ":nohlsearch<CR>")
 
 -- Stay in visual mode after indenting
-map("v", "<", "<gv")
-map("v", ">", ">gv")
+map("x", "<", "<gv")
+map("x", ">", ">gv")
 
 -- Just Build for a project-agnostic build command that can be configured as needed
 map("n", "<leader>jd", ":!just test<CR>")
@@ -147,56 +160,25 @@ map("n", "<leader>jb", ":!just build<CR>")
 -- Plugin-specific keymaps
 
 -- which-key
-silent_map({"n", "v"}, "<C-h>", ":WhichKey<CR>")
+silent_map({"n", "v"}, "\x33[104;5u", ":WhichKey<CR>")
 
 -- legendary
 silent_map({"n", "v"}, "<C-p>", ":Legendary<CR>")
 
--- nvim-tree
-silent_map("n", "<leader>l", "<cmd>lua require('lsp_lines').toggle()<CR>")
-
--- nvim-tree
-silent_map("n", "<leader>nt", ":NvimTreeToggle<CR>")
-
 -- Vista
 map("n", "<leader>fa", ":Vista finder fzf<CR>")
 
--- harpoon - Just Build in the third tmux pane
-map("n", "<leader>td", '<cmd>lua require("harpoon.tmux").sendCommand("3", "just test")<CR>')
-map("n", "<leader>tb", '<cmd>lua require("harpoon.tmux").sendCommand("3", "just build")<CR>')
-
 -- Telescope
 silent_map("n", "<leader>qr", "<cmd>lua require('user.telescope').reload()<CR>")
-map("n", "<leader>ff", "<cmd>Telescope find_files hidden=true<CR>")
-map("n", "<leader>fg", "<cmd>Telescope live_grep<CR>")
-map("n", "<leader>fb", "<cmd>Telescope buffers<CR>")
-map("n", "<leader>fh", "<cmd>Telescope help_tags<CR>")
-map("n", "<leader>fw", "<cmd>Telescope workspaces<CR>")
-map("n", "<leader>fv", "<cmd>Telescope vim_bookmarks current_file<CR>")
-map("n", "<leader>fV", "<cmd>Telescope vim_bookmarks all<CR>")
-map("n", "<leader>ft", "<cmd>Telescope telescope-tabs list_tabs<CR>")
-map("n", "<leader>bf", "<cmd>Telescope file_browser<CR>")
-map("n", "<leader>bh", "<cmd>Telescope file_browser hidden=true<CR>")
 
 -- nvim-surround: create a link on selected text using text saved to the clipboard
-map("v", "<leader><leader>l", "<Plug>(nvim-surround-visual)]%a(<C-r>+)<Esc>")
-
--- wiki.vim
---map("n", "\x1b[9;u", "<Plug>(wiki-link-next)")
-map("n", "<S-C-n>", "<Plug>(wiki-journal-prev)") -- <S-C-n>
-map("n", "<S-C-o>", "<Plug>(wiki-journal-next)") -- <S-C-o>
+map("x", "<leader><leader>l", "<Plug>(nvim-surround-visual)]%a(<C-r>+)<Esc>")
 
 -- vim-easy-align
 -- Start interactive EasyAlign for a motion/text object (e.g. gaip)
 map("n", "ga", "<Plug>(EasyAlign)");
 -- Start interactive EasyAlign in visual mode (e.g. vipga)
 map("x", "ga", "<Plug>(EasyAlign)");
-
--- vim-swoop
-map("n", "<leader>l", "<cmd>call Swoop()<CR>")
-map("v", "<leader>l", "<cmd>call SwoopSelection()<CR>")
-map("n", "<leader>ml", "<cmd>call SwoopMulti()<CR>")
-map("v", "<leader>ml", "<cmd>call SwoopMultiSelection()<CR>")
 
 -- DAP
 map("n", "<leader>db", "<cmd>lua require'dap'.toggle_breakpoint()<CR>")

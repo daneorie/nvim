@@ -1,6 +1,7 @@
 vim.keymap.set("n", "<leader>ff", "<cmd>Telescope find_files hidden=true<CR>", {noremap = true})
 vim.keymap.set("n", "<leader>fg", "<cmd>Telescope live_grep<CR>", {noremap = true})
 vim.keymap.set("n", "<leader>fb", "<cmd>Telescope buffers<CR>", {noremap = true})
+vim.keymap.set("n", "<leader>fq", "<cmd>Telescope quickfix<CR>", {noremap = true})
 vim.keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<CR>", {noremap = true})
 vim.keymap.set("n", "<leader>fw", "<cmd>Telescope workspaces<CR>", {noremap = true})
 vim.keymap.set("n", "<leader>fv", "<cmd>Telescope vim_bookmarks current_file<CR>", {noremap = true})

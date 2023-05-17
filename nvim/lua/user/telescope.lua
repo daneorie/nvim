@@ -14,6 +14,10 @@ if a_status_ok then
 		["e"]     = actions.move_selection_next,
 		["\x33[105;5u"] = actions.move_selection_previous, -- <C-i>
 		["i"]     = actions.move_selection_previous,
+		["<C-q>"] = function(bufnr)
+			actions.smart_send_to_qflist(bufnr)
+			require("telescope.builtin").quickfix()
+		end,
 		["<C-u>"] = actions.results_scrolling_down,
 		["<C-y>"] = actions.results_scrolling_up,
 		["<C-,>"] = actions.preview_scrolling_down,
@@ -22,6 +26,10 @@ if a_status_ok then
 	local action_i_mappings = {
 		["<C-e>"] = actions.move_selection_next,
 		["\x33[105;5u"] = actions.move_selection_previous, -- <C-i>
+		["<C-q>"] = function(bufnr)
+			actions.smart_send_to_qflist(bufnr)
+			require("telescope.builtin").quickfix()
+		end,
 		["<C-u>"] = actions.results_scrolling_down,
 		["<C-y>"] = actions.results_scrolling_up,
 		["<C-,>"] = actions.preview_scrolling_down,

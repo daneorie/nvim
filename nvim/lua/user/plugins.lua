@@ -54,10 +54,16 @@ return require("packer").startup(function(use)
 	use "jose-elias-alvarez/null-ls.nvim" -- for formatters and linters
 	use "ray-x/lsp_signature.nvim"
 	use "SmiteshP/nvim-navic"
-	use "simrat39/symbols-outline.nvim"
+	use {
+		"simrat39/symbols-outline.nvim",
+		config = function() require("symbols-outline").setup() end
+	}
 	use "b0o/SchemaStore.nvim"
 	use "RRethy/vim-illuminate"
-	use "j-hui/fidget.nvim"
+	use {
+		"j-hui/fidget.nvim",
+		config = function() require("fidget").setup() end
+	}
 	use "lvimuser/lsp-inlayhints.nvim"
 	use "https://git.sr.ht/~whynothugo/lsp_lines.nvim"
 	use "pierreglaser/folding-nvim"
@@ -79,7 +85,6 @@ return require("packer").startup(function(use)
 
 	-- Snippets
 	use "L3MON4D3/LuaSnip" -- snippet engine
-	--use "rafamadriz/friendly-snippets" -- a bunch of snippets to use
 
 	-- Syntax/Treesitter
 	use {
@@ -96,7 +101,7 @@ return require("packer").startup(function(use)
 	use "natecraddock/sessions.nvim"
 	use "natecraddock/workspaces.nvim"
 
-	-- Fuzzy Finder/Telescope
+	-- Fuzzy Finder/Telescope/Navigation
 	use { "junegunn/fzf.vim", requires = { "junegunn/fzf", run = ":call fzf#install()" } }
 	use "nvim-telescope/telescope.nvim"
 	use "nvim-telescope/telescope-ui-select.nvim"
@@ -106,13 +111,25 @@ return require("packer").startup(function(use)
 	use "daneorie/telescope-insert-path.nvim"
 	use "LinArcX/telescope-env.nvim"
 	use "LukasPietzschmann/telescope-tabs"
-	use "adoyle-h/lsp-toggle.nvim"
+	use {
+		"adoyle-h/lsp-toggle.nvim",
+		config = function() require("lsp-toggle").setup() end
+	}
 	use {
 		"AckslD/nvim-neoclip.lua",
 		requires = {
 			{'nvim-telescope/telescope.nvim'},
 		},
 	}
+	use {
+		'phaazon/hop.nvim',
+		branch = 'v2', -- optional but strongly recommended
+		config = function()
+			-- you can configure Hop the way you like here; see :h hop-config
+			require("hop").setup { keys = "arstdhneioqwfpgjluy;ARSTDHNEIOQWFPGJLUY:" }
+		end
+	}
+	use "nvim-telescope/telescope-hop.nvim"
 
 	-- Note Taking
 	use "lervag/wiki.vim"
@@ -129,7 +146,10 @@ return require("packer").startup(function(use)
 
 	-- Ulility
 	use "christoomey/vim-tmux-navigator"
-	use "lewis6991/impatient.nvim"
+	use {
+		"lewis6991/impatient.nvim",
+		config = function() require("impatient").enable_profile() end
+	}
 	use { "neoclide/coc.nvim", branch = "release" } -- a fast code completion engine
 	use { "mg979/vim-visual-multi", branch = "master" }
 	use "folke/zen-mode.nvim"
@@ -164,7 +184,10 @@ return require("packer").startup(function(use)
 	use "akinsho/toggleterm.nvim"
 
 	-- Git
-	use "lewis6991/gitsigns.nvim" -- show git decorations in buffers
+	use { -- show git decorations in buffers
+		"lewis6991/gitsigns.nvim",
+		config = function() require("gitsigns").setup() end
+	}
 	use "tpope/vim-fugitive" -- git commands
 	use "mbbill/undotree"
 
@@ -173,7 +196,10 @@ return require("packer").startup(function(use)
 
 	-- Keybinding
 	use "folke/which-key.nvim"
-	use "mrjones2014/legendary.nvim"
+	use {
+		"mrjones2014/legendary.nvim",
+		config = function() require("legendary").setup({ which_key = { auto_register = true } }) end
+	}
 
 	-- Java
 	use "mfussenegger/nvim-jdtls" -- Java LSP

@@ -37,6 +37,8 @@ map("n", "<leader>al", "o- [ ] ") -- add a new markdown list item
 
 -- Set keymaps for Colemak navigation.
 --   Here's the circle of mappings: n -> h -> i -> k -> o -> l -> e -> j -> n
+--   nioe 1342
+--   jhkl 2134
 map({"n", "x"}, "n", "h") -- arrow: left
 map({"n", "x"}, "e", "j") -- arrow: down
 map({"n", "x"}, "i", "k") -- arrow: up

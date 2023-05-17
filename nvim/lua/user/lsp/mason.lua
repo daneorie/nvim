@@ -16,7 +16,6 @@ local servers = {
 	"jsonls",
 	"tsserver",
 	"lua_ls",
-	"ruby_ls",
 }
 
 local settings = {

@@ -79,38 +79,32 @@ end
 local function lsp_highlight_document(client)
 	-- Set autocommands conditional on server_capabilities
 	local status_ok, illuminate = pcall(require, "illuminate")
-	if not status_ok then
-		return
+	if status_ok then
+		illuminate.on_attach(client)
 	end
-	illuminate.on_attach(client)
-	-- end
 end
 
 local function attach_navic(client, bufnr)
 	vim.g.navic_silence = true
 	local status_ok, navic = pcall(require, "nvim-navic")
-	if not status_ok then
-		return
+	if status_ok then
+		navic.attach(client, bufnr)
 	end
-	navic.attach(client, bufnr)
 end
 
 local function attach_folding()
 	local status_ok, folding = pcall(require, "folding")
-	if not status_ok then
-		return
+	if status_ok then
+		folding.on_attach()
 	end
-	folding.on_attach()
 end
 
 local function lsp_inlayhints(bufnr, client)
 	-- Set autocommands conditional on server_capabilities
 	local status_ok, hints = pcall(require, "lsp-inlayhints")
-	if not status_ok then
-		return
+	if status_ok then
+		hints.on_attach(bufnr, client)
 	end
-	hints.on_attach(bufnr, client)
-	-- end
 end
 
 M.on_attach = function(client, bufnr)

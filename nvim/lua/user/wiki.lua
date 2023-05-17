@@ -42,3 +42,6 @@ g.wiki_map_text_to_link = function(x)
 	-- Create the new link in a subfolder using the name of the current file. This creates an auto-nesting behavior.
 	return { current_file .. "/" .. path, x }
 end
+
+vim.keymap.set("n", "<S-C-n>", "<Plug>(wiki-journal-prev)", {noremap = true}) -- <S-C-n>
+vim.keymap.set("n", "<S-C-o>", "<Plug>(wiki-journal-next)", {noremap = true}) -- <S-C-o>

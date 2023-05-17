@@ -1,5 +1,11 @@
 local n_mappings = {}
 local i_mappings = {}
+local extensions = {}
+local extensions_to_load = {
+	"env",
+	"file_browser",
+	"fzf",
+}
 
 local a_status_ok, actions = pcall(require, "telescope.actions")
 if a_status_ok then
@@ -50,11 +56,52 @@ end
 
 local w_status_ok, whichkey = pcall(require, "which-key")
 if w_status_ok then
-	n_mappings = vim.tbl_extend("force", n_mappings, { ["<C-h>"] = "which_key" })
-	i_mappings = vim.tbl_extend("force", i_mappings, { ["<C-h>"] = "which_key" })
+	n_mappings = vim.tbl_extend("force", n_mappings, { ["\x33[104;5u"] = "which_key" })
+	i_mappings = vim.tbl_extend("force", i_mappings, { ["\x33[104;5u"] = "which_key" })
 end
 
-require("telescope").setup({
+local h_status_ok, hop = pcall(require, "hop")
+if w_status_ok then
+	local hop_mappings = {
+		["<C-n>"] = R("telescope").extensions.hop.hop,
+		["<C-space>"] = function(prompt_bufnr)
+			local opts = {
+				callback = actions.toggle_selection,
+				loop_callback = actions.send_selected_to_qflist,
+			}
+			require("telescope").extensions.hop._hop_loop(prompt_bufnr, opts)
+		end,
+	}
+	n_mappings = vim.tbl_extend("force", n_mappings, hop_mappings)
+	i_mappings = vim.tbl_extend("force", i_mappings, hop_mappings)
+		
+	extensions = vim.tbl_extend("force", extensions, {
+		hop = {
+			keys = {"a", "r", "s", "t", "d", "h", "n", "e", "i", "o",
+					"q", "w", "f", "p", "g", "j", "l", "u", "y", ";",
+					"A", "R", "S", "T", "D", "H", "N", "E", "I", "O",
+					"Q", "W", "F", "P", "G", "J", "L", "U", "Y", ":",},
+		-- Highlight groups to link to signs and lines; the below configuration refers to demo
+			-- sign_hl typically only defines foreground to possibly be combined with line_hl
+			sign_hl = { "WarningMsg", "Title" },
+			-- optional, typically a table of two highlight groups that are alternated between
+			line_hl = { "CursorLine", "Normal" },
+			-- options specific to `hop_loop`
+		-- true temporarily disables Telescope selection highlighting
+			clear_selection_hl = false,
+			-- highlight hopped to entry with telescope selection highlight
+			-- note: mutually exclusive with `clear_selection_hl`
+			trace_entry = true,
+			-- jump to entry where hop loop was started from
+			reset_selection = true,
+		}
+	})
+
+	extensions_to_load[#extensions_to_load + 1] = "hop"
+end
+
+local telescope = require("telescope")
+telescope.setup({
 	defaults = {
 		file_ignore_patterns = {
 			"^.git/",
@@ -73,6 +120,9 @@ require("telescope").setup({
 			}
 		}
 	},
-	extensions = {
-	},
+	extensions = extensions,
 });
+
+for _, extension in ipairs(extensions_to_load) do
+	telescope.load_extension(extension)
+end

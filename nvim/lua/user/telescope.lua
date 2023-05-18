@@ -108,6 +108,11 @@ if w_status_ok then
 	extensions_to_load[#extensions_to_load + 1] = "hop"
 end
 
+local g_status_ok, git_worktree = pcall(require, "git-worktree")
+if g_status_ok then
+	extensions_to_load[#extensions_to_load + 1] = "git_worktree"
+end
+
 local telescope = require("telescope")
 telescope.setup({
 	defaults = {

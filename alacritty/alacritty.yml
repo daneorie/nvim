@@ -147,7 +147,7 @@ key_bindings:
   - { key: Up,       mods: Command,       chars: "\x06\x49"    } # ctrl-f i : Resize pane - Up
   - { key: Right,    mods: Command,       chars: "\x06\x4f"    } # ctrl-f o : Resize pane - Right
 
-  # 5u - ctrl
+  # 5u - ctrl -- any overlaps require \x33 instead of \x1b, which will need to be passed on with tmux and interpretted by NeoVim
   - { key: Tab,      mods: Control,       chars: "\x1b[9;5u"   } # ctrl-tab
   - { key: Comma,    mods: Control,       chars: "\x1b[44;5u"  } # ctrl-,
   - { key: Minus,    mods: Control,       chars: "\x1b[45;5u"  } # ctrl--

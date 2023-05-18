@@ -122,14 +122,14 @@ return require("packer").startup(function(use)
 		},
 	}
 	use {
-		'phaazon/hop.nvim',
-		branch = 'v2', -- optional but strongly recommended
-		config = function()
-			-- you can configure Hop the way you like here; see :h hop-config
-			require("hop").setup { keys = "arstdhneioqwfpgjluy;ARSTDHNEIOQWFPGJLUY:" }
-		end
+		"phaazon/hop.nvim",
+		branch = "v2" -- optional but strongly recommended
 	}
 	use "nvim-telescope/telescope-hop.nvim"
+	use {
+		"ThePrimeagen/git-worktree.nvim",
+		config = function() require("git-worktree").setup() end
+	}
 
 	-- Note Taking
 	use "lervag/wiki.vim"

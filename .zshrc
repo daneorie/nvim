@@ -58,10 +58,6 @@ alias yqwd='yqw --display'
 
 alias testGithub='ssh -T git@github.com'
 
-#cat() {
-	#[[ "$(file $1)" =~ ": directory" ]] && ll $1 || /bin/cat $1
-#}
-
 export KEYTIMEOUT=1 # this lowers the time it takes to switch from viins to vicmd and vice versa
 eval "$(jenv init -)"
 eval "$(rbenv init - zsh)"
@@ -155,3 +151,6 @@ set-prompt() {
 }
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# Created by `pipx` on 2023-05-18 05:50:54
+export PATH="$PATH:/Users/daneorie/.local/bin"

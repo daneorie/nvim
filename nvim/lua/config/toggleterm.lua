@@ -5,7 +5,7 @@ function _G.set_terminal_keymaps()
 	-- vim.keymap.set("t", "<esc>", [[<C-\><C-n>]], opts)
 	vim.keymap.set("t", "<C-n>", [[<C-\><C-n><C-W>h]], opts)
 	vim.keymap.set("t", "<C-e>", [[<C-\><C-n><C-W>j]], opts)
-	vim.keymap.set("t", "\x3", [[<C-\><C-n><C-W>k]], opts)
+	vim.keymap.set("t", "\\x3", [[<C-\><C-n><C-W>k]], opts)
 	vim.keymap.set("t", "<C-o>", [[<C-\><C-n><C-W>l]], opts)
 end
 
@@ -19,7 +19,7 @@ end
 local toggleterm = require("toggleterm")
 
 function M.setup()
-	vim.cmd('autocmd! TermOpen term://* lua set_terminal_keymaps()')
+	vim.cmd("autocmd! TermOpen term://* lua set_terminal_keymaps()")
 
 	toggleterm.setup({
 		size = 20,

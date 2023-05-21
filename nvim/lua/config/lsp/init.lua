@@ -178,21 +178,21 @@ function M.on_attach(client, bufnr)
 
 	-- Configure for jdtls
 	if client.name == "jdt.ls" then
-		require("jdtls").setup_dap { hotcodereplace = "auto" }
+		require("jdtls").setup_dap({ hotcodereplace = "auto" })
 		require("jdtls.dap").setup_dap_main_class_configs()
 		vim.lsp.codelens.refresh()
 	end
 
 	-- nvim-navic
 	if caps.documentSymbolProvider then
-		local navic = require "nvim-navic"
+		local navic = require("nvim-navic")
 		navic.attach(client, bufnr)
 	end
 
 	if client.name ~= "null-ls" then
 		-- inlay-hints
-		local ih = require "inlay-hints"
-		ih.on_attach(client, bufnr)
+		--local ih = require "inlay-hints"
+		--ih.on_attach(client, bufnr)
 
 		-- semantic highlighting -- https://github.com/neovim/neovim/pull/21100
 		-- if caps.semanticTokensProvider and caps.semanticTokensProvider.full then
@@ -244,7 +244,8 @@ function M.setup()
 	require("config.lsp.installer").setup(servers, opts)
 
 	-- Inlay hints
-	require("config.lsp.inlay-hints").setup()
+	--require("config.lsp.inlay-hints").setup()
+	require("config.lsp.lsp-inlayhints").setup()
 end
 
 local diagnostics_active = true
@@ -259,13 +260,13 @@ function M.toggle_diagnostics()
 end
 
 function M.remove_unused_imports()
-	vim.diagnostic.setqflist { severity = vim.diagnostic.severity.WARN }
-	vim.cmd "packadd cfilter"
-	vim.cmd "Cfilter /main/"
-	vim.cmd "Cfilter /The import/"
-	vim.cmd "cdo normal dd"
-	vim.cmd "cclose"
-	vim.cmd "wa"
+	vim.diagnostic.setqflist({ severity = vim.diagnostic.severity.WARN })
+	vim.cmd("packadd cfilter")
+	vim.cmd("Cfilter /main/")
+	vim.cmd("Cfilter /The import/")
+	vim.cmd("cdo normal dd")
+	vim.cmd("cclose")
+	vim.cmd("wa")
 end
 
 return M

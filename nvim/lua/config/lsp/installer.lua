@@ -1,10 +1,10 @@
 local M = {}
 
 function M.setup(servers, server_options)
-	local lspconfig = require "lspconfig"
-	local icons = require "config.icons"
+	local lspconfig = require("lspconfig")
+	local icons = require("config.icons")
 
-	require("mason").setup {
+	require("mason").setup({
 		ui = {
 			icons = {
 				package_installed = icons.lsp.server_installed,
@@ -12,27 +12,27 @@ function M.setup(servers, server_options)
 				package_uninstalled = icons.lsp.server_uninstalled,
 			},
 		},
-	}
-	require("mason-null-ls").setup {
+	})
+	require("mason-null-ls").setup({
 		automatic_setup = true,
-	}
-	require("mason-null-ls").setup_handlers()
+	})
+	--require("mason-null-ls").setup_handlers()
 
-	require("mason-tool-installer").setup {
+	require("mason-tool-installer").setup({
 		ensure_installed = { "codelldb", "stylua", "shfmt", "shellcheck", "prettierd" },
 		auto_update = false,
 		run_on_start = true,
-	}
+	})
 
-	require("mason-lspconfig").setup {
+	require("mason-lspconfig").setup({
 		ensure_installed = vim.tbl_keys(servers),
 		automatic_installation = false,
-	}
+	})
 
 	-- Package installation folder
-	local install_root_dir = vim.fn.stdpath "data" .. "/mason"
+	local install_root_dir = vim.fn.stdpath("data") .. "/mason"
 
-	require("mason-lspconfig").setup_handlers {
+	require("mason-lspconfig").setup_handlers({
 		function(server_name)
 			local opts = vim.tbl_deep_extend("force", server_options, servers[server_name] or {})
 			lspconfig[server_name].setup(opts)
@@ -42,7 +42,7 @@ function M.setup(servers, server_options)
 		end,
 		["lua_ls"] = function()
 			local opts = vim.tbl_deep_extend("force", server_options, servers["lua_ls"] or {})
-			require("neodev").setup {}
+			require("neodev").setup({})
 			lspconfig.lua_ls.setup(opts)
 		end,
 		["rust_analyzer"] = function()
@@ -52,8 +52,8 @@ function M.setup(servers, server_options)
 			local extension_path = install_root_dir .. "/packages/codelldb/extension/"
 			local codelldb_path = extension_path .. "adapter/codelldb"
 			local liblldb_path = extension_path .. "lldb/lib/liblldb.so"
-			local ih = require "inlay-hints"
-			require("rust-tools").setup {
+			--local ih = require "inlay-hints"
+			require("rust-tools").setup({
 				tools = {
 					-- executor = require("rust-tools/executors").toggleterm,
 					hover_actions = { border = "solid" },
@@ -64,7 +64,7 @@ function M.setup(servers, server_options)
 								vim.lsp.codelens.refresh()
 							end,
 						})
-						ih.set_all()
+						--ih.set_all()
 					end,
 					inlay_hints = {
 						auto = false,
@@ -74,17 +74,17 @@ function M.setup(servers, server_options)
 				dap = {
 					adapter = require("rust-tools.dap").get_codelldb_adapter(codelldb_path, liblldb_path),
 				},
-			}
+			})
 		end,
 		["tsserver"] = function()
 			local opts = vim.tbl_deep_extend("force", server_options, servers["tsserver"] or {})
-			require("typescript").setup {
+			require("typescript").setup({
 				disable_commands = false,
 				debug = false,
 				server = opts,
-			}
+			})
 		end,
-	}
+	})
 end
 
 return M

@@ -64,7 +64,7 @@ local config = {
 }
 
 function M.setup()
-	require("zenmode").setup(config)
+	require("zen-mode").setup(config)
 end
 
 return M

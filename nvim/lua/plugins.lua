@@ -2,18 +2,18 @@ local M = {}
 
 function M.setup()
 	-- Indicate first time installation
-	local is_boostrap = false
+	local is_bootstrap = false
 
 	-- packer.nvim configuration
 	local conf = {
+		max_jobs = 8,
 		profile = {
 			enable = true,
-			threshold = 0, -- the amount in ms that a plugins load time must be over for it to be included in the profile
+			--threshold = 0, -- the amount in ms that a plugins load time must be over for it to be included in the profile
 		},
-
 		display = {
 			open_fn = function()
-				return require("packer.util").float { border = "rounded" }
+				return require("packer.util").float({ border = "rounded" })
 			end,
 		},
 	}
@@ -34,6 +34,7 @@ function M.setup()
 			})
 			print("Installing packer close and reopen Neovim...")
 			vim.cmd([[packadd packer.nvim]])
+			is_bootstrap = true
 		end
 
 		-- Run PackerCompile if there are changes in this file
@@ -41,75 +42,74 @@ function M.setup()
 		local packer_grp = vim.api.nvim_create_augroup("packer_user_config", { clear = true })
 		vim.api.nvim_create_autocmd(
 			{ "BufWritePost" },
-			{ pattern = vim.fn.expand "$MYVIMRC", command = "source <afile> | PackerCompile", group = packer_grp }
+			{ pattern = vim.fn.expand("$MYVIMRC"), command = "source <afile> | PackerCompile", group = packer_grp }
 		)
 	end
 
 	-- Plugins
 	local function plugins(use)
-		print("plugins")
-		use { "wbthomason/packer.nvim" }
+		use({ "wbthomason/packer.nvim" })
 
 		-- Performance
-		use { "lewis6991/impatient.nvim" }
+		use({ "lewis6991/impatient.nvim" })
 		--use {
-			--"lewis6991/impatient.nvim",
-			--config = function() require("impatient").enable_profile() end
+		--"lewis6991/impatient.nvim",
+		--config = function() require("impatient").enable_profile() end
 		--}
 
 		-- Load only when require
-		use { "nvim-lua/plenary.nvim", module = "plenary" }
+		use({ "nvim-lua/plenary.nvim", module = "plenary" })
 
 		-- Notification
-		use {
+		use({
 			"rcarriga/nvim-notify",
 			event = "BufReadPre",
 			config = function()
 				require("config.notify").setup()
 			end,
 			disable = false,
-		}
-		use {
+		})
+		use({
 			"simrat39/desktop-notify.nvim",
 			config = function()
 				require("desktop-notify").override_vim_notify()
 			end,
 			disable = true,
-		}
-		use {
+		})
+		use({
 			"vigoux/notifier.nvim",
 			config = function()
 				require("notifier").setup({})
 			end,
 			disable = true,
-		}
+		})
 
 		-- Colorschemes
-		use {
+		use({
 			"EdenEast/nightfox.nvim",
 			config = function()
-				vim.cmd.colorscheme [[nightfox]]
+				vim.cmd.colorscheme([[nightfox]])
 			end,
 			disable = false,
-		}
+		})
 
 		-- Git
-		use { -- show git decorations in buffers
+		use({ -- show git decorations in buffers
 			"lewis6991/gitsigns.nvim",
 			event = "BufReadPre",
 			requires = { "nvim-lua/plenary.nvim" },
 			config = function()
 				require("gitsigns").setup()
 			end,
-		}
-		use { -- git commands
+		})
+		use({ -- git commands
 			"tpope/vim-fugitive",
 			opt = true,
 			cmd = { "Git", "GBrowse", "Gdiffsplit", "Gvdiffsplit" },
-		}
+		})
 
 		-- WhichKey
-		use {
+		use({
 			"folke/which-key.nvim",
 			event = "VimEnter",
 			module = { "which-key" },
@@ -117,55 +117,55 @@ function M.setup()
 				require("config.which-key").setup()
 			end,
 			disable = false,
-		}
-		use {
+		})
+		use({
 			"mrjones2014/legendary.nvim",
 			config = function()
 				require("legendary").setup({ which_key = { auto_register = true } })
 			end,
 			disable = true,
-		}
+		})
 
 		-- IndentLine
-		use {
+		use({
 			"lukas-reineke/indent-blankline.nvim",
 			event = "BufReadPre",
 			config = function()
 				require("config.indent-blankline").setup()
 			end,
-		}
+		})
 
 		-- Better icons
-		use {
+		use({
 			"kyazdani42/nvim-web-devicons",
 			module = "nvim-web-devicons",
 			config = function()
 				require("nvim-web-devicons").setup({ default = true })
 			end,
-		}
+		})
 
 		-- Better comment
-		use { "preservim/nerdcommenter" } -- an easy way for commenting out lines
+		use({ "preservim/nerdcommenter" }) -- an easy way for commenting out lines
 
 		-- Better surround
-		use {
+		use({
 			"kylechui/nvim-surround",
 			config = function()
 				require("config.surround").setup()
 			end,
-		}
+		})
 
 		-- IDE
-		use {
+		use({
 			"mbbill/undotree",
 			cmd = { "UndotreeToggle" },
 			config = function()
 				require("config.undotree").setup()
 			end,
-		}
+		})
 
 		-- Jumps
-		use {
+		use({
 			"phaazon/hop.nvim",
 			cmd = "HopWord",
 			module = "hop",
@@ -174,10 +174,10 @@ function M.setup()
 				require("config.hop").setup()
 			end,
 			disable = false,
-		}
+		})
 
 		-- Markdown
-		use {
+		use({
 			"iamcco/markdown-preview.nvim",
 			opt = true,
 			run = function()
@@ -189,19 +189,19 @@ function M.setup()
 				{ "zhaozg/vim-diagram" },
 				{ "aklt/plantuml-syntax" },
 			},
-		}
+		})
 
 		-- Status line
-		use {
+		use({
 			"nvim-lualine/lualine.nvim",
 			event = "BufReadPre",
 			config = function()
 				require("config.lualine").setup()
 			end,
-		}
+		})
 
 		-- Treesitter
-		use {
+		use({
 			"nvim-treesitter/nvim-treesitter",
 			run = ":TSUpdate",
 			config = function()
@@ -214,13 +214,13 @@ function M.setup()
 					event = "InsertEnter",
 					config = function()
 						require("nvim-treesitter.configs").setup({ autotag = { enable = true } })
-					end
+					end,
 				},
 			},
-		}
+		})
 
 		-- Telescope
-		use {
+		use({
 			"nvim-telescope/telescope.nvim",
 			event = { "VimEnter" },
 			config = function()
@@ -269,20 +269,20 @@ function M.setup()
 					end,
 				},
 			},
-		}
+		})
 
 		-- File Explorer
-		use {
+		use({
 			"nvim-tree/nvim-tree.lua",
-			opt = true,
-			cmd = { "NvimTreeToggle", "NvimTreeClose" },
+			--opt = true,
+			--cmd = { "NvimTreeToggle", "NvimTreeClose" },
 			config = function()
 				require("config.nvim-tree").setup()
 			end,
-		}
+		})
 
 		-- Completion
-		use {
+		use({
 			"hrsh7th/nvim-cmp",
 			event = "InsertEnter",
 			opt = true,
@@ -304,10 +304,10 @@ function M.setup()
 					module = { "luasnip" },
 				},
 			},
-		}
+		})
 
 		-- Auto pairs
-		use { -- Autopairs, integrates with both cmp and treesitter
+		use({ -- Autopairs, integrates with both cmp and treesitter
 			"windwp/nvim-autopairs",
 			opt = true,
 			event = "InsertEnter",
@@ -315,26 +315,25 @@ function M.setup()
 			config = function()
 				require("config.autopairs").setup()
 			end,
-		}
+		})
 
 		-- Auto tag
-		use {
+		use({
 			"windwp/nvim-ts-autotag",
 			opt = true,
 			event = "InsertEnter",
 			config = function()
 				require("nvim-ts-autotag").setup({ enable = true })
 			end,
-		}
+		})
 
 		-- LSP
-		use {
+		use({
 			"neovim/nvim-lspconfig",
 			config = function()
 				require("config.lsp").setup()
 			end,
 			requires = {
-				-- { "lvimuser/lsp-inlayhints.nvim", branch = "readme" },
 				{ "williamboman/mason.nvim" },
 				{ "williamboman/mason-lspconfig.nvim" },
 				{ "WhoIsSethDaniel/mason-tool-installer.nvim" },
@@ -362,12 +361,13 @@ function M.setup()
 					end,
 					module = { "nvim-navic" },
 				},
-				{
-					"simrat39/inlay-hints.nvim",
-					config = function()
-						require("inlay-hints").setup()
-					end,
-				},
+				{ "lvimuser/lsp-inlayhints.nvim" },
+				--{
+				--	"simrat39/inlay-hints.nvim",
+				--	config = function()
+				--		require("inlay-hints").setup()
+				--	end,
+				--},
 				{
 					"zbirenbaum/neodim",
 					event = "LspAttach",
@@ -411,14 +411,52 @@ function M.setup()
 						require("lsp_lines").setup()
 					end,
 				},
+				{ "ray-x/lsp_signature.nvim" },
+				{ "pierreglaser/folding-nvim" },
 			},
-		}
+		})
+
+		-- Rust
+		use({
+			"simrat39/rust-tools.nvim",
+			ft = { "rust" },
+			module = "rust-tools",
+			requires = { "nvim-lua/plenary.nvim", "rust-lang/rust.vim" },
+			opt = true,
+		})
+		use({
+			"saecki/crates.nvim",
+			event = { "BufRead Cargo.toml" },
+			requires = { { "nvim-lua/plenary.nvim" } },
+			config = function()
+				require("crates").setup({
+					null_ls = {
+						enabled = true,
+						name = "crates.nvim",
+					},
+				})
+			end,
+			disable = false,
+		})
+
+		-- Go
+		use({
+			"ray-x/go.nvim",
+			ft = { "go" },
+			config = function()
+				require("go").setup()
+			end,
+			disable = true,
+		})
 
 		-- Java
-		use { "mfussenegger/nvim-jdtls", ft = { "java" } }
+		use({
+			"mfussenegger/nvim-jdtls",
+			ft = { "java" }
+		})
 
 		-- Terminal
-		use {
+		use({
 			"akinsho/toggleterm.nvim",
 			keys = { [[<C-\>]] },
 			cmd = { "ToggleTerm", "TermExec" },
@@ -426,10 +464,10 @@ function M.setup()
 			config = function()
 				require("config.toggleterm").setup()
 			end,
-		}
+		})
 
 		-- Debugging
-		use {
+		use({
 			"mfussenegger/nvim-dap",
 			opt = true,
 			module = { "dap" },
@@ -437,6 +475,7 @@ function M.setup()
 				{ "theHamsta/nvim-dap-virtual-text", module = { "nvim-dap-virtual-text" } },
 				{ "rcarriga/nvim-dap-ui", module = { "dapui" } },
 				{ "mfussenegger/nvim-dap-python", module = { "dap-python" } },
+				{ "nvim-telescope/telescope-dap.nvim" },
 				{ "leoluz/nvim-dap-go", module = "dap-go" },
 				{ "jbyuki/one-small-step-for-vimkind", module = "osv" },
 				{ "mxsdev/nvim-dap-vscode-js", module = { "dap-vscode-js" } },
@@ -446,16 +485,15 @@ function M.setup()
 					run = "npm install --legacy-peer-deps && npm run compile",
 					disable = false,
 				},
-				{ "nvim-telescope/telescope-dap.nvim" },
 			},
 			config = function()
 				require("config.dap").setup()
 			end,
 			disable = false,
-		}
+		})
 
 		-- vimspector
-		use {
+		use({
 			"puremourning/vimspector",
 			cmd = { "VimspectorInstall", "VimspectorUpdate" },
 			fn = { "vimspector#Launch()", "vimspector#ToggleBreakpoint", "vimspector#Continue" },
@@ -463,36 +501,36 @@ function M.setup()
 				require("config.vimspector").setup()
 			end,
 			disable = true,
-		}
+		})
 
 		-- Harpoon
-		use {
+		use({
 			"ThePrimeagen/harpoon",
-			module = {
-				"harpoon",
-				"harpoon.cmd-ui",
-				"harpoon.mark",
-				"harpoon.ui",
-				"harpoon.term",
-				"telescope._extensions.harpoon",
-			},
+			--module = {
+			--	"harpoon",
+			--	"harpoon.cmd-ui",
+			--	"harpoon.mark",
+			--	"harpoon.ui",
+			--	"harpoon.term",
+			--	"telescope._extensions.harpoon",
+			--},
 			config = function()
 				require("config.harpoon").setup()
 			end,
-		}
+		})
 
 		-- Refactoring
-		use {
+		use({
 			"ThePrimeagen/refactoring.nvim",
 			module = { "refactoring", "telescope" },
 			keys = { [[<leader>r]] },
 			config = function()
 				require("config.refactoring").setup()
 			end,
-		}
+		})
 
 		-- Session
-		use {
+		use({
 			"rmagatti/auto-session",
 			opt = true,
 			cmd = { "SaveSession", "RestoreSession" },
@@ -501,20 +539,20 @@ function M.setup()
 				require("auto-session").setup()
 			end,
 			disable = true,
-		}
+		})
 
 		-- Quickfix
-		use { "romainl/vim-qf", event = "BufReadPre", disable = true }
+		use({ "romainl/vim-qf", event = "BufReadPre", disable = true })
 
 		-- Sidebar
-		use {
+		use({
 			"sidebar-nvim/sidebar.nvim",
 			cmd = { "SidebarNvimToggle" },
 			config = function()
 				require("sidebar-nvim").setup({ open = false })
 			end,
-		}
-		use {
+		})
+		use({
 			"stevearc/aerial.nvim",
 			module = { "aerial", "telescope._extensions.aerial" },
 			cmd = { "AerialToggle" },
@@ -527,114 +565,113 @@ function M.setup()
 					end,
 				})
 			end,
-		}
+		})
 
 		-- Lua Development
-		use { "folke/lua-dev.nvim" }
-		use { "folke/neodev.nvim" }
-
-		-- LSP
-		use { "ray-x/lsp_signature.nvim" }
-		use { "pierreglaser/folding-nvim" }
+		use({ "folke/lua-dev.nvim" })
+		use({ "folke/neodev.nvim" })
 
 		-- Marks
-		use { "MattesGroeger/vim-bookmarks" }
-		use {
+		use({ "MattesGroeger/vim-bookmarks" })
+		use({
 			"natecraddock/sessions.nvim",
 			config = function()
 				require("config.sessions").setup()
 			end,
-		}
-		use {
+		})
+		use({
 			"natecraddock/workspaces.nvim",
 			config = function()
 				require("config.workspaces").setup()
 			end,
-		}
+		})
 
 		-- Fuzzy Finder/Telescope/Navigation
-		use {
+		use({
 			"junegunn/fzf.vim",
-			requires = { "junegunn/fzf", run = ":call fzf#install()" }
-		}
+			requires = { "junegunn/fzf", run = ":call fzf#install()" },
+		})
 		--use {
-			--"adoyle-h/lsp-toggle.nvim",
-			--config = function()
-				--require("lsp-toggle").setup()
-			--end,
+		--"adoyle-h/lsp-toggle.nvim",
+		--config = function()
+		--require("lsp-toggle").setup()
+		--end,
 		--}
-		use {
+		use({
 			"ThePrimeagen/git-worktree.nvim",
 			config = function()
 				require("config.git-worktree").setup()
 			end,
-		}
+		})
 
 		-- Note Taking
-		use {
+		use({
 			"lervag/wiki.vim",
 			config = function()
 				require("config.wiki").setup()
 			end,
-		}
-		use {
+		})
+		use({
 			"lervag/lists.vim",
 			config = function()
 				require("config.lists").setup()
 			end,
-		}
-		use {
+		})
+		use({
 			"dhruvasagar/vim-table-mode",
 			config = function()
 				require("config.vim-table-mode").setup()
 			end,
-		}
-		use { "junegunn/vim-easy-align" }
-		use {
+		})
+		use({ "junegunn/vim-easy-align" })
+		use({
 			"itchyny/calendar.vim",
 			config = function()
 				require("config.calendar").setup()
 			end,
-		}
+		})
 
 		-- Multi-buffer Editing
-		use {
+		use({
 			"pelodelfuego/vim-swoop",
 			config = function()
 				require("config.vim-swoop").setup()
 			end,
-		}
+		})
 
 		-- Ulility
-		use {
+		use({
 			"christoomey/vim-tmux-navigator",
 			config = function()
 				require("config.vim-tmux-navigator").setup()
 			end,
-		}
-		use { "neoclide/coc.nvim", branch = "release" } -- a fast code completion engine
-		use {
+		})
+		use({ -- a fast code completion engine
+			"neoclide/coc.nvim",
+			branch = "release"
+		})
+		use({
 			"mg979/vim-visual-multi",
 			branch = "master",
 			config = function()
 				require("config.vim-visual-multi").setup()
 			end,
-		}
-		use {
+		})
+		use({
 			"folke/zen-mode.nvim",
 			config = function()
 				require("config.zen-mode").setup()
 			end,
-		}
+		})
 
 		-- Bootstrap Neovim
-		if is_boostrap then
-			print "Neovim restart is required after installation!"
+		if is_bootstrap then
+			print("Neovim restart is required after installation!")
 			require("packer").sync()
 		end
 	end
 
-	 -- Init and start packer
+	-- Init and start packer
 	packer_init()
 	local packer = require("packer")
 

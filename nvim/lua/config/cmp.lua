@@ -1,8 +1,8 @@
 local M = {}
 
 local check_backspace = function()
-	local col = vim.fn.col "." - 1
-	return col == 0 or vim.fn.getline("."):sub(col, col):match "%s"
+	local col = vim.fn.col(".") - 1
+	return col == 0 or vim.fn.getline("."):sub(col, col):match("%s")
 end
 
 --   פּ ﯟ   some other good icons
@@ -35,7 +35,6 @@ local kind_icons = {
 }
 -- find more here: https://www.nerdfonts.com/cheat-sheet
 
-
 function M.setup()
 	local cmp = require("cmp")
 	local luasnip = require("luasnip")
@@ -49,19 +48,19 @@ function M.setup()
 		},
 		mapping = {
 			--   Here's the circle of mappings: n -> h -> i -> k -> o -> l -> e -> j -> n
-			["\x3"] = cmp.mapping.select_prev_item(),
+			["\\x3"] = cmp.mapping.select_prev_item(),
 			["<C-e>"] = cmp.mapping.select_next_item(),
 			["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-1), { "i", "c" }),
 			["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(1), { "i", "c" }),
 			["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
 			["<C-y>"] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
-			["<C-l>"] = cmp.mapping {
+			["<C-l>"] = cmp.mapping({
 				i = cmp.mapping.abort(),
 				c = cmp.mapping.close(),
-			},
+			}),
 			-- Accept currently selected item. If none selected, `select` first item.
 			-- Set `select` to `false` to only confirm explicitly selected items.
-			["<CR>"] = cmp.mapping.confirm { select = true },
+			["<CR>"] = cmp.mapping.confirm({ select = true }),
 			["<Tab>"] = cmp.mapping(function(fallback)
 				if cmp.visible() then
 					cmp.select_next_item()
@@ -74,9 +73,9 @@ function M.setup()
 				else
 					fallback()
 				end
-				end, {
-					"i",
-					"s",
+			end, {
+				"i",
+				"s",
 			}),
 			["<S-Tab>"] = cmp.mapping(function(fallback)
 				if cmp.visible() then
@@ -86,9 +85,9 @@ function M.setup()
 				else
 					fallback()
 				end
-				end, {
-					"i",
-					"s",
+			end, {
+				"i",
+				"s",
 			}),
 		},
 		formatting = {

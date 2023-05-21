@@ -74,7 +74,7 @@ end
 local h_status_ok, hop = pcall(require, "hop")
 if w_status_ok then
 	local hop_mappings = {
-		["<C-n>"] = R("telescope").extensions.hop.hop,
+		["<C-n>"] = require("utils.reload").R("telescope").extensions.hop.hop,
 		["<C-space>"] = function(prompt_bufnr)
 			local opts = {
 				callback = actions.toggle_selection,

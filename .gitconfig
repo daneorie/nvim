@@ -13,3 +13,5 @@
 	del = branch -D
 	br = branch --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) %(color:green)(%(committerdate:relative)) [%(authorname)]' --sort=-committerdate
 	lg = log --oneline --decorate --graph
+[push]
+	autoSetupRemote = true

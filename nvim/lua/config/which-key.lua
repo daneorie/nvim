@@ -302,7 +302,7 @@ local function normal_keymap()
 		g = {
 			name = "Git",
 			b = { "<cmd>GitBlameToggle<CR>", "Blame" },
-			c = { "<cmd>lua require('utils.term').git_commit_toggle()<CR>", "Conventional Commits" },
+			-- c = { "<cmd>lua require('utils.term').git_commit_toggle()<CR>", "Conventional Commits" },
 			p = { "<cmd>Git push<CR>", "Push" },
 			s = { "<cmd>lua require('neogit').open()<CR>", "Status - Neogit" },
 			S = { "<cmd>Git<CR>", "Status - Fugitive" },
@@ -315,6 +315,8 @@ local function normal_keymap()
 			h = { name = "Hunk" },
 			t = { name = "Toggle" },
 			x = { "<cmd>lua require('telescope.builtin').git_branches()<cr>", "Switch Branch" },
+			w = { "<cmd>lua require('telescope').extensions.git_worktree.git_worktrees()<CR>", "Show Worktrees" },
+			c = { "<cmd>lua require('telescope').extensions.git_worktree.create_git_worktree()<CR>", "Create Worktree" },
 			-- g = {
 			--   name = "+Github",
 			--   c = {

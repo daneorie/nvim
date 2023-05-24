@@ -162,6 +162,13 @@ function M.setup()
 				require("config.surround").setup()
 			end,
 		})
+		use({
+			"andymass/vim-matchup",
+			setup = function()
+				-- may set any options here
+				vim.g.matchup_matchparen_offscreen = { method = "popup" }
+			end,
+		})
 
 		-- IDE
 		use({
@@ -174,6 +181,12 @@ function M.setup()
 
 		-- Jumps
 		use({
+			"christoomey/vim-tmux-navigator",
+			config = function()
+				require("config.vim-tmux-navigator").setup()
+			end,
+		})
+		use({
 			"phaazon/hop.nvim",
 			cmd = "HopWord",
 			module = "hop",
@@ -181,7 +194,23 @@ function M.setup()
 			config = function()
 				require("config.hop").setup()
 			end,
-			disable = false,
+			disable = true,
+		})
+		use({
+			"jinh0/eyeliner.nvim",
+			config = function()
+				require("eyeliner").setup({
+					highlight_on_key = true, -- show highlights only after keypress
+					dim = false, -- dim all other characters if set to true (recommended!)
+				})
+			end,
+		})
+		use({
+			"ggandor/leap.nvim",
+			requires = { "tpope/vim-repeat" },
+			config = function()
+				require("leap").add_default_mappings()
+			end,
 		})
 
 		-- Markdown
@@ -286,6 +315,12 @@ function M.setup()
 			--cmd = { "NvimTreeToggle", "NvimTreeClose" },
 			config = function()
 				require("config.nvim-tree").setup()
+			end,
+		})
+		use({
+			"stevearc/oil.nvim",
+			config = function()
+				require("config.oil").setup()
 			end,
 		})
 
@@ -597,12 +632,7 @@ function M.setup()
 		--require("lsp-toggle").setup()
 		--end,
 		--}
-		use({
-			"ThePrimeagen/git-worktree.nvim",
-			config = function()
-				require("config.git-worktree").setup()
-			end,
-		})
+		use({ "ThePrimeagen/git-worktree.nvim" })
 
 		-- Note Taking
 		use({
@@ -640,12 +670,6 @@ function M.setup()
 		})
 
 		-- Ulility
-		use({
-			"christoomey/vim-tmux-navigator",
-			config = function()
-				require("config.vim-tmux-navigator").setup()
-			end,
-		})
 		use({ -- a fast code completion engine
 			"neoclide/coc.nvim",
 			branch = "release",
@@ -665,10 +689,8 @@ function M.setup()
 		})
 
 		use({
-			"stevearc/oil.nvim",
-			config = function()
-				require("config.oil").setup()
-			end,
+			"tpope/vim-unimpaired",
+			requires = { "tpope/vim-repeat" },
 		})
 
 		-- Bootstrap Neovim

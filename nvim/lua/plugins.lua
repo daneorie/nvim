@@ -38,11 +38,11 @@ function M.setup()
 		end
 
 		-- Run PackerCompile if there are changes in this file
-		-- vim.cmd "autocmd BufWritePost plugins.lua source <afile> | PackerCompile"
+		-- vim.cmd "autocmd BufWritePost plugins.lua source <afile> | PackerSync"
 		local packer_grp = vim.api.nvim_create_augroup("packer_user_config", { clear = true })
 		vim.api.nvim_create_autocmd({ "BufWritePost" }, {
 			pattern = "plugins.lua",
-			command = "source <afile> | PackerCompile",
+			command = "source <afile> | PackerSync",
 			group = packer_grp,
 		})
 	end
@@ -661,6 +661,13 @@ function M.setup()
 			"folke/zen-mode.nvim",
 			config = function()
 				require("config.zen-mode").setup()
+			end,
+		})
+
+		use({
+			"stevearc/oil.nvim",
+			config = function()
+				require("config.oil").setup()
 			end,
 		})
 

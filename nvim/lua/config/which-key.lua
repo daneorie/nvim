@@ -50,7 +50,8 @@ local function normal_keymap()
 		q = { "<cmd>lua require('telescope.builtin').quickfix()<cr>", "Quickfix" },
 		t = { "<cmd>lua require('telescope').extensions.telescope_tabs.list_tabs()<cr>", "Tabs" },
 		w = { "<cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<cr>", "Current Buffer" },
-		e = { "<cmd>NvimTreeToggle<cr>", "Explorer" },
+		n = { "<cmd>NvimTreeToggle<cr>", "NvimTree" },
+		e = { "<cmd>Oil --float<cr>", "Oil Float" },
 	}
 
 	keymap_p = {

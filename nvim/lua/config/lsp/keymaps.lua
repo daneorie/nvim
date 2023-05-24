@@ -3,17 +3,13 @@ local M = {}
 local whichkey = require("which-key")
 -- local legendary = require "legendary"
 
--- local keymap = vim.api.nvim_set_keymap
--- local buf_keymap = vim.api.nvim_buf_set_keymap
 local keymap = vim.keymap.set
 
 local function keymappings(client, bufnr)
 	local opts = { noremap = true, silent = true }
 
 	-- Key mappings
-	-- buf_keymap(bufnr, "n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
-	-- vim.keymap.set("n", "K", vim.lsp.buf.hover, { buffer = 0 })
-	keymap("n", "K", vim.lsp.buf.hover, { buffer = bufnr })
+	keymap("n", "M", vim.lsp.buf.hover, { buffer = bufnr })
 
 	keymap("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
 	keymap("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
@@ -28,6 +24,7 @@ local function keymappings(client, bufnr)
 			a = { "<cmd>lua vim.lsp.buf.code_action()<CR>", "Code Action" },
 			d = { "<cmd>lua require('telescope.builtin').diagnostics()<CR>", "Diagnostics" },
 			f = { "<cmd>Lspsaga lsp_finder<CR>", "Finder" },
+			g = { "<cmd>lua vim.diagnostic.open_float({ border = 'rounded' })<CR>", "Open Float" },
 			i = { "<cmd>LspInfo<CR>", "Lsp Info" },
 			n = { "<cmd>lua require('renamer').rename()<CR>", "Rename" },
 			r = { "<cmd>lua require('telescope.builtin').lsp_references()<CR>", "References" },

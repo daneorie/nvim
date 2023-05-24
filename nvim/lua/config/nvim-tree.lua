@@ -132,7 +132,6 @@ function M.setup()
 	vim.api.nvim_create_autocmd({ "VimEnter" }, { callback = open_nvim_tree })
 
 	vim.keymap.set("n", "<leader>l", "<cmd>lua require('lsp_lines').toggle()<CR>", { noremap = true, silent = true })
-	vim.keymap.set("n", "<leader>nt", ":NvimTreeToggle<CR>", { noremap = true, silent = true })
 end
 
 return M

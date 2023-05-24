@@ -2,17 +2,17 @@ local M = {}
 
 function M.setup()
 	local g = vim.g
-	g.wiki_root = '~/Documents/iCloud/iCloud~md~obsidian/Documents/wiki'
-	g.wiki_filetypes = {'md', 'wiki'}
+	g.wiki_root = "~/Documents/iCloud/iCloud~md~obsidian/Documents/wiki"
+	g.wiki_filetypes = { "md", "wiki" }
 	g.wiki_journal = {
 		date_format = {
-			daily = '%Y/%m/%Y-%m-%d',
-			weekly = '%Y/%Y-week_%V',
-			monthly = '%Y/%m/%Y-%m-summary',
+			daily = "%Y/%m/%Y-%m-%d",
+			weekly = "%Y/%Y-week_%V",
+			monthly = "%Y/%m/%Y-%m-summary",
 		},
 	}
-	g.wiki_link_extension = '.md'
-	g.wiki_link_target_type = 'md'
+	g.wiki_link_extension = ".md"
+	g.wiki_link_target_type = "md"
 	g.wiki_map_text_to_link = function(x)
 		-- the filename will always be lowercase
 		local path = x:lower()
@@ -36,7 +36,7 @@ function M.setup()
 			return { path, link_description }
 		end
 
-		local current_file = vim.fn.expand('%:t:r')
+		local current_file = vim.fn.expand("%:t:r")
 		-- If the current file is index, then don't try to put the link in a subfolder like everywhere else.
 		if current_file == "index" then
 			return { path, x }
@@ -46,8 +46,8 @@ function M.setup()
 		return { current_file .. "/" .. path, x }
 	end
 
-	vim.keymap.set("n", "<S-C-n>", "<Plug>(wiki-journal-prev)", {noremap = true})
-	vim.keymap.set("n", "<S-C-o>", "<Plug>(wiki-journal-next)", {noremap = true})
+	vim.keymap.set("n", "<S-C-n>", "<Plug>(wiki-journal-prev)", { noremap = true })
+	vim.keymap.set("n", "<S-C-o>", "<Plug>(wiki-journal-next)", { noremap = true })
 end
 
 return M

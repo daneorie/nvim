@@ -40,10 +40,11 @@ function M.setup()
 		-- Run PackerCompile if there are changes in this file
 		-- vim.cmd "autocmd BufWritePost plugins.lua source <afile> | PackerCompile"
 		local packer_grp = vim.api.nvim_create_augroup("packer_user_config", { clear = true })
-		vim.api.nvim_create_autocmd(
-			{ "BufWritePost" },
-			{ pattern = vim.fn.expand("$MYVIMRC"), command = "source <afile> | PackerCompile", group = packer_grp }
-		)
+		vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+			pattern = "plugins.lua",
+			command = "source <afile> | PackerCompile",
+			group = packer_grp,
+		})
 	end
 
 	-- Plugins
@@ -145,7 +146,14 @@ function M.setup()
 		})
 
 		-- Better comment
-		use({ "preservim/nerdcommenter" }) -- an easy way for commenting out lines
+		use({
+			"numToStr/Comment.nvim",
+			--keys = { "gc", "gcc", "gbc" },
+			config = function()
+				require("config.comment").setup()
+			end,
+			disable = false,
+		})
 
 		-- Better surround
 		use({
@@ -452,7 +460,7 @@ function M.setup()
 		-- Java
 		use({
 			"mfussenegger/nvim-jdtls",
-			ft = { "java" }
+			ft = { "java" },
 		})
 
 		-- Terminal
@@ -506,14 +514,6 @@ function M.setup()
 		-- Harpoon
 		use({
 			"ThePrimeagen/harpoon",
-			--module = {
-			--	"harpoon",
-			--	"harpoon.cmd-ui",
-			--	"harpoon.mark",
-			--	"harpoon.ui",
-			--	"harpoon.term",
-			--	"telescope._extensions.harpoon",
-			--},
 			config = function()
 				require("config.harpoon").setup()
 			end,
@@ -648,7 +648,7 @@ function M.setup()
 		})
 		use({ -- a fast code completion engine
 			"neoclide/coc.nvim",
-			branch = "release"
+			branch = "release",
 		})
 		use({
 			"mg979/vim-visual-multi",

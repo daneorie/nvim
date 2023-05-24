@@ -1,8 +1,7 @@
 local M = {}
 
 local harpoon = require("harpoon")
-local mark = require("harpoon.mark")
-local ui = require("harpoon.ui")
+local whichkey = require("which-key")
 
 function M.setup()
 	harpoon.setup({
@@ -24,20 +23,50 @@ function M.setup()
 
 			-- set marks specific to each git branch inside git repository
 			mark_branch = false,
-		}
+		},
 	})
 
-	vim.keymap.set("n", "<leader>ma", mark.add_file)
-	vim.keymap.set("n", "<leader>me", ui.toggle_quick_menu)
+	local keymap = {
+		m = {
+			name = "Harpoon",
+			a = { "<cmd>lua require('harpoon.mark').add_file<CR>", "Mark File" },
+			e = { "<cmd>lua require('harpoon.ui').toggle_quick_menu<CR>", "Show Marked Files" },
+		},
+		t = {
+			name = "Justfile with Harpoon",
+			d = { "<cmd>lua require('harpoon.tmux').sendCommand('3', 'just test')<CR>", "Test" },
+			b = { "<cmd>lua require('harpoon.tmux').sendCommand('3', 'just build')<CR>", "Build" },
+		},
+	}
+	local opts = {
+		mode = "n",
+		prefix = "<leader>",
+		buffer = nil,
+		silent = true,
+		noremap = true,
+		nowait = false,
+	}
+	whichkey.register(keymap, opts)
 
-	vim.keymap.set("n", "<M-n>", function() ui.nav_file(1) end)
-	vim.keymap.set("n", "<M-e>", function() ui.nav_file(2) end)
-	vim.keymap.set("n", "<M-i>", function() ui.nav_file(3) end)
-	vim.keymap.set("n", "<M-o>", function() ui.nav_file(4) end)
-
-	-- Just Build in the third tmux pane
-	vim.keymap.set("n", "<leader>td", '<cmd>lua require("harpoon.tmux").sendCommand("3", "just test")<CR>', {noremap = true})
-	vim.keymap.set("n", "<leader>tb", '<cmd>lua require("harpoon.tmux").sendCommand("3", "just build")<CR>', {noremap = true})
+	local M_keymap = {
+		["<M-l>"] = { "<cmd>lua require('harpoon.tmux').sendCommand(3, 1)<CR>", "Run 1st Marked Command" },
+		["<M-u>"] = { "<cmd>lua require('harpoon.tmux').sendCommand(3, 2)<CR>", "Run 2nd Marked Command" },
+		["<M-y>"] = { "<cmd>lua require('harpoon.tmux').sendCommand(3, 3)<CR>", "Run 3rd Marked Command" },
+		["<M-;>"] = { "<cmd>lua require('harpoon.tmux').sendCommand(3, 4)<CR>", "Run 4th Marked Command" },
+		["<M-n>"] = { "<cmd>lua require('harpoon.ui').nav_file(1)<CR>", "Open 1st Marked File" },
+		["<M-e>"] = { "<cmd>lua require('harpoon.ui').nav_file(2)<CR>", "Open 2nd Marked File" },
+		["<M-i>"] = { "<cmd>lua require('harpoon.ui').nav_file(3)<CR>", "Open 3rd Marked File" },
+		["<M-o>"] = { "<cmd>lua require('harpoon.ui').nav_file(4)<CR>", "Open 4th Marked File" },
+	}
+	local M_opts = {
+		mode = "n",
+		prefix = nil,
+		buffer = nil,
+		silent = true,
+		noremap = true,
+		nowait = false,
+	}
+	whichkey.register(M_keymap, M_opts)
 
 	local status_ok, telescope = pcall(require, "telescope")
 	if status_ok then

@@ -9,7 +9,7 @@ local function keymappings(client, bufnr)
 	local opts = { noremap = true, silent = true }
 
 	-- Key mappings
-	keymap("n", "M", vim.lsp.buf.hover, { buffer = bufnr })
+	keymap("n", "\x33[109;5u", vim.lsp.buf.hover, { buffer = bufnr })
 
 	keymap("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
 	keymap("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)

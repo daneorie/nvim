@@ -42,7 +42,11 @@ function M.setup()
 		local packer_grp = vim.api.nvim_create_augroup("packer_user_config", { clear = true })
 		vim.api.nvim_create_autocmd({ "BufWritePost" }, {
 			pattern = "plugins.lua",
-			command = "source <afile> | PackerSync",
+			callback = function(ev)
+				require("plugins").setup()
+				require("packer").sync()
+				require("packer").compile()
+			end,
 			group = packer_grp,
 		})
 	end
@@ -168,6 +172,10 @@ function M.setup()
 				-- may set any options here
 				vim.g.matchup_matchparen_offscreen = { method = "popup" }
 			end,
+			config = function()
+				require("config.vim-matchup").setup()
+			end,
+			disable = true, -- until I can ignore the text object mappings, this must be disabled
 		})
 
 		-- IDE
@@ -313,6 +321,7 @@ function M.setup()
 			"nvim-tree/nvim-tree.lua",
 			--opt = true,
 			--cmd = { "NvimTreeToggle", "NvimTreeClose" },
+			commit = "6117582578d2e5b81212f04db4ad206836bcd24a",
 			config = function()
 				require("config.nvim-tree").setup()
 			end,
@@ -459,6 +468,15 @@ function M.setup()
 			},
 		})
 
+		-- lspsaga.nvim
+		use({
+			"glepnir/lspsaga.nvim",
+			cmd = { "Lspsaga" },
+			config = function()
+				require("config.lspsaga").setup()
+			end,
+		})
+
 		-- Rust
 		use({
 			"simrat39/rust-tools.nvim",
@@ -577,7 +595,11 @@ function M.setup()
 		})
 
 		-- Quickfix
-		use({ "romainl/vim-qf", event = "BufReadPre", disable = true })
+		use({
+			"romainl/vim-qf",
+			event = "BufReadPre",
+			disable = true,
+		})
 
 		-- Sidebar
 		use({

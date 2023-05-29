@@ -115,5 +115,6 @@ yabai -m rule --add manage=off label="off:Microsoft Outlook|Outlook Preferences"
 yabai -m rule --add manage=off label="off:Arc|Dane" app="^Arc$" title="^Dane$"
 yabai -m rule --add manage=off label="off:Sound Control|Sound Control Preferences" app="^Sound Control$" title="^Sound Control Preferences$"
 yabai -m rule --add manage=off label="off:Dictionary" app="^Dictionary$"
+yabai -m rule --add manage=off label="off:FaceTime|Settings" app="^FaceTime$" title="^Settings$"
 
 echo "yabai configuration loaded..."

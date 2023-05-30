@@ -15,3 +15,5 @@
 	lg = log --oneline --decorate --graph
 [push]
 	autoSetupRemote = true
+[pull]
+	rebase = false

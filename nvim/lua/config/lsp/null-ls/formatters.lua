@@ -25,7 +25,7 @@ function M.format()
 		local have_nls = #require("null-ls.sources").get_available(ft, "NULL_LS_FORMATTING") > 0
 
 		local view = vim.fn.winsaveview()
-		vim.lsp.buf.format {
+		vim.lsp.buf.format({
 			async = true,
 			filter = function(client)
 				if have_nls then
@@ -33,7 +33,7 @@ function M.format()
 				end
 				return client.name ~= "null-ls"
 			end,
-		}
+		})
 		vim.fn.winrestview(view)
 	end
 end
@@ -42,7 +42,7 @@ function M.setup(client, bufnr)
 	local filetype = api.nvim_buf_get_option(bufnr, "filetype")
 
 	local enable = false
-	if M.has_formatter(filetype) then
+	if filetype ~= "markdown" and M.has_formatter(filetype) then
 		enable = client.name == "null-ls"
 	else
 		enable = not (client.name == "null-ls")

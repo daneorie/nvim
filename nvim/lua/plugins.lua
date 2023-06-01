@@ -112,6 +112,10 @@ function M.setup()
 			opt = true,
 			cmd = { "Git", "GBrowse", "Gdiffsplit", "Gvdiffsplit" },
 		})
+		use({
+			"f-person/git-blame.nvim",
+			cmd = { "GitBlameToggle" },
+		})
 
 		-- WhichKey
 		use({
@@ -690,6 +694,7 @@ function M.setup()
 				require("config.vim-swoop").setup()
 			end,
 		})
+		use({ "AckslD/muren.nvim" })
 
 		-- Ulility
 		use({ -- a fast code completion engine

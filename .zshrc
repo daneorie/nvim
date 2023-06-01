@@ -18,9 +18,17 @@ for path_to_add in "${paths_to_add[@]}"; do
 	fi
 done
 
+# When typing '#' in normal/vicmd mode, append a '#' at the beginning of the line and return.
+# This stops the current line from running but keeps it in the history.
 setopt interactivecomments
 
+# When in normal/vicmd mode, typing <C-v> will enter the current line into a nvim buffer for editing.
+# Save and quit the buffer to output the line back to the terminal.
 export EDITOR=nvim
+autoload -U edit-command-line
+zle -N edit-command-line
+bindkey -M vicmd '^v' edit-command-line
+
 export PAGER=less
 export LESSKEY=~/.lesskey
 export FZF_DEFAULT_OPTS='--bind=ctrl-e:down,ctrl-u:down,ctrl-y:up'

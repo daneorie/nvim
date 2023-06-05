@@ -234,6 +234,7 @@ export const data = {
   microsoftOutlookOption: { label: "Microsoft Outlook", type: "checkbox" },
   microsoftTeamsOption: { label: "Microsoft Teams", type: "checkbox" },
   remindersOption: { label: "Reminders", type: "checkbox" },
+  slackOption: { label: "Slack", type: "checkbox" },
 
   networkWidgetOptions: {
     label: "Network",
@@ -433,11 +434,12 @@ export const defaultSettings = {
   },
   notificationWidgetOptions: {
     discordOption: false,
-    mailOption: true,
+    mailOption: false,
     messagesOption: true,
-    microsoftOutlookOption: true,
-    microsoftTeamsOption: true,
-    remindersOption: false,
+    microsoftOutlookOption: false,
+    microsoftTeamsOption: false,
+    remindersOption: true,
+    slackOption: true,
     refreshFrequency: 1000,
   },
   weatherWidgetOptions: {

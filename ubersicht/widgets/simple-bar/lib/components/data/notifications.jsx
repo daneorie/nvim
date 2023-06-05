@@ -7,6 +7,7 @@ import * as Settings from "../../settings";
 import * as Utils from "../../utils";
 import * as AppIdentifiers from "../../app-identifiers";
 import * as AppOptions from "../../app-options";
+import * as AppNotifications from "../../app-notifications";
 
 export { notificationsStyle as styles } from "../../styles/components/data/notifications.js";
 
@@ -31,17 +32,17 @@ export const Widget = () => {
 	const [loading, setLoading] = Uebersicht.React.useState(notificationWidget);
 
 	const getNotifications = async () => {
-		const database = await Uebersicht.run(
-			`lsof -p $(ps aux | grep -m1 usernoted | awk '{ print $2 }') | awk '{ print $NF }' | grep 'db2/db$'`
-		);
+		notificationWidgetOptions
+		await Promise.all(Object.keys(AppIdentifiers.apps)
+			.filter(appName => notificationWidgetOptions[AppOptions.apps[appName]])
+			.map(async appName => {
+				const appBadge = await Uebersicht.run(
+					`${AppNotifications.apps[appName]}`
+				);
 
-		await Promise.all(Object.keys(AppIdentifiers.apps).map(async appName => {
-			const appBadge = await Uebersicht.run(
-				`echo "SELECT badge FROM app WHERE identifier = '${AppIdentifiers.apps[appName]}';" | sqlite3 ${database}`
-			);
-		
-			setState(state => ({...state, [appName]: Number(appBadge) }));
-		}));
+				setState(state => ({...state, [appName]: appBadge }));
+			})
+		);
 
 		setLoading(false);
 	};
@@ -59,7 +60,7 @@ export const Widget = () => {
 	return (
 		<DataWidget.Widget classes="notifications">
 			{Object.keys(state)
-				.filter(appName => state[appName] > 0 && notificationWidgetOptions[AppOptions.apps[appName]])
+				.filter(appName => state[appName] != 0 && notificationWidgetOptions[AppOptions.apps[appName]])
 				.map((appName, _) => {
 					const Icon = Icons[appName] || Icons[Default];
 					return <div onClick={onClick(AppIdentifiers.apps[appName])} className="notification">

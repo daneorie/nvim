@@ -74,6 +74,7 @@ eval "$(rbenv init - zsh)"
 # Plugins (Antigen)
 source /usr/local/share/antigen/antigen.zsh
 
+antigen bundle kutsan/zsh-system-clipboard
 antigen bundle mollifier/cd-gitroot # type "cd-gitroot<CR>" to get to the root directory of a git repo; aliased above
 antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle zsh-users/zsh-syntax-highlighting

@@ -50,23 +50,24 @@ export const Widget = () => {
 		const defaultResponse = await Uebersicht.run(
 			`./simple-bar/lib/scripts/notifications-default.sh "${database}" "${defaultList.join("', '")}"`
 		);
-		const appBadgeJsonList = JSON.parse(defaultResponse);
+		const defaultAppBadgeJsonList = JSON.parse(defaultResponse);
 		function getAppNameByIdentifier(object, value) {
 			return Object.keys(object).find(key => object[key] === value)
 		}
-		appBadgeJsonList.forEach(appObject => {
+		defaultAppBadgeJsonList.forEach(appObject => {
 			const appName = getAppNameByIdentifier(AppIdentifiers.apps, appObject.identifier);
 			setState(state => ({...state, [appName]: appObject.badge }));
 		});
 
 		// handle python execution
-		const pythonRun = await Uebersicht.run(
+		const pythonResponse = await Uebersicht.run(
 			`./simple-bar/lib/scripts/notifications-other.py3`
 		);
+		const pythonAppBadgeJsonList = JSON.parse(pythonResponse.replace(/'/g, '"'));
 		Object.keys(AppNotifications.methods.python)
 			.filter(appName => notificationWidgetOptions[AppOptions.apps[appName]])
 			.forEach(appName => 
-				setState(state => ({...state, [appName]: pythonRun[appName] }))
+				setState(state => ({...state, [appName]: pythonAppBadgeJsonList[appName] }))
 			);
 
 		setLoading(false);

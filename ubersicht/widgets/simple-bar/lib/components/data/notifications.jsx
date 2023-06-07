@@ -22,6 +22,13 @@ const REFRESH_FREQUENCY = Settings.getRefreshFrequency(
 	DEFAULT_REFRESH_FREQUENCY
 );
 
+let database;
+async function getDatabase() {
+	return (await Uebersicht.run(
+		`lsof -p "$(ps aux | grep -m1 usernoted | awk '{ print $2 }')" | awk '{ print $NF }' | grep 'db2/db$'`
+	)).trim();
+}
+
 const openApp = (bundleIdentifier) =>
 	Uebersicht.run(
 		`open -b ${bundleIdentifier}`
@@ -32,17 +39,35 @@ export const Widget = () => {
 	const [loading, setLoading] = Uebersicht.React.useState(notificationWidget);
 
 	const getNotifications = async () => {
-		notificationWidgetOptions
-		await Promise.all(Object.keys(AppIdentifiers.apps)
-			.filter(appName => notificationWidgetOptions[AppOptions.apps[appName]])
-			.map(async appName => {
-				const appBadge = await Uebersicht.run(
-					`${AppNotifications.apps[appName]}`
-				);
+		// Sometimes, when trying to get the database, the command doesn't return anything,
+		//   so once we get it successfully once, we should keep the value.
+		if (!database) database = await getDatabase();
 
-				setState(state => ({...state, [appName]: appBadge }));
-			})
+		// handle default execution
+		const defaultList =	Object.keys(AppNotifications.methods.default)
+			.filter(appName => notificationWidgetOptions[AppOptions.apps[appName]])
+			.map(appName => AppIdentifiers.apps[appName]);
+		const defaultResponse = await Uebersicht.run(
+			`./simple-bar/lib/scripts/notifications-default.sh "${database}" "${defaultList.join("', '")}"`
 		);
+		const appBadgeJsonList = JSON.parse(defaultResponse);
+		function getAppNameByIdentifier(object, value) {
+			return Object.keys(object).find(key => object[key] === value)
+		}
+		appBadgeJsonList.forEach(appObject => {
+			const appName = getAppNameByIdentifier(AppIdentifiers.apps, appObject.identifier);
+			setState(state => ({...state, [appName]: appObject.badge }));
+		});
+
+		// handle python execution
+		const pythonRun = await Uebersicht.run(
+			`./simple-bar/lib/scripts/notifications-other.py3`
+		);
+		Object.keys(AppNotifications.methods.python)
+			.filter(appName => notificationWidgetOptions[AppOptions.apps[appName]])
+			.forEach(appName => 
+				setState(state => ({...state, [appName]: pythonRun[appName] }))
+			);
 
 		setLoading(false);
 	};
@@ -60,9 +85,9 @@ export const Widget = () => {
 	return (
 		<DataWidget.Widget classes="notifications">
 			{Object.keys(state)
-				.filter(appName => state[appName] != 0 && notificationWidgetOptions[AppOptions.apps[appName]])
+				.filter(appName => state[appName] && notificationWidgetOptions[AppOptions.apps[appName]])
 				.map((appName, _) => {
-					const Icon = Icons[appName] || Icons[Default];
+					const Icon = Icons[appName.replace(/ /, "")] || Icons.Default;
 					return <div onClick={onClick(AppIdentifiers.apps[appName])} className="notification">
 						<Icon />
 						{state[appName]}

@@ -1,6 +1,7 @@
 #!/bin/bash
 
-database="$(lsof -p "$(ps aux | grep -m1 usernoted | awk '{ print $2 }')" | awk '{ print $NF }' | grep 'db2/db$')"
-count="$(echo "SELECT badge FROM app WHERE identifier = '$1';" | sqlite3 "$database")"
+database="$1"
+apps="$2"
+count="$(echo "SELECT json_group_array(json_object('identifier', identifier, 'badge', badge)) FROM app WHERE identifier in ('$apps');" | sqlite3 "$database")"
 
 echo "$count"

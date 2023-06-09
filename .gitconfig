@@ -13,6 +13,9 @@
 	del = branch -D
 	br = branch --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) %(color:green)(%(committerdate:relative)) [%(authorname)]' --sort=-committerdate
 	lg = log --oneline --decorate --graph
+	show-conflicts = diff --name-only --diff-filter=U --relative
+	edit-conflicts = !nvim $(git show-conflicts)
+	resolve-conflicts = !git add $(git show-conflicts)
 [push]
 	autoSetupRemote = true
 [pull]

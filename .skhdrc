@@ -100,17 +100,19 @@ meh - s: brew services restart skhd
 #meh - 8: open "~/Library/Mobile Documents/com~apple~ScriptEditor2/Documents/Set Sound Control Input Device - Input2.app"
 
 # open applications
+meh - 0x2C: open -nb org.alacritty --args --config-file ~/.config/alacritty/alacritty.yml # meh - /
+#------------------
 hyper - q: open -a "Activity Monitor"
 hyper - w: open -nb org.alacritty --args --config-file ~/.config/alacritty/alacritty.yml --title WikiIndex -e $SHELL -lc "export NVIM_HOME=~/.config/nvim; tmux new -A -s 'WikiIndex' -n 'Index' 'cd ~/Documents/iCloud/iCloud~md~obsidian/Documents/wiki; nvim +WikiIndex'"
-hyper - f: open -a Finder
-#hyper - f: osascript -e 'tell application "Finder" to make new document' && open -a Finder
+hyper - f: osascript -e 'tell application "Finder"' -e 'set theWindow to make new Finder window' -e 'activate target of theWindow' -e 'end tell'
 hyper - p: open -a Photos
 hyper - g: open -nb org.alacritty --args --config-file ~/.config/alacritty/alacritty.yml --title WikiJournal -e $SHELL -lc "export NVIM_HOME=~/.config/nvim; tmux new -A -s 'WikiJournal' -n 'Journal' 'cd ~/Documents/iCloud/iCloud~md~obsidian/Documents/wiki; nvim +WikiJournal'"
 #------------------
-hyper - a: open -nb org.alacritty
+#hyper - a: open -nb org.alacritty
+hyper - a: open -nb org.alacritty --args --config-file ~/.config/alacritty/alacritty.yml --title WikiIndex -e $SHELL -lc "export NVIM_HOME=~/.config/nvim; tmux new -A -s 'main' -n 'dotfiles' 'cd ~/dotfiles; nvim .'"
 hyper - r: open -a Mail
-hyper - s: osascript -e 'tell application "Safari" to make new document' -e 'delay 0.2' && open -a Safari # In testing, 1.08 is the minimum delay, but it's not consistent.
-hyper - t: osascript -e 'tell application "Notes" to make new document' && open -a Notes
+hyper - s: osascript -e 'tell application "Safari"' -e 'make new document' -e 'activate' -e 'end tell'
+hyper - t: open -a Notes && open -a Notes
 hyper - d: open -n -a Discord
 #------------------
 hyper - z: open -b "com.apple.systempreferences"
@@ -118,6 +120,7 @@ hyper - x: open -a "Microsoft Excel"
 hyper - c: open -a Calendar
 #hyper - v: open -a 
 hyper - b: open -a Obsidian
+#------------------
 
 # increase window size
 shift + alt - w : yabai -m window --resize top:0:-20

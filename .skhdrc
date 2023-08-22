@@ -1,8 +1,12 @@
 # focus window
-alt - n : yabai -m window --focus west
-alt - e : yabai -m window --focus south
-alt - i : yabai -m window --focus north
-alt - o : yabai -m window --focus east
+#alt - n : yabai -m window --focus west
+#alt - e : yabai -m window --focus south
+#alt - i : yabai -m window --focus north
+#alt - o : yabai -m window --focus east
+alt - n : yabai -m window --focus "$(yabai -m query --windows --space | jq -re 'map(if isempty(select(."has-focus")) then .id else "west" end) | max')"
+alt - e : yabai -m window --focus "$(yabai -m query --windows --space | jq -re 'map(if isempty(select(."has-focus")) then .id else "south" end) | max')"
+alt - i : yabai -m window --focus "$(yabai -m query --windows --space | jq -re 'map(if isempty(select(."has-focus")) then .id else "north" end) | max')"
+alt - o : yabai -m window --focus "$(yabai -m query --windows --space | jq -re 'map(if isempty(select(."has-focus")) then .id else "east" end) | max')"
 
 # swap managed window
 shift + alt - n : yabai -m window --swap west
@@ -73,10 +77,13 @@ shift + alt - c : yabai -m space --create && \
 
 
 # cycle through stack and floating windows
-alt + cmd - 0x32 : yabai -m window --focus "$(yabai -m query --windows --space | jq -re 'map(select(."stack-index" == 1 or ."is-visible" and ."stack-index" == 0)) | sort_by(.frame.x, .frame.y, .id) | nth((index(map(select(."has-focus"))) + length - 1) % length).id')"
+#alt - 0x32 : yabai -m window --focus "$(yabai -m query --windows --space | jq -re 'map(select(."stack-index" == 1 or ."is-visible" and ."stack-index" == 0)) | sort_by(.frame.x, .frame.y, .id) | nth((index(map(select(."has-focus"))) + length - 1) % length).id')"
+
+# cycle through all windows in the space
+alt - 0x32 : yabai -m window --focus "$(yabai -m query --windows --space | jq -re 'map(select("is-visible")) | sort_by(.frame.x, .frame.y, .id) | nth((index(map(select(."has-focus"))) + length - 1) % length).id')"
  
 # cycle within a stack
-alt - 0x32 : yabai -m window --focus stack.prev || yabai -m window --focus stack.last
+alt + cmd - 0x32 : yabai -m window --focus stack.prev || yabai -m window --focus stack.last
 alt + cmd - e : yabai -m window --focus stack.prev || yabai -m window --focus stack.last
 alt + cmd - i : yabai -m window --focus stack.next || yabai -m window --focus stack.first
 

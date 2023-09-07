@@ -120,5 +120,8 @@ yabai -m rule --add manage=off label="off:Microsoft Teams|Meeting with Dane Orie
 yabai -m rule --add manage=off label="off:Steam Helper|Special Offers" app="^Steam Helper$" title="^Special Offers$"
 yabai -m rule --add manage=off label="off:Steam Helper|Friends List" app="^Steam Helper$" title="^Friends List$"
 yabai -m rule --add manage=off label="off:GIMP|Set Image Canvas Size" app="^GIMP$" title="^Set Image Canvas Size$"
+yabai -m rule --add manage=off label="off:Homerow|Clicking" app="^Homerow$" title="^Clicking$"
+yabai -m rule --add manage=off label="off:Homerow|General" app="^Homerow$" title="^General$"
+yabai -m rule --add manage=off label="off:Homerow|Exceptions" app="^Homerow$" title="^Exceptions$"
 
 echo "yabai configuration loaded..."

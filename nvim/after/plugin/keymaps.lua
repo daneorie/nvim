@@ -51,7 +51,7 @@ map({ "n", "x" }, "l", "e") -- end of word
 map({ "n", "x" }, "j", "n") -- next match
 map({ "n", "x" }, "N", "H") -- top of page
 map({ "n", "x" }, "E", "J") -- join line below to current line
-map({ "n", "x" }, "I", "K") -- <unset>?
+map({ "n", "x" }, "I", "K") -- keywordprg
 map({ "n", "x" }, "O", "L") -- bottom of page
 map({ "n", "x" }, "H", "I") -- insert at beginning of line
 map({ "n", "x" }, "K", "O") -- insert newline

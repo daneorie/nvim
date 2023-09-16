@@ -238,6 +238,9 @@ function M.setup()
 				{ "zhaozg/vim-diagram" },
 				{ "aklt/plantuml-syntax" },
 			},
+			config = function()
+				vim.g.mkdp_browser = "/Applications/Arc.app"
+			end,
 		})
 
 		-- Status line
@@ -404,6 +407,7 @@ function M.setup()
 				{ "jose-elias-alvarez/null-ls.nvim" }, -- for formatters and linters
 				{
 					"j-hui/fidget.nvim",
+					tag = "legacy",
 					config = function()
 						require("fidget").setup()
 					end,
@@ -565,8 +569,47 @@ function M.setup()
 			config = function()
 				require("config.vimspector").setup()
 			end,
+			disable = false,
+		})
+
+		-- Test
+		use({
+			"nvim-neotest/neotest",
+			requires = {
+				{
+					"vim-test/vim-test",
+					event = { "BufReadPre" },
+					config = function()
+						require("config.test").setup()
+					end,
+				},
+				"nvim-lua/plenary.nvim",
+				"nvim-treesitter/nvim-treesitter",
+				{ "nvim-neotest/neotest-vim-test", module = { "neotest-vim-test" } },
+				{ "nvim-neotest/neotest-python", module = { "neotest-python" } },
+				{ "nvim-neotest/neotest-plenary", module = { "neotest-plenary" } },
+				{ "nvim-neotest/neotest-go", module = { "neotest-go" } },
+				{ "haydenmeade/neotest-jest", module = { "neotest-jest" } },
+				{ "rouge8/neotest-rust", module = { "neotest-rust" } },
+			},
+			module = { "neotest", "neotest.async" },
+			config = function()
+				require("config.neotest").setup()
+			end,
+			disable = false,
+		})
+		use({ "diepm/vim-rest-console", ft = { "rest" }, disable = false })
+		use({
+			"NTBBloodbath/rest.nvim",
+			config = function()
+				require("rest-nvim").setup({})
+				vim.keymap.set("n", "<C-j>", "<Plug>RestNvim", { noremap = true, silent = true })
+			end,
 			disable = true,
 		})
+
+		-- AI completion
+		use({ "github/copilot.vim", event = "InsertEnter", disable = true })
 
 		-- Harpoon
 		use({
@@ -718,6 +761,80 @@ function M.setup()
 		use({
 			"tpope/vim-unimpaired",
 			requires = { "tpope/vim-repeat" },
+		})
+		use({
+			"tpope/vim-abolish",
+		})
+
+		use({
+			"edluffy/hologram.nvim",
+			config = function()
+				require("hologram").setup({
+					auto_display = true,
+				})
+			end,
+			disable = true,
+		})
+
+		use({
+			"jackMort/ChatGPT.nvim",
+			config = function()
+				require("chatgpt").setup()
+			end,
+			requires = {
+				"MunifTanjim/nui.nvim",
+				"nvim-lua/plenary.nvim",
+				"nvim-telescope/telescope.nvim",
+			},
+			disable = false,
+		})
+
+		use({
+			"Tyler-Barham/floating-help.nvim",
+			config = function()
+				require("floating-help").setup()
+			end,
+			disable = false,
+		})
+
+		use({
+			"jake-stewart/recursive-macro.nvim",
+			config = function()
+				--require("recursive-macros").setup({
+				--	registers = {"q", "w", "e", "r", "t", "y"},
+				--	startMacro = "q",
+				--	replayMacro = "Q",
+				--})
+			end,
+			disable = false,
+		})
+		use({
+			"jake-stewart/normon.nvim",
+			config = function()
+				--local normon = require("normon")
+				---- cgn on current word/selection
+				--normon("<leader>n", "cgn")
+				--normon("<leader>N", "cgN")
+
+				---- macro on current word/selection
+				--normon("<leader>q", "qq")
+				--normon("<leader>Q", "qq", {backward = true})
+
+				---- improved * and #
+				---- escapes special characters and does not ignore case
+				--normon("*", "n", {clearSearch = true})
+				--normon("#", "n", {backward = true, clearSearch = true})
+			end,
+			disable = false,
+		})
+
+		use({
+			"sustech-data/wildfire.nvim",
+			config = function()
+				require("wildfire").setup()
+			end,
+			requires = { "nvim-treesitter/nvim-treesitter" },
+			disable = false,
 		})
 
 		-- Bootstrap Neovim

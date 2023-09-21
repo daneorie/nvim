@@ -18,6 +18,10 @@ for path_to_add in "${paths_to_add[@]}"; do
 	fi
 done
 
+if [[ -n "~/.keys" ]]; then
+	. ~/.keys
+fi
+
 # When typing '#' in normal/vicmd mode, append a '#' at the beginning of the line and return.
 # This stops the current line from running but keeps it in the history.
 setopt interactivecomments

@@ -620,7 +620,7 @@ function M.setup()
 					-- Keep the http file buffer above|left when split horizontal|vertical
 					result_split_in_place = false,
 					-- Skip SSL verification, useful for unknown certificates
-					skip_ssl_verification = false,
+					skip_ssl_verification = true,
 					-- Encode URL before making request
 					encode_url = true,
 					-- Highlight request on run
@@ -755,6 +755,7 @@ function M.setup()
 			config = function()
 				require("config.wiki").setup()
 			end,
+			disabled = false,
 		})
 		use({
 			"lervag/lists.vim",
@@ -774,6 +775,31 @@ function M.setup()
 			config = function()
 				require("config.calendar").setup()
 			end,
+		})
+
+		-- Obsidian
+		use({
+			"epwalsh/obsidian.nvim",
+			requires = { "nvim-lua/plenary.nvim" },
+			config = function()
+				require("obsidian").setup({
+					dir = "~/Documents/iCloud/iCloud~md~obsidian/Documents/wiki",
+					mappings = {
+						["<CR>"] = require("obsidian.mapping").gf_passthrough(),
+					},
+					finder = "telescope.nvim",
+				})
+			end,
+			disabled = true,
+		})
+		use({
+			"oflisback/obsidian-sync.nvim",
+			config = function()
+				require("obsidian-sync").setup({
+					obsidian_server_address = "https://localhost:27124",
+				})
+			end,
+			disabled = true,
 		})
 
 		-- Multi-buffer Editing
@@ -874,10 +900,17 @@ function M.setup()
 			disable = false,
 		})
 
+		-- quickly select the closest text object among a group of candidates
 		use({
 			"sustech-data/wildfire.nvim",
 			config = function()
-				require("wildfire").setup()
+				require("wildfire").setup({
+					keymaps = {
+						init_selection = "<Space>",
+						node_incremental = "<Space>",
+						node_decremental = "<BS>",
+					},
+				})
 			end,
 			requires = { "nvim-treesitter/nvim-treesitter" },
 			disable = false,

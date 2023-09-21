@@ -97,8 +97,8 @@ shift + alt - p : yabai -m window --display previous; yabai -m display --focus p
 
 # restart
 meh - u: ~/dotfiles/ubersicht/restart_ubersicht.sh
-meh - y: brew services restart yabai
-meh - s: brew services restart skhd
+meh - y: yabai --restart-service
+meh - s: skhd --restart-service
 
 # change the sound input and output
 #hyper - 3: open "~/Library/Mobile Documents/com~apple~ScriptEditor2/Documents/Set Sound Control Output Device - Output1.app"
@@ -110,13 +110,13 @@ meh - s: brew services restart skhd
 meh - 0x2C: open -nb org.alacritty --args --config-file ~/.config/alacritty/alacritty.yml # meh - /
 #------------------
 hyper - q: open -a "Activity Monitor"
-hyper - w: open -nb org.alacritty --args --config-file ~/.config/alacritty/alacritty.yml --title WikiIndex -e $SHELL -lc "export NVIM_HOME=~/.config/nvim; tmux new -A -s 'WikiIndex' -n 'Index' 'cd ~/Documents/iCloud/iCloud~md~obsidian/Documents/wiki; nvim +WikiIndex'"
+hyper - w: open -nb org.alacritty --args --config-file ~/.config/alacritty/alacritty.yml --title WikiIndex -e $SHELL -lc "tmux new -A -s 'WikiIndex' -n 'Index' 'source ~/.zshrc; cd ~/Documents/iCloud/iCloud~md~obsidian/Documents/wiki; nvim +WikiIndex'"
 hyper - f: osascript -e 'tell application "Finder"' -e 'set theWindow to make new Finder window' -e 'activate target of theWindow' -e 'end tell'
 hyper - p: open -a Photos
-hyper - g: open -nb org.alacritty --args --config-file ~/.config/alacritty/alacritty.yml --title WikiJournal -e $SHELL -lc "export NVIM_HOME=~/.config/nvim; tmux new -A -s 'WikiJournal' -n 'Journal' 'cd ~/Documents/iCloud/iCloud~md~obsidian/Documents/wiki; nvim +WikiJournal'"
+hyper - g: open -nb org.alacritty --args --config-file ~/.config/alacritty/alacritty.yml --title WikiJournal -e $SHELL -lc "tmux new -A -s 'WikiJournal' -n 'Journal' 'source ~/.zshrc; cd ~/Documents/iCloud/iCloud~md~obsidian/Documents/wiki; nvim +WikiJournal'"
 #------------------
 #hyper - a: open -nb org.alacritty
-hyper - a: open -nb org.alacritty --args --config-file ~/.config/alacritty/alacritty.yml --title WikiIndex -e $SHELL -lc "export NVIM_HOME=~/.config/nvim; tmux new -A -s 'main' -n 'dotfiles' 'cd ~/dotfiles; nvim .'"
+hyper - a: open -nb org.alacritty --args --config-file ~/.config/alacritty/alacritty.yml --title main -e $SHELL -lc "tmux new -A -s 'main' -n 'dotfiles' 'source ~/.zshrc; cd ~/dotfiles; nvim .'"
 hyper - r: open -a Mail
 hyper - s: osascript -e 'tell application "Safari"' -e 'make new document' -e 'activate' -e 'end tell'
 hyper - t: open -a Notes && open -a Notes

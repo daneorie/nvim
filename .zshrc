@@ -1,5 +1,6 @@
 export NVIM_HOME=~/.config/nvim
 export MAVEN_HOME=~/apache-maven-3.8.1
+export WIKI_HOME=~/Documents/iCloud/iCloud~md~obsidian/Documents/wiki
 
 if [[ -n "/usr/local/bin/brew" ]]; then
 	export PATH="$PATH:/opt/homebrew/bin"

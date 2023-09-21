@@ -3,7 +3,7 @@ local M = {}
 local g = vim.g
 
 function M.setup()
-	g.wiki_root = "~/Documents/iCloud/iCloud~md~obsidian/Documents/wiki"
+	g.wiki_root = vim.fn.getenv("WIKI_HOME")
 	g.wiki_filetypes = { "md", "wiki" }
 	g.wiki_journal = {
 		date_format = {

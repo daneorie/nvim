@@ -1,938 +1,429 @@
-local M = {}
-
-function M.setup()
-	-- Indicate first time installation
-	local is_bootstrap = false
-
-	-- packer.nvim configuration
-	local conf = {
-		max_jobs = 8,
-		profile = {
-			enable = true,
-			--threshold = 0, -- the amount in ms that a plugins load time must be over for it to be included in the profile
-		},
-		display = {
-			open_fn = function()
-				return require("packer.util").float({ border = "rounded" })
-			end,
-		},
-	}
-
-	-- Check if packer.nvim is installed
-	-- Run PackerCompile if there are changes in this file
-	local function packer_init()
-		local fn = vim.fn
-		local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
-		if fn.empty(fn.glob(install_path)) > 0 then
-			PACKER_BOOTSTRAP = fn.system({
-				"git",
-				"clone",
-				"--depth",
-				"1",
-				"https://github.com/wbthomason/packer.nvim",
-				install_path,
-			})
-			print("Installing packer close and reopen Neovim...")
-			vim.cmd([[packadd packer.nvim]])
-			is_bootstrap = true
-		end
-
-		-- Run PackerCompile if there are changes in this file
-		-- vim.cmd "autocmd BufWritePost plugins.lua source <afile> | PackerSync"
-		local packer_grp = vim.api.nvim_create_augroup("packer_user_config", { clear = true })
-		vim.api.nvim_create_autocmd({ "BufWritePost" }, {
-			pattern = "plugins.lua",
-			callback = function(ev)
-				require("plugins").setup()
-				require("packer").sync()
-				require("packer").compile()
-			end,
-			group = packer_grp,
-		})
-	end
-
-	-- Plugins
-	local function plugins(use)
-		use({ "wbthomason/packer.nvim" })
-
-		-- Performance
-		use({ "lewis6991/impatient.nvim" })
-		--use {
-		--"lewis6991/impatient.nvim",
-		--config = function() require("impatient").enable_profile() end
-		--}
-
-		-- Load only when require
-		use({ "nvim-lua/plenary.nvim", module = "plenary" })
-
-		-- Notification
-		use({
-			"rcarriga/nvim-notify",
-			event = "BufReadPre",
-			config = function()
-				require("config.notify").setup()
-			end,
-			disable = false,
-		})
-		use({
-			"simrat39/desktop-notify.nvim",
-			config = function()
-				require("desktop-notify").override_vim_notify()
-			end,
-			disable = true,
-		})
-		use({
-			"vigoux/notifier.nvim",
-			config = function()
-				require("notifier").setup({})
-			end,
-			disable = true,
-		})
-
-		-- Colorschemes
-		use({
-			"EdenEast/nightfox.nvim",
-			config = function()
-				vim.cmd.colorscheme([[nightfox]])
-			end,
-			disable = false,
-		})
-
-		-- Git
-		use({ -- show git decorations in buffers
-			"lewis6991/gitsigns.nvim",
-			event = "BufReadPre",
-			requires = { "nvim-lua/plenary.nvim" },
-			config = function()
-				require("gitsigns").setup()
-			end,
-		})
-		use({ -- git commands
-			"tpope/vim-fugitive",
-			opt = true,
-			cmd = { "Git", "GBrowse", "Gdiffsplit", "Gvdiffsplit" },
-		})
-		use({
-			"f-person/git-blame.nvim",
-			cmd = { "GitBlameToggle" },
-		})
-		use({
-			"pwntester/octo.nvim",
-			requires = {
-				{ "nvim-lua/plenary.nvim" },
-				{ "nvim-telescope/telescope.nvim" },
-				{ "nvim-tree/nvim-web-devicons" },
-			},
-			config = function()
-				require("octo").setup({ enable_builtin = true })
-				vim.cmd([[hi OctoEditable guibg=none]])
-			end,
-		})
-
-		-- WhichKey
-		use({
-			"folke/which-key.nvim",
-			event = "VimEnter",
-			module = { "which-key" },
-			config = function()
-				require("config.which-key").setup()
-			end,
-			disable = false,
-		})
-		use({
-			"mrjones2014/legendary.nvim",
-			config = function()
-				require("legendary").setup({ which_key = { auto_register = true } })
-			end,
-			disable = true,
-		})
-
-		-- IndentLine
-		use({
-			"lukas-reineke/indent-blankline.nvim",
-			event = "BufReadPre",
-			config = function()
-				require("config.indent-blankline").setup()
-			end,
-		})
-
-		-- Better icons
-		use({
-			"kyazdani42/nvim-web-devicons",
-			module = "nvim-web-devicons",
-			config = function()
-				require("nvim-web-devicons").setup({ default = true })
-			end,
-		})
-
-		-- Better comment
-		use({
-			"numToStr/Comment.nvim",
-			--keys = { "gc", "gcc", "gbc" },
-			config = function()
-				require("config.comment").setup()
-			end,
-			disable = false,
-		})
-
-		-- Better surround
-		use({
-			"kylechui/nvim-surround",
-			config = function()
-				require("config.surround").setup()
-			end,
-		})
-		use({
-			"andymass/vim-matchup",
-			setup = function()
-				-- may set any options here
-				vim.g.matchup_matchparen_offscreen = { method = "popup" }
-			end,
-			config = function()
-				require("config.vim-matchup").setup()
-			end,
-			disable = true, -- until I can ignore the text object mappings, this must be disabled
-		})
-
-		-- IDE
-		use({
-			"mbbill/undotree",
-			cmd = { "UndotreeToggle" },
-			config = function()
-				require("config.undotree").setup()
-			end,
-		})
-
-		-- Jumps
-		use({
-			"christoomey/vim-tmux-navigator",
-			config = function()
-				require("config.vim-tmux-navigator").setup()
-			end,
-		})
-		use({
-			"phaazon/hop.nvim",
-			cmd = "HopWord",
-			module = "hop",
-			keys = { "f", "F", "t", "T" },
-			config = function()
-				require("config.hop").setup()
-			end,
-			disable = true,
-		})
-		use({
-			"jinh0/eyeliner.nvim",
-			config = function()
-				require("eyeliner").setup({
-					highlight_on_key = true, -- show highlights only after keypress
-					dim = false, -- dim all other characters if set to true (recommended!)
-				})
-			end,
-		})
-		use({
-			"ggandor/leap.nvim",
-			requires = { "tpope/vim-repeat" },
-			config = function()
-				require("leap").add_default_mappings()
-			end,
-		})
-
-		-- Markdown
-		use({
-			"iamcco/markdown-preview.nvim",
-			opt = true,
-			run = function()
-				vim.fn["mkdp#util#install"]()
-			end,
-			ft = "markdown",
-			cmd = { "MarkdownPreview" },
-			requires = {
-				{ "zhaozg/vim-diagram" },
-				{ "aklt/plantuml-syntax" },
-			},
-			config = function()
-				vim.g.mkdp_browser = "/Applications/Arc.app"
-			end,
-		})
-
-		-- Status line
-		use({
-			"nvim-lualine/lualine.nvim",
-			event = "BufReadPre",
-			config = function()
-				require("config.lualine").setup()
-			end,
-		})
-
-		-- Treesitter
-		use({
-			"nvim-treesitter/nvim-treesitter",
-			run = ":TSUpdate",
-			config = function()
-				require("config.treesitter").setup()
-			end,
-			requires = {
-				{ "nvim-treesitter/nvim-treesitter-textobjects", event = "BufReadPre" },
-				{
-					"windwp/nvim-ts-autotag",
-					event = "InsertEnter",
-					config = function()
-						require("nvim-treesitter.configs").setup({ autotag = { enable = true } })
-					end,
-				},
-			},
-		})
-
-		-- Telescope
-		use({
-			"nvim-telescope/telescope.nvim",
-			event = { "VimEnter" },
-			config = function()
-				require("config.telescope").setup()
-			end,
-			requires = {
-				{ "nvim-lua/popup.nvim" },
-				{ "nvim-lua/plenary.nvim" },
-				{ "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
-				{ "nvim-telescope/telescope-file-browser.nvim" },
-				{ "nvim-telescope/telescope-dap.nvim" },
-				{
-					"AckslD/nvim-neoclip.lua",
-					requires = {
-						{ "tami5/sqlite.lua", module = "sqlite" },
-					},
-					config = function()
-						require("config.neoclip").setup()
-					end,
-				},
-				{
-					"nvim-telescope/telescope-ui-select.nvim",
-					config = function()
-						require("config.telescope-ui-select").setup()
-					end,
-				},
-				{
-					"tom-anders/telescope-vim-bookmarks.nvim",
-					config = function()
-						require("config.bookmarks").setup()
-					end,
-				},
-				{ "daneorie/telescope-insert-path.nvim" },
-				{ "LinArcX/telescope-env.nvim" },
-				{
-					"LukasPietzschmann/telescope-tabs",
-					config = function()
-						require("telescope-tabs").setup()
-					end,
-				},
-				{ "nvim-telescope/telescope-hop.nvim" },
-				{
-					"nvim-telescope/telescope-ui-select.nvim",
-					config = function()
-						require("config.telescope-ui-select").setup()
-					end,
-				},
-			},
-		})
-
-		-- File Explorer
-		use({
-			"nvim-tree/nvim-tree.lua",
-			--opt = true,
-			--cmd = { "NvimTreeToggle", "NvimTreeClose" },
-			commit = "6117582578d2e5b81212f04db4ad206836bcd24a",
-			config = function()
-				require("config.nvim-tree").setup()
-			end,
-		})
-		use({
-			"stevearc/oil.nvim",
-			config = function()
-				require("config.oil").setup()
-			end,
-		})
-
-		-- Completion
-		use({
-			"hrsh7th/nvim-cmp",
-			event = "InsertEnter",
-			opt = true,
-			config = function()
-				require("config.cmp").setup()
-			end,
-			requires = {
-				{ "hrsh7th/cmp-buffer" }, -- buffer completions
-				{ "hrsh7th/cmp-path" }, -- path completions
-				{ "hrsh7th/cmp-nvim-lua" },
-				{ "hrsh7th/cmp-cmdline" },
-				{ "saadparwaiz1/cmp_luasnip" }, -- snippet completions
-				{ "hrsh7th/cmp-nvim-lsp", module = { "cmd_nvim_lsp" } },
-				{
-					"L3MON4D3/LuaSnip",
-					config = function()
-						--require("config.snip").setup()
-					end,
-					module = { "luasnip" },
-				},
-			},
-		})
-
-		-- Auto pairs
-		use({ -- Autopairs, integrates with both cmp and treesitter
-			"windwp/nvim-autopairs",
-			opt = true,
-			event = "InsertEnter",
-			module = { "nvim-autopairs.completion.cmp", "nvim-autopairs" },
-			config = function()
-				require("config.autopairs").setup()
-			end,
-		})
-
-		-- Auto tag
-		use({
-			"windwp/nvim-ts-autotag",
-			opt = true,
-			event = "InsertEnter",
-			config = function()
-				require("nvim-ts-autotag").setup({ enable = true })
-			end,
-		})
-
-		-- LSP
-		use({
-			"neovim/nvim-lspconfig",
-			config = function()
-				require("config.lsp").setup()
-			end,
-			requires = {
-				{ "williamboman/mason.nvim" },
-				{ "williamboman/mason-lspconfig.nvim" },
-				{ "WhoIsSethDaniel/mason-tool-installer.nvim" },
-				{ "jayp0521/mason-null-ls.nvim" },
-				{ "folke/neodev.nvim" },
-				{
-					"RRethy/vim-illuminate",
-					config = function()
-						require("config.illuminate").setup()
-					end,
-				},
-				{ "jose-elias-alvarez/null-ls.nvim" }, -- for formatters and linters
-				{
-					"j-hui/fidget.nvim",
-					tag = "legacy",
-					config = function()
-						require("fidget").setup()
-					end,
-				},
-				{ "b0o/schemastore.nvim", module = { "schemastore" } },
-				{ "jose-elias-alvarez/typescript.nvim", module = { "typescript" } },
-				{
-					"SmiteshP/nvim-navic",
-					config = function()
-						require("nvim-navic").setup()
-					end,
-					module = { "nvim-navic" },
-				},
-				{ "lvimuser/lsp-inlayhints.nvim" },
-				--{
-				--	"simrat39/inlay-hints.nvim",
-				--	config = function()
-				--		require("inlay-hints").setup()
-				--	end,
-				--},
-				{
-					"zbirenbaum/neodim",
-					event = "LspAttach",
-					config = function()
-						require("config.neodim").setup()
-					end,
-					disable = true,
-				},
-				{
-					"theHamsta/nvim-semantic-tokens",
-					config = function()
-						require("config.semantictokens").setup()
-					end,
-					disable = true,
-				},
-				{
-					"David-Kunz/markid",
-					disable = true,
-				},
-				{
-					"simrat39/symbols-outline.nvim",
-					cmd = { "SymbolsOutline" },
-					config = function()
-						require("symbols-outline").setup()
-					end,
-					disable = true,
-				},
-				--{
-				--	"weilbith/nvim-code-action-menu",
-				--	cmd = "CodeActionMenu",
-				--},
-				--{
-				--	"rmagatti/goto-preview",
-				--	config = function()
-				--		require("goto-preview").setup({})
-				--	end,
-				--},
-				{
-					"https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-					config = function()
-						require("lsp_lines").setup()
-					end,
-				},
-				{ "ray-x/lsp_signature.nvim" },
-				{ "pierreglaser/folding-nvim" },
-			},
-		})
-
-		-- lspsaga.nvim
-		use({
-			"glepnir/lspsaga.nvim",
-			cmd = { "Lspsaga" },
-			config = function()
-				require("config.lspsaga").setup()
-			end,
-		})
-
-		-- Rust
-		use({
-			"simrat39/rust-tools.nvim",
-			ft = { "rust" },
-			module = "rust-tools",
-			requires = { "nvim-lua/plenary.nvim", "rust-lang/rust.vim" },
-			opt = true,
-		})
-		use({
-			"saecki/crates.nvim",
-			event = { "BufRead Cargo.toml" },
-			requires = { { "nvim-lua/plenary.nvim" } },
-			config = function()
-				require("crates").setup({
-					null_ls = {
-						enabled = true,
-						name = "crates.nvim",
-					},
-				})
-			end,
-			disable = false,
-		})
-
-		-- Go
-		use({
-			"ray-x/go.nvim",
-			ft = { "go" },
-			config = function()
-				require("go").setup()
-			end,
-			disable = true,
-		})
-
-		-- Java
-		use({
-			"mfussenegger/nvim-jdtls",
-			ft = { "java" },
-		})
-
-		-- Terminal
-		use({
-			"akinsho/toggleterm.nvim",
-			keys = { [[<C-\>]] },
-			cmd = { "ToggleTerm", "TermExec" },
-			module = { "toggleterm", "toggleterm.terminal" },
-			config = function()
-				require("config.toggleterm").setup()
-			end,
-		})
-
-		-- Debugging
-		use({
-			"mfussenegger/nvim-dap",
-			opt = true,
-			module = { "dap" },
-			requires = {
-				{ "theHamsta/nvim-dap-virtual-text", module = { "nvim-dap-virtual-text" } },
-				{ "rcarriga/nvim-dap-ui", module = { "dapui" } },
-				{ "mfussenegger/nvim-dap-python", module = { "dap-python" } },
-				{ "nvim-telescope/telescope-dap.nvim" },
-				{ "leoluz/nvim-dap-go", module = "dap-go" },
-				{ "jbyuki/one-small-step-for-vimkind", module = "osv" },
-				{ "mxsdev/nvim-dap-vscode-js", module = { "dap-vscode-js" } },
-				{
-					"microsoft/vscode-js-debug",
-					opt = true,
-					run = "npm install --legacy-peer-deps && npm run compile",
-					disable = false,
-				},
-			},
-			config = function()
-				require("config.dap").setup()
-			end,
-			disable = false,
-		})
-
-		-- vimspector
-		use({
-			"puremourning/vimspector",
-			cmd = { "VimspectorInstall", "VimspectorUpdate" },
-			fn = { "vimspector#Launch()", "vimspector#ToggleBreakpoint", "vimspector#Continue" },
-			config = function()
-				require("config.vimspector").setup()
-			end,
-			disable = false,
-		})
-
-		-- Test
-		use({
-			"nvim-neotest/neotest",
-			requires = {
-				{
-					"vim-test/vim-test",
-					event = { "BufReadPre" },
-					config = function()
-						require("config.test").setup()
-					end,
-				},
-				"nvim-lua/plenary.nvim",
-				"nvim-treesitter/nvim-treesitter",
-				{ "nvim-neotest/neotest-vim-test", module = { "neotest-vim-test" } },
-				{ "nvim-neotest/neotest-python", module = { "neotest-python" } },
-				{ "nvim-neotest/neotest-plenary", module = { "neotest-plenary" } },
-				{ "nvim-neotest/neotest-go", module = { "neotest-go" } },
-				{ "haydenmeade/neotest-jest", module = { "neotest-jest" } },
-				{ "rouge8/neotest-rust", module = { "neotest-rust" } },
-			},
-			module = { "neotest", "neotest.async" },
-			config = function()
-				require("config.neotest").setup()
-			end,
-			disable = false,
-		})
-		use({
-			"rest-nvim/rest.nvim",
-			requires = { "nvim-lua/plenary.nvim" },
-			config = function()
-				require("rest-nvim").setup({
-					-- Open request results in a horizontal split
-					result_split_horizontal = false,
-					-- Keep the http file buffer above|left when split horizontal|vertical
-					result_split_in_place = false,
-					-- Skip SSL verification, useful for unknown certificates
-					skip_ssl_verification = true,
-					-- Encode URL before making request
-					encode_url = true,
-					-- Highlight request on run
-					highlight = {
-						enabled = true,
-						timeout = 150,
-					},
-					result = {
-						-- toggle showing URL, HTTP info, headers at top the of result window
-						show_url = true,
-						-- show the generated curl command in case you want to launch
-						-- the same request via the terminal (can be verbose)
-						show_curl_command = false,
-						show_http_info = true,
-						show_headers = true,
-						-- executables or functions for formatting response body [optional]
-						-- set them to false if you want to disable them
-						formatters = {
-							json = "jq",
-							html = function(body)
-								return vim.fn.system({ "tidy", "-i", "-q", "-" }, body)
-							end,
-						},
-					},
-					-- Jump to request line on run
-					jump_to_request = false,
-					env_file = ".env",
-					custom_dynamic_variables = {},
-					yank_dry_run = true,
-				})
-			end,
-		})
-
-		-- AI completion
-		use({ "github/copilot.vim", event = "InsertEnter", disable = true })
-
-		-- Harpoon
-		use({
-			"ThePrimeagen/harpoon",
-			config = function()
-				require("config.harpoon").setup()
-			end,
-		})
-
-		-- Refactoring
-		use({
-			"ThePrimeagen/refactoring.nvim",
-			module = { "refactoring", "telescope" },
-			keys = { [[<leader>r]] },
-			config = function()
-				require("config.refactoring").setup()
-			end,
-		})
-
-		-- Session
-		use({
-			"rmagatti/auto-session",
-			opt = true,
-			cmd = { "SaveSession", "RestoreSession" },
-			requires = { "rmagatti/session-lens" },
-			config = function()
-				require("auto-session").setup()
-			end,
-			disable = true,
-		})
-
-		-- Quickfix
-		use({
-			"romainl/vim-qf",
-			event = "BufReadPre",
-			disable = true,
-		})
-
-		-- Sidebar
-		use({
-			"sidebar-nvim/sidebar.nvim",
-			cmd = { "SidebarNvimToggle" },
-			config = function()
-				require("sidebar-nvim").setup({ open = false })
-			end,
-		})
-		use({
-			"stevearc/aerial.nvim",
-			module = { "aerial", "telescope._extensions.aerial" },
-			cmd = { "AerialToggle" },
-			config = function()
-				require("aerial").setup({
-					backends = { "treesitter", "lsp" },
-					on_attach = function(bufnr)
-						vim.keymap.set("n", "{", "<cmd>AerialPrev<CR>", { buffer = bufnr })
-						vim.keymap.set("n", "}", "<cmd>AerialNext<CR>", { buffer = bufnr })
-					end,
-				})
-			end,
-		})
-
-		-- Lua Development
-		use({ "folke/lua-dev.nvim" })
-		use({ "folke/neodev.nvim" })
-
-		-- Marks
-		use({ "MattesGroeger/vim-bookmarks" })
-		use({
-			"natecraddock/sessions.nvim",
-			config = function()
-				require("config.sessions").setup()
-			end,
-		})
-		use({
-			"natecraddock/workspaces.nvim",
-			config = function()
-				require("config.workspaces").setup()
-			end,
-		})
-
-		-- Fuzzy Finder/Telescope/Navigation
-		use({
-			"junegunn/fzf.vim",
-			requires = { "junegunn/fzf", run = ":call fzf#install()" },
-		})
-		--use {
-		--"adoyle-h/lsp-toggle.nvim",
-		--config = function()
-		--require("lsp-toggle").setup()
-		--end,
-		--}
-		use({ "ThePrimeagen/git-worktree.nvim" })
-
-		-- Note Taking
-		use({
-			"lervag/wiki.vim",
-			config = function()
-				require("config.wiki").setup()
-			end,
-			disabled = false,
-		})
-		use({
-			"lervag/lists.vim",
-			config = function()
-				require("config.lists").setup()
-			end,
-		})
-		use({
-			"dhruvasagar/vim-table-mode",
-			config = function()
-				require("config.vim-table-mode").setup()
-			end,
-		})
-		use({ "junegunn/vim-easy-align" })
-		use({
-			"itchyny/calendar.vim",
-			config = function()
-				require("config.calendar").setup()
-			end,
-		})
-
-		-- Obsidian
-		use({
-			"epwalsh/obsidian.nvim",
-			requires = { "nvim-lua/plenary.nvim" },
-			config = function()
-				require("obsidian").setup({
-					dir = "~/Documents/iCloud/iCloud~md~obsidian/Documents/wiki",
-					mappings = {
-						["<CR>"] = require("obsidian.mapping").gf_passthrough(),
-					},
-					finder = "telescope.nvim",
-				})
-			end,
-			disabled = true,
-		})
-		use({
-			"oflisback/obsidian-sync.nvim",
-			config = function()
-				require("obsidian-sync").setup({
-					obsidian_server_address = "https://localhost:27124",
-				})
-			end,
-			disabled = true,
-		})
-
-		-- Multi-buffer Editing
-		use({
-			"pelodelfuego/vim-swoop",
-			config = function()
-				require("config.vim-swoop").setup()
-			end,
-		})
-		use({ "AckslD/muren.nvim" })
-
-		-- Ulility
-		use({ -- a fast code completion engine
-			"neoclide/coc.nvim",
-			branch = "release",
-		})
-		use({
-			"mg979/vim-visual-multi",
-			branch = "master",
-			config = function()
-				require("config.vim-visual-multi").setup()
-			end,
-		})
-		use({
-			"folke/zen-mode.nvim",
-			config = function()
-				require("config.zen-mode").setup()
-			end,
-		})
-
-		use({
-			"tpope/vim-unimpaired",
-			requires = { "tpope/vim-repeat" },
-		})
-		use({
-			"tpope/vim-abolish",
-		})
-
-		use({
-			"edluffy/hologram.nvim",
-			config = function()
-				require("hologram").setup({
-					auto_display = true,
-				})
-			end,
-			disable = true,
-		})
-
-		use({
-			"jackMort/ChatGPT.nvim",
-			config = function()
-				require("chatgpt").setup()
-			end,
-			requires = {
-				"MunifTanjim/nui.nvim",
-				"nvim-lua/plenary.nvim",
-				"nvim-telescope/telescope.nvim",
-			},
-			disable = false,
-		})
-
-		use({
-			"Tyler-Barham/floating-help.nvim",
-			config = function()
-				require("floating-help").setup()
-			end,
-			disable = false,
-		})
-
-		use({
-			"jake-stewart/recursive-macro.nvim",
-			config = function()
-				--require("recursive-macros").setup({
-				--	registers = {"q", "w", "e", "r", "t", "y"},
-				--	startMacro = "q",
-				--	replayMacro = "Q",
-				--})
-			end,
-			disable = false,
-		})
-		use({
-			"jake-stewart/normon.nvim",
-			config = function()
-				--local normon = require("normon")
-				---- cgn on current word/selection
-				--normon("<leader>n", "cgn")
-				--normon("<leader>N", "cgN")
-
-				---- macro on current word/selection
-				--normon("<leader>q", "qq")
-				--normon("<leader>Q", "qq", {backward = true})
-
-				---- improved * and #
-				---- escapes special characters and does not ignore case
-				--normon("*", "n", {clearSearch = true})
-				--normon("#", "n", {backward = true, clearSearch = true})
-			end,
-			disable = false,
-		})
-
-		-- quickly select the closest text object among a group of candidates
-		use({
-			"sustech-data/wildfire.nvim",
-			config = function()
-				require("wildfire").setup({
-					keymaps = {
-						init_selection = "<Space>",
-						node_incremental = "<Space>",
-						node_decremental = "<BS>",
-					},
-				})
-			end,
-			requires = { "nvim-treesitter/nvim-treesitter" },
-			disable = false,
-		})
-
-		-- Bootstrap Neovim
-		if is_bootstrap then
-			print("Neovim restart is required after installation!")
-			require("packer").sync()
-		end
-	end
-
-	-- Init and start packer
-	packer_init()
-	local packer = require("packer")
-
-	-- Performance
-	pcall(require, "impatient")
-	-- pcall(require, "packer_compiled")
-
-	packer.init(conf)
-	packer.startup(plugins)
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+	vim.fn.system({
+		"git",
+		"clone",
+		"--filter=blob:none",
+		"https://github.com/folke/lazy.nvim.git",
+		"--branch=stable", -- latest stable release
+		lazypath,
+	})
 end
+vim.opt.rtp:prepend(lazypath)
 
-return M
+require("lazy").setup({
+	{ "folke/neoconf.nvim", cmd = "Neoconf" },
+	{ "folke/neodev.nvim" },
+
+	-- WhichKey
+	{
+		"folke/which-key.nvim",
+		event = "VimEnter",
+		config = function()
+			require("config.which-key").setup()
+		end,
+	},
+
+	-- Colorschemes
+	{
+		"EdenEast/nightfox.nvim",
+		config = function()
+			vim.cmd.colorscheme([[nightfox]])
+		end,
+		enabled = true,
+	},
+
+	-- Better icons
+	{
+		"nvim-tree/nvim-web-devicons",
+		config = function()
+			require("nvim-web-devicons").setup({ default = true })
+		end,
+	},
+
+	-- Git
+	{
+		"lewis6991/gitsigns.nvim", -- show git decorations in buffers
+		event = "BufReadPre",
+		dependencies = { "nvim-lua/plenary.nvim" },
+		config = true,
+	},
+	{
+		"pwntester/octo.nvim",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"nvim-telescope/telescope.nvim",
+			"nvim-tree/nvim-web-devicons",
+		},
+		config = function()
+			require("octo").setup({ enable_builtin = true })
+			vim.cmd([[hi OctoEditable guibg=none]])
+		end,
+	},
+	{
+		"sindrets/diffview.nvim",
+		config = function()
+			require("config.diffview").setup()
+		end,
+	},
+
+	-- Better surround
+	{
+		"kylechui/nvim-surround",
+		config = function()
+			require("config.surround").setup()
+		end,
+	},
+
+	-- IDE
+	{
+		"mbbill/undotree",
+		cmd = { "UndotreeToggle" },
+		config = function()
+			require("config.undotree").setup()
+		end,
+	},
+
+	-- Jumps
+	{
+		"christoomey/vim-tmux-navigator",
+		config = function()
+			require("config.vim-tmux-navigator").setup()
+		end,
+	},
+	{
+		"ggandor/leap.nvim",
+		dependencies = { "tpope/vim-repeat" },
+		config = function()
+			require("leap").add_default_mappings()
+		end,
+	},
+
+	-- Status line
+	{
+		"nvim-lualine/lualine.nvim",
+		event = "BufReadPre",
+		config = function()
+			require("config.lualine").setup()
+		end,
+	},
+
+	-- Treesitter
+	{
+		"nvim-treesitter/nvim-treesitter",
+		build = ":TSUpdate",
+		config = function()
+			require("config.treesitter").setup()
+		end,
+		dependencies = {
+			{ "nvim-treesitter/nvim-treesitter-textobjects", event = "BufReadPre" },
+			{
+				"windwp/nvim-ts-autotag",
+				event = "InsertEnter",
+				config = function()
+					require("nvim-treesitter.configs").setup({ autotag = { enable = true } })
+				end,
+			},
+		},
+	},
+
+	-- Telescope
+	{
+		"tami5/sqlite.lua",
+	},
+	{
+		"nvim-telescope/telescope.nvim",
+		event = { "VimEnter" },
+		config = function()
+			require("config.telescope").setup()
+		end,
+		dependencies = {
+			"nvim-lua/popup.nvim",
+			"nvim-lua/plenary.nvim",
+			"nvim-telescope/telescope-fzf-native.nvim",
+			"nvim-telescope/telescope-file-browser.nvim",
+			"nvim-telescope/telescope-dap.nvim",
+			"LinArcX/telescope-env.nvim",
+			{
+				"LukasPietzschmann/telescope-tabs",
+				config = true,
+			},
+			{
+				"nvim-telescope/telescope-ui-select.nvim",
+				config = function()
+					require("config.telescope-ui-select").setup()
+				end,
+			},
+			{
+				"tom-anders/telescope-vim-bookmarks.nvim",
+				config = function()
+					require("config.bookmarks").setup()
+				end,
+			},
+			{
+				"AckslD/nvim-neoclip.lua",
+				dependencies = { "tami5/sqlite.lua" },
+				config = function()
+					require("config.neoclip").setup()
+				end,
+			},
+			"daneorie/telescope-insert-path.nvim",
+		},
+	},
+
+	-- Debugging
+	{
+		"mfussenegger/nvim-dap",
+		dependencies = {
+			"theHamsta/nvim-dap-virtual-text",
+			"rcarriga/nvim-dap-ui",
+			"mfussenegger/nvim-dap-python",
+			"nvim-telescope/telescope-dap.nvim",
+			"leoluz/nvim-dap-go",
+			"jbyuki/one-small-step-for-vimkind",
+			"mxsdev/nvim-dap-vscode-js",
+			{
+				"microsoft/vscode-js-debug",
+				build = "npm install --legacy-peer-deps && npm run compile",
+			},
+		},
+		config = function()
+			require("config.dap").setup()
+		end,
+	},
+
+	-- File Explorer
+	{
+		"stevearc/oil.nvim",
+		config = function()
+			require("config.oil").setup()
+		end,
+	},
+
+	-- Completion
+	{
+		"hrsh7th/nvim-cmp",
+		event = "InsertEnter",
+		config = function()
+			require("config.cmp").setup()
+		end,
+		dependencies = {
+			"hrsh7th/cmp-buffer", -- buffer completions
+			"hrsh7th/cmp-path", -- path completions
+			"hrsh7th/cmp-nvim-lua",
+			"hrsh7th/cmp-cmdline",
+			"saadparwaiz1/cmp_luasnip", -- snippet completions
+			"hrsh7th/cmp-nvim-lsp",
+			{
+				"L3MON4D3/LuaSnip",
+				config = function()
+					--require("config.snip").setup()
+				end,
+			},
+		},
+	},
+
+	-- LSP
+	{
+		"neovim/nvim-lspconfig",
+		config = function()
+			require("config.lsp").setup()
+		end,
+		dependencies = {
+			"williamboman/mason.nvim",
+			"williamboman/mason-lspconfig.nvim",
+			"WhoIsSethDaniel/mason-tool-installer.nvim",
+			"jayp0521/mason-null-ls.nvim",
+			"folke/neodev.nvim",
+			{
+				"RRethy/vim-illuminate",
+				config = function()
+					require("config.illuminate").setup()
+				end,
+			},
+			"jose-elias-alvarez/null-ls.nvim", -- for formatters and linters
+			{
+				"j-hui/fidget.nvim",
+				tag = "legacy",
+				config = function()
+					require("fidget").setup()
+				end,
+			},
+			"b0o/schemastore.nvim",
+			"jose-elias-alvarez/typescript.nvim",
+			{
+				"SmiteshP/nvim-navic",
+				config = function()
+					require("nvim-navic").setup()
+				end,
+			},
+			"lvimuser/lsp-inlayhints.nvim",
+			{
+				"https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+				config = function()
+					require("lsp_lines").setup()
+				end,
+			},
+			"ray-x/lsp_signature.nvim",
+			"pierreglaser/folding-nvim",
+		},
+	},
+
+	-- Terminal
+	{
+		"akinsho/toggleterm.nvim",
+		keys = { [[<C-\>]] },
+		cmd = { "ToggleTerm", "TermExec" },
+		config = function()
+			require("config.toggleterm").setup()
+		end,
+	},
+
+	-- quickly select the closest text object among a group of candidates
+	{
+		"sustech-data/wildfire.nvim",
+		config = function()
+			require("wildfire").setup({
+				keymaps = {
+					init_selection = "<Space>",
+					node_incremental = "<Space>",
+					node_decremental = "<BS>",
+				},
+			})
+		end,
+		dependencies = { "nvim-treesitter/nvim-treesitter" },
+	},
+
+	-- Fuzzy Finder/Telescope/Navigation
+	{
+		"junegunn/fzf.vim",
+		dependencies = { "junegunn/fzf", build = ":call fzf#install()" },
+	},
+	{
+		"ThePrimeagen/git-worktree.nvim",
+	},
+	{
+		"ThePrimeagen/harpoon",
+		config = function()
+			require("config.harpoon").setup()
+		end,
+	},
+
+	-- Better comment
+	{
+		"numToStr/Comment.nvim",
+		config = function()
+			require("config.comment").setup()
+		end,
+	},
+
+	-- Utility
+	{
+		"neoclide/coc.nvim", -- a fast code completion engine
+		branch = "release",
+	},
+	{
+		"folke/zen-mode.nvim",
+		config = function()
+			require("config.zen-mode").setup()
+		end,
+	},
+	{
+		"tpope/vim-unimpaired",
+		dependencies = { "tpope/vim-repeat" },
+	},
+	{
+		"tpope/vim-abolish",
+	},
+
+	-- Note Taking
+	{
+		"lervag/wiki.vim",
+		config = function()
+			require("config.wiki").setup()
+		end,
+	},
+
+	-- REST
+	{
+		"rest-nvim/rest.nvim",
+		dependencies = { "nvim-lua/plenary.nvim" },
+		config = function()
+			require("rest-nvim").setup({
+				-- Open request results in a horizontal split
+				result_split_horizontal = false,
+				-- Keep the http file buffer above|left when split horizontal|vertical
+				result_split_in_place = false,
+				-- Skip SSL verification, useful for unknown certificates
+				skip_ssl_verification = true,
+				-- Encode URL before making request
+				encode_url = true,
+				-- Highlight request on run
+				highlight = {
+					enabled = true,
+					timeout = 150,
+				},
+				result = {
+					-- toggle showing URL, HTTP info, headers at top the of result window
+					show_url = true,
+					-- show the generated curl command in case you want to launch
+					-- the same request via the terminal (can be verbose)
+					show_curl_command = false,
+					show_http_info = true,
+					show_headers = true,
+					-- executables or functions for formatting response body [optional]
+					-- set them to false if you want to disable them
+					formatters = {
+						json = "jq",
+						html = function(body)
+							return vim.fn.system({ "tidy", "-i", "-q", "-" }, body)
+						end,
+					},
+				},
+				-- Jump to request line on run
+				jump_to_request = false,
+				env_file = ".env",
+				custom_dynamic_variables = {},
+				yank_dry_run = true,
+			})
+		end,
+	},
+	-- Rust
+	{
+		"simrat39/rust-tools.nvim",
+		ft = { "rust" },
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"rust-lang/rust.vim",
+		},
+	},
+	{
+		"saecki/crates.nvim",
+		event = { "BufRead Cargo.toml" },
+		dependencies = { "nvim-lua/plenary.nvim" },
+		config = function()
+			require("crates").setup({
+				null_ls = {
+					enabled = true,
+					name = "crates.nvim",
+				},
+			})
+		end,
+	},
+
+	-- Go
+	--{
+	--	"ray-x/go.nvim",
+	--	ft = { "go" },
+	--	config = function()
+	--		require("go").setup()
+	--	end,
+	--	disable = true,
+	--},
+
+	-- Java
+	{
+		"mfussenegger/nvim-jdtls",
+		ft = { "java" },
+	},
+})

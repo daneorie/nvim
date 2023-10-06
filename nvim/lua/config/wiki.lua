@@ -6,6 +6,9 @@ function M.setup()
 	g.wiki_root = vim.fn.getenv("WIKI_HOME")
 	g.wiki_filetypes = { "md", "wiki" }
 	g.wiki_journal = {
+		name = 'journal',
+		root = '',
+		frequency = 'daily',
 		date_format = {
 			daily = "%Y/%m/%Y-%m-%d",
 			weekly = "%Y/%Y-week_%V",
@@ -38,6 +41,9 @@ function M.setup()
 
 				-- Remove the .md extension if it exists, because it will be automatically added later.
 				path = string.gsub(path, ".md$", "")
+
+				-- Remove any remaining periods
+				path = string.gsub(path, ".", "") -- remove periods
 
 				-- If the relative path of the file is already specified, then remove it from the link description/name but keep the path for the link.
 				if string.find(x, "/") then

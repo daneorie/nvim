@@ -48,16 +48,16 @@ local function normal_keymap()
 		g = { "<cmd>lua require('telescope.builtin').live_grep()<cr>", "Live Grep" },
 		c = { "<cmd>lua require('telescope.builtin').commands()<cr>", "Commands" },
 		q = { "<cmd>lua require('telescope.builtin').quickfix()<cr>", "Quickfix" },
-		t = { "<cmd>lua require('telescope').extensions.telescope_tabs.list_tabs()<cr>", "Tabs" },
+		t = { "<cmd>Telescope telescope-tabs list_tabs<cr>", "Tabs" },
 		w = { "<cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<cr>", "Current Buffer" },
-		n = { "<cmd>NvimTreeToggle<cr>", "NvimTree" },
+		n = { "<cmd>Explore<cr>", "netrw" },
 		e = { "<cmd>Oil --float<cr>", "Oil Float" },
 	}
 
 	keymap_p = {
 		name = "Project",
-		p = { "<cmd>lua require'telescope'.extensions.project.project{display_type = 'full'}<cr>", "List" },
-		s = { "<cmd>lua require'telescope'.extensions.repo.list{}<cr>", "Search" },
+		p = { "<cmd>lua require('telescope').extensions.project.project{display_type = 'full'}<cr>", "List" },
+		s = { "<cmd>lua require('telescope').extensions.repo.list{}<cr>", "Search" },
 		P = { "<cmd>TermExec cmd='BROWSER=brave yarn dev'<cr>", "Slidev" },
 	}
 
@@ -296,7 +296,7 @@ local function normal_keymap()
 			e = { "!!$SHELL<CR>", "Execute line" },
 			W = { "<cmd>lua require('utils.session').toggle_session()<cr>", "Toggle Workspace Saving" },
 			w = { "<cmd>lua require('utils.session').list_session()<cr>", "Restore Workspace" },
-			z = { "<cmd>lua require'telescope'.extensions.zoxide.list{}<cr>", "Zoxide" },
+			z = { "<cmd>lua require('telescope').extensions.zoxide.list{}<cr>", "Zoxide" },
 		},
 
 		g = {
@@ -307,7 +307,7 @@ local function normal_keymap()
 			s = { "<cmd>lua require('neogit').open()<CR>", "Status - Neogit" },
 			S = { "<cmd>Git<CR>", "Status - Fugitive" },
 			y = {
-				"<cmd>lua require'gitlinker'.get_buf_range_url('n', {action_callback = require'gitlinker.actions'.open_in_browser})<cr>",
+				"<cmd>lua require('gitlinker').get_buf_range_url('n', {action_callback = require('gitlinker.actions').open_in_browser})<cr>",
 				"Link",
 			},
 			g = { "<cmd>lua require('telescope').extensions.gh.gist()<CR>", "Gist" },
@@ -468,7 +468,7 @@ local function visual_keymap()
 		g = {
 			name = "Git",
 			y = {
-				"<cmd>lua require'gitlinker'.get_buf_range_url('v', {action_callback = require'gitlinker.actions'.open_in_browser})<cr>",
+				"<cmd>lua require('gitlinker').get_buf_range_url('v', {action_callback = require('gitlinker.actions').open_in_browser})<cr>",
 				"Link",
 			},
 		},
@@ -551,7 +551,7 @@ local function code_keymap()
 		elseif ft == "java" then
 			keymap_c = {
 				name = "Code",
-				o = { "<cmd>lua require'jdtls'.organize_imports()<cr>", "Organize Imports" },
+				o = { "<cmd>lua require('jdtls').organize_imports()<cr>", "Organize Imports" },
 				v = { "<cmd>lua require('jdtls').extract_variable()<cr>", "Extract Variable" },
 				c = { "<cmd>lua require('jdtls').extract_constant()<cr>", "Extract Constant" },
 				t = { "<cmd>lua require('jdtls').test_class()<cr>", "Test Class" },

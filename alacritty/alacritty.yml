@@ -17,6 +17,8 @@ window:
 
   decorations: buttonless
 
+  #opacity: 0.97
+
 font:
   # Normal font face - Also used to draw glyphs on tmux & VIM
   normal:

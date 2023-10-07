@@ -1,6 +1,6 @@
 local M = {}
 
-local whichkey = require "which-key"
+local whichkey = require("which-key")
 -- local legendary = require "legendary"
 
 -- local function keymap(lhs, rhs, desc)

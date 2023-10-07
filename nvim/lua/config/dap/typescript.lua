@@ -1,10 +1,10 @@
 local M = {}
 
-local HOME = os.getenv "HOME"
+local HOME = os.getenv("HOME")
 local DEBUGGER_LOCATION = HOME .. "/.local/share/nvim/vscode-chrome-debug"
 
 function M.setup()
-	local dap = require "dap"
+	local dap = require("dap")
 
 	dap.adapters.chrome = {
 		type = "executable",

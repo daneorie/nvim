@@ -67,11 +67,6 @@ function M.setup()
 		nowait = false,
 	}
 	whichkey.register(M_keymap, M_opts)
-
-	local status_ok, telescope = pcall(require, "telescope")
-	if status_ok then
-		telescope.load_extension("harpoon")
-	end
 end
 
 return M

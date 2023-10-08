@@ -1,4 +1,4 @@
-local M
+local M = {}
 
 function M.setup()
 	local actions = require("diffview.actions")

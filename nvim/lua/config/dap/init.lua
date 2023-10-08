@@ -66,7 +66,6 @@ function M.setup()
 	configure_exts() -- Extensions
 	configure_debuggers() -- Debugger
 	require("config.dap.keymaps").setup() -- Keymaps
-	require("telescope").load_extension("dap")
 end
 
 configure_debuggers()

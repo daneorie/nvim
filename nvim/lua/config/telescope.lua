@@ -4,10 +4,11 @@ local n_mappings = {}
 local i_mappings = {}
 local extensions = {}
 local extensions_to_load = {
-	--"dap",
+	"dap",
 	"env",
 	"file_browser",
 	"fzf",
+	"harpoon",
 	"telescope-tabs",
 }
 

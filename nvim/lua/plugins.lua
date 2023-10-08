@@ -12,6 +12,9 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
+	git = {
+		timeout = 240,
+	},
 	{ "folke/neoconf.nvim", cmd = "Neoconf" },
 	{ "folke/neodev.nvim" },
 
@@ -129,9 +132,6 @@ require("lazy").setup({
 
 	-- Telescope
 	{
-		"tami5/sqlite.lua",
-	},
-	{
 		"nvim-telescope/telescope.nvim",
 		event = { "VimEnter" },
 		config = function()
@@ -140,14 +140,12 @@ require("lazy").setup({
 		dependencies = {
 			"nvim-lua/popup.nvim",
 			"nvim-lua/plenary.nvim",
-			"nvim-telescope/telescope-fzf-native.nvim",
 			"nvim-telescope/telescope-file-browser.nvim",
 			"nvim-telescope/telescope-dap.nvim",
 			"LinArcX/telescope-env.nvim",
-			{
-				"LukasPietzschmann/telescope-tabs",
-				config = true,
-			},
+			"daneorie/telescope-insert-path.nvim",
+			{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+			{ "LukasPietzschmann/telescope-tabs", config = true },
 			{
 				"nvim-telescope/telescope-ui-select.nvim",
 				config = function()
@@ -167,7 +165,12 @@ require("lazy").setup({
 					require("config.neoclip").setup()
 				end,
 			},
-			"daneorie/telescope-insert-path.nvim",
+			{
+				"ThePrimeagen/harpoon",
+				config = function()
+					require("config.harpoon").setup()
+				end,
+			},
 		},
 	},
 
@@ -235,13 +238,18 @@ require("lazy").setup({
 			"WhoIsSethDaniel/mason-tool-installer.nvim",
 			"jayp0521/mason-null-ls.nvim",
 			"folke/neodev.nvim",
+			"b0o/schemastore.nvim",
+			"jose-elias-alvarez/typescript.nvim",
+			"jose-elias-alvarez/null-ls.nvim", -- for formatters and linters
+			"lvimuser/lsp-inlayhints.nvim",
+			"ray-x/lsp_signature.nvim",
+			"pierreglaser/folding-nvim",
 			{
 				"RRethy/vim-illuminate",
 				config = function()
 					require("config.illuminate").setup()
 				end,
 			},
-			"jose-elias-alvarez/null-ls.nvim", -- for formatters and linters
 			{
 				"j-hui/fidget.nvim",
 				tag = "legacy",
@@ -249,23 +257,18 @@ require("lazy").setup({
 					require("fidget").setup()
 				end,
 			},
-			"b0o/schemastore.nvim",
-			"jose-elias-alvarez/typescript.nvim",
 			{
 				"SmiteshP/nvim-navic",
 				config = function()
 					require("nvim-navic").setup()
 				end,
 			},
-			"lvimuser/lsp-inlayhints.nvim",
 			{
 				"https://git.sr.ht/~whynothugo/lsp_lines.nvim",
 				config = function()
 					require("lsp_lines").setup()
 				end,
 			},
-			"ray-x/lsp_signature.nvim",
-			"pierreglaser/folding-nvim",
 		},
 	},
 
@@ -301,12 +304,6 @@ require("lazy").setup({
 	},
 	{
 		"ThePrimeagen/git-worktree.nvim",
-	},
-	{
-		"ThePrimeagen/harpoon",
-		config = function()
-			require("config.harpoon").setup()
-		end,
 	},
 
 	-- Better comment

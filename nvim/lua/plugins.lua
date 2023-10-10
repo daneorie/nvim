@@ -12,11 +12,15 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-	git = {
-		timeout = 240,
+	git = { timeout = 240 },
+
+	{
+		"folke/neoconf.nvim",
+		cmd = "Neoconf",
 	},
-	{ "folke/neoconf.nvim", cmd = "Neoconf" },
-	{ "folke/neodev.nvim" },
+	{
+		"folke/neodev.nvim",
+	},
 
 	-- WhichKey
 	{
@@ -52,6 +56,10 @@ require("lazy").setup({
 		config = true,
 	},
 	{
+		"f-person/git-blame.nvim",
+		cmd = "GitBlameToggle",
+	},
+	{
 		"pwntester/octo.nvim",
 		dependencies = {
 			"nvim-lua/plenary.nvim",
@@ -81,7 +89,7 @@ require("lazy").setup({
 	-- IDE
 	{
 		"mbbill/undotree",
-		cmd = { "UndotreeToggle" },
+		cmd = "UndotreeToggle",
 		config = function()
 			require("config.undotree").setup()
 		end,
@@ -406,6 +414,12 @@ require("lazy").setup({
 				},
 			})
 		end,
+	},
+
+	-- Task Runner and Job Management
+	{
+		"stevearc/overseer.nvim",
+		opts = {},
 	},
 
 	-- Go

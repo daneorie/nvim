@@ -19,7 +19,12 @@ if a_status_ok then
 		["e"]     = actions.move_selection_next,
 		["\x33[105;5u"] = actions.move_selection_previous, -- <C-i>
 		["i"]     = actions.move_selection_previous,
-		["<C-q>"] = function(bufnr)
+		["<C-q><C-q>"] = require("telescope.builtin").quickfix(),
+		["<C-q><C-a>"] = function(bufnr)
+			actions.send_to_qflist(bufnr)
+			require("telescope.builtin").quickfix()
+		end,
+		["<C-q><C-s>"] = function(bufnr)
 			actions.smart_send_to_qflist(bufnr)
 			require("telescope.builtin").quickfix()
 		end,
@@ -31,7 +36,12 @@ if a_status_ok then
 	local action_i_mappings = {
 		["<C-e>"] = actions.move_selection_next,
 		["\x33[105;5u"] = actions.move_selection_previous, -- <C-i>
-		["<C-q>"] = function(bufnr)
+		["<C-q><C-q>"] = require("telescope.builtin").quickfix(),
+		["<C-q><C-a>"] = function(bufnr)
+			actions.send_to_qflist(bufnr)
+			require("telescope.builtin").quickfix()
+		end,
+		["<C-q><C-s>"] = function(bufnr)
 			actions.smart_send_to_qflist(bufnr)
 			require("telescope.builtin").quickfix()
 		end,

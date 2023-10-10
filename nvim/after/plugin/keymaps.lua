@@ -37,6 +37,7 @@ map({ "n", "x" }, "<leader>nr", ":set relativenumber!<CR>") -- toggle relative n
 map("n", "<leader>h", ":nohlsearch<CR>") -- clear highlights
 map("n", "<leader>al", "o- [ ] ") -- add a new markdown list item
 map("v", "y", "ygv<Esc>") -- prevent yanking from putting the cursor back to the start of the yank
+map({ "n", "x" }, "<C-q><C-q>", "require('telescope.builtin').quickfix()")
 
 -- Set keymaps for Colemak navigation.
 --   Here's the circle of mappings: n -> h -> i -> k -> o -> l -> e -> j -> n

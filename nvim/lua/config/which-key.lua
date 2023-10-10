@@ -29,101 +29,88 @@ local v_opts = {
 }
 
 local function normal_keymap()
-	local keymap_f = nil -- File search
-	local keymap_p = nil -- Project search
-
-	keymap_f = {
-		name = "Find",
-		f = { "<cmd>lua require('utils.finder').find_files()<cr>", "Files" },
-		F = { "<cmd>lua require('telescope').extensions.file_browser.file_browser()<cr>", "File Browser" },
-		H = {
-			"<cmd>lua require('telescope').extensions.file_browser.file_browser({hidden = true})<cr>",
-			"File Browser",
-		},
-		d = { "<cmd>lua require('utils.finder').find_dotfiles()<cr>", "Dotfiles" },
-		b = { "<cmd>lua require('telescope.builtin').buffers()<cr>", "Buffers" },
-		h = { "<cmd>lua require('telescope.builtin').help_tags()<cr>", "Help" },
-		m = { "<cmd>lua require('telescope.builtin').marks()<cr>", "Marks" },
-		o = { "<cmd>lua require('telescope.builtin').oldfiles()<cr>", "Old Files" },
-		g = { "<cmd>lua require('telescope.builtin').live_grep()<cr>", "Live Grep" },
-		c = { "<cmd>lua require('telescope.builtin').commands()<cr>", "Commands" },
-		q = { "<cmd>lua require('telescope.builtin').quickfix()<cr>", "Quickfix" },
-		t = { "<cmd>Telescope telescope-tabs list_tabs<cr>", "Tabs" },
-		w = { "<cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<cr>", "Current Buffer" },
-		n = { "<cmd>Explore<cr>", "netrw" },
-		e = { "<cmd>Oil --float<cr>", "Oil Float" },
-	}
-
-	keymap_p = {
-		name = "Project",
-		p = { "<cmd>lua require('telescope').extensions.project.project{display_type = 'full'}<cr>", "List" },
-		s = { "<cmd>lua require('telescope').extensions.repo.list{}<cr>", "Search" },
-		P = { "<cmd>TermExec cmd='BROWSER=brave yarn dev'<cr>", "Slidev" },
-	}
-
 	local keymap = {
 		-- ["w"] = { "<cmd>update!<CR>", "Save" },
 		["q"] = { "<cmd>lua require('utils').quit()<CR>", "Quit" },
 		-- ["t"] = { "<cmd>ToggleTerm<CR>", "Terminal" },
 
-		a = {
-			name = "Attempt",
-			n = { "<Cmd>lua require('attempt').new_select()<Cr>", "New Select" },
-			i = { "<Cmd>lua require('attempt').new_input_ext()<Cr>", "New Input Extension" },
-			r = { "<Cmd>lua require('attempt').run()<Cr>", "Run" },
-			d = { "<Cmd>lua require('attempt').delete_buf()<Cr>", "Delete Buffer" },
-			c = { "<Cmd>lua require('attempt').rename_buf()<Cr>", "Rename Buffer" },
-			s = { "<Cmd>Telescope attempt<Cr>", "Search" },
-		},
+		--a = {
+		--	name = "Attempt",
+		--	n = { "<Cmd>lua require('attempt').new_select()<Cr>", "New Select" },
+		--	i = { "<Cmd>lua require('attempt').new_input_ext()<Cr>", "New Input Extension" },
+		--	r = { "<Cmd>lua require('attempt').run()<Cr>", "Run" },
+		--	d = { "<Cmd>lua require('attempt').delete_buf()<Cr>", "Delete Buffer" },
+		--	c = { "<Cmd>lua require('attempt').rename_buf()<Cr>", "Rename Buffer" },
+		--	s = { "<Cmd>Telescope attempt<Cr>", "Search" },
+		--},
 
-		b = {
-			name = "Buffer",
-			c = { "<Cmd>BDelete this<Cr>", "Close Buffer" },
-			f = { "<Cmd>bdelete!<Cr>", "Force Close Buffer" },
-			D = { "<Cmd>BWipeout other<Cr>", "Delete All Buffers" },
-			b = { "<Cmd>BufferLinePick<Cr>", "Pick a Buffer" },
-			p = { "<Cmd>BufferLinePickClose<Cr>", "Pick & Close a Buffer" },
-			m = { "<Cmd>JABSOpen<Cr>", "Menu" },
-		},
+		--b = {
+		--	name = "Buffer",
+		--	c = { "<Cmd>BDelete this<Cr>", "Close Buffer" },
+		--	f = { "<Cmd>bdelete!<Cr>", "Force Close Buffer" },
+		--	D = { "<Cmd>BWipeout other<Cr>", "Delete All Buffers" },
+		--	b = { "<Cmd>BufferLinePick<Cr>", "Pick a Buffer" },
+		--	p = { "<Cmd>BufferLinePickClose<Cr>", "Pick & Close a Buffer" },
+		--	m = { "<Cmd>JABSOpen<Cr>", "Menu" },
+		--},
 
-		c = {
-			name = "Code",
-			g = { "<cmd>Neogen func<Cr>", "Func Doc" },
-			G = { "<cmd>Neogen class<Cr>", "Class Doc" },
-			d = { "<cmd>DogeGenerate<Cr>", "Generate Doc" },
-			o = { "<cmd>Telescope aerial<Cr>", "Outline" },
-			T = { "<cmd>TodoTelescope<Cr>", "TODO" },
-			x = {
-				name = "Swap Next",
-				f = "Function",
-				p = "Parameter",
-				c = "Class",
-			},
-			X = {
-				name = "Swap Previous",
-				f = "Function",
-				p = "Parameter",
-				c = "Class",
-			},
-			-- f = "Select Outer Function",
-			-- F = "Select Outer Class",
-		},
+		--c = {
+		--	name = "Code",
+		--	g = { "<cmd>Neogen func<Cr>", "Func Doc" },
+		--	G = { "<cmd>Neogen class<Cr>", "Class Doc" },
+		--	d = { "<cmd>DogeGenerate<Cr>", "Generate Doc" },
+		--	o = { "<cmd>Telescope aerial<Cr>", "Outline" },
+		--	T = { "<cmd>TodoTelescope<Cr>", "TODO" },
+		--	x = {
+		--		name = "Swap Next",
+		--		f = "Function",
+		--		p = "Parameter",
+		--		c = "Class",
+		--	},
+		--	X = {
+		--		name = "Swap Previous",
+		--		f = "Function",
+		--		p = "Parameter",
+		--		c = "Class",
+		--	},
+		--	-- f = "Select Outer Function",
+		--	-- F = "Select Outer Class",
+		--},
 
-		d = {
-			name = "Debug",
-		},
+		--d = {
+		--	name = "Debug",
+		--},
 
 		-- Database
-		D = {
-			name = "Database",
-			u = { "<Cmd>DBUIToggle<Cr>", "Toggle UI" },
-			f = { "<Cmd>DBUIFindBuffer<Cr>", "Find buffer" },
-			r = { "<Cmd>DBUIRenameBuffer<Cr>", "Rename buffer" },
-			q = { "<Cmd>DBUILastQueryInfo<Cr>", "Last query info" },
-		},
+		--D = {
+		--	name = "Database",
+		--	u = { "<Cmd>DBUIToggle<Cr>", "Toggle UI" },
+		--	f = { "<Cmd>DBUIFindBuffer<Cr>", "Find buffer" },
+		--	r = { "<Cmd>DBUIRenameBuffer<Cr>", "Rename buffer" },
+		--	q = { "<Cmd>DBUILastQueryInfo<Cr>", "Last query info" },
+		--},
 
-		f = keymap_f,
-		p = keymap_p,
+		f = {
+			name = "Find",
+			f = { "<cmd>lua require('utils.finder').find_files()<cr>", "Files" },
+			F = { "<cmd>lua require('telescope').extensions.file_browser.file_browser()<cr>", "File Browser" },
+			H = {
+				"<cmd>lua require('telescope').extensions.file_browser.file_browser({hidden = true})<cr>",
+				"File Browser",
+			},
+			d = { "<cmd>lua require('utils.finder').find_dotfiles()<cr>", "Dotfiles" },
+			b = { "<cmd>lua require('telescope.builtin').buffers()<cr>", "Buffers" },
+			h = { "<cmd>lua require('telescope.builtin').help_tags()<cr>", "Help" },
+			m = { "<cmd>lua require('telescope.builtin').marks()<cr>", "Marks" },
+			o = { "<cmd>lua require('telescope.builtin').oldfiles()<cr>", "Old Files" },
+			g = { "<cmd>lua require('telescope.builtin').live_grep()<cr>", "Live Grep" },
+			c = { "<cmd>lua require('telescope.builtin').commands()<cr>", "Commands" },
+			q = { "<cmd>lua require('telescope.builtin').quickfix()<cr>", "Quickfix" },
+			t = { "<cmd>Telescope telescope-tabs list_tabs<cr>", "Tabs" },
+			w = { "<cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<cr>", "Current Buffer" },
+			n = { "<cmd>Explore<cr>", "netrw" },
+			e = { "<cmd>Oil --float<cr>", "Oil Float" },
+		},
 
 		j = {
 			name = "Jump",
@@ -154,11 +141,6 @@ local function normal_keymap()
 		--   p = { "<Plug>PlenaryTestFile", "PlenaryTestFile" },
 		-- },
 
-		-- keymap_c.s = { "<cmd>OverseerRun<cr>", "Overseer Run" }
-		-- keymap_c.S = { "<cmd>OverseerToggle!<cr>", "Overseer Toggle" }
-		-- keymap_c.a = { "<cmd>OverseerQuickAction<cr>", "Overseer Quick Action" }
-		-- keymap_c.A = { "<cmd>OverseerTaskAction<cr>", "Overseer Task Action" }
-
 		o = {
 			name = "Overseer",
 			C = { "<cmd>OverseerClose<cr>", "OverseerClose" },
@@ -174,37 +156,37 @@ local function normal_keymap()
 			t = { "<cmd>OverseerToggle!<cr>", "OverseerToggle" },
 		},
 
-		t = {
-			name = "Test",
-			a = { "<cmd>lua require('neotest').run.attach()<cr>", "Attach" },
-			f = { "<cmd>lua require('neotest').run.run(vim.fn.expand('%'))<cr>", "Run File" },
-			F = { "<cmd>lua require('neotest').run.run({vim.fn.expand('%'), strategy = 'dap'})<cr>", "Debug File" },
-			l = { "<cmd>lua require('neotest').run.run_last()<cr>", "Run Last" },
-			L = { "<cmd>lua require('neotest').run.run_last({ strategy = 'dap' })<cr>", "Debug Last" },
-			n = { "<cmd>lua require('neotest').run.run()<cr>", "Run Nearest" },
-			N = { "<cmd>lua require('neotest').run.run({strategy = 'dap'})<cr>", "Debug Nearest" },
-			o = { "<cmd>lua require('neotest').output.open({ enter = true })<cr>", "Output" },
-			S = { "<cmd>lua require('neotest').run.stop()<cr>", "Stop" },
-			s = { "<cmd>lua require('neotest').summary.toggle()<cr>", "Summary" },
-			p = { "<Plug>PlenaryTestFile", "PlenaryTestFile" },
-			v = { "<cmd>TestVisit<cr>", "Visit" },
-			x = { "<cmd>TestSuite<cr>", "Suite" },
-			t = {
-				name = "Test",
-				l = { "<cmd>TestLast<cr>", "Run Last" },
-				n = { "<cmd>TestNearest<cr>", "Run Nearest" },
-			},
-		},
+		--t = {
+		--	name = "Test",
+		--	a = { "<cmd>lua require('neotest').run.attach()<cr>", "Attach" },
+		--	f = { "<cmd>lua require('neotest').run.run(vim.fn.expand('%'))<cr>", "Run File" },
+		--	F = { "<cmd>lua require('neotest').run.run({vim.fn.expand('%'), strategy = 'dap'})<cr>", "Debug File" },
+		--	l = { "<cmd>lua require('neotest').run.run_last()<cr>", "Run Last" },
+		--	L = { "<cmd>lua require('neotest').run.run_last({ strategy = 'dap' })<cr>", "Debug Last" },
+		--	n = { "<cmd>lua require('neotest').run.run()<cr>", "Run Nearest" },
+		--	N = { "<cmd>lua require('neotest').run.run({strategy = 'dap'})<cr>", "Debug Nearest" },
+		--	o = { "<cmd>lua require('neotest').output.open({ enter = true })<cr>", "Output" },
+		--	S = { "<cmd>lua require('neotest').run.stop()<cr>", "Stop" },
+		--	s = { "<cmd>lua require('neotest').summary.toggle()<cr>", "Summary" },
+		--	p = { "<Plug>PlenaryTestFile", "PlenaryTestFile" },
+		--	v = { "<cmd>TestVisit<cr>", "Visit" },
+		--	x = { "<cmd>TestSuite<cr>", "Suite" },
+		--	t = {
+		--		name = "Test",
+		--		l = { "<cmd>TestLast<cr>", "Run Last" },
+		--		n = { "<cmd>TestNearest<cr>", "Run Nearest" },
+		--	},
+		--},
 
-		r = {
-			name = "Refactor",
-			i = { [[<cmd>lua require('refactoring').refactor('Inline Variable')<cr>]], "Inline Variable" },
-			b = { [[<cmd>lua require('refactoring').refactor('Exract Block')<cr>]], "Extract Block" },
-			B = { [[<cmd>lua require('refactoring').refactor('Exract Block To File')<cr>]], "Extract Block to File" },
-			P = { [[<cmd>lua require('refactoring').debug.printf({below = false})<cr>]], "Debug Print" },
-			p = { [[<cmd>lua require('refactoring').debug.print_var({normal = true})<cr>]], "Debug Print Variable" },
-			c = { [[<cmd>lua require('refactoring').debug.cleanup({})<cr>]], "Debug Cleanup" },
-		},
+		--r = {
+		--	name = "Refactor",
+		--	i = { [[<cmd>lua require('refactoring').refactor('Inline Variable')<cr>]], "Inline Variable" },
+		--	b = { [[<cmd>lua require('refactoring').refactor('Exract Block')<cr>]], "Extract Block" },
+		--	B = { [[<cmd>lua require('refactoring').refactor('Exract Block To File')<cr>]], "Extract Block to File" },
+		--	P = { [[<cmd>lua require('refactoring').debug.printf({below = false})<cr>]], "Debug Print" },
+		--	p = { [[<cmd>lua require('refactoring').debug.print_var({normal = true})<cr>]], "Debug Print Variable" },
+		--	c = { [[<cmd>lua require('refactoring').debug.cleanup({})<cr>]], "Debug Cleanup" },
+		--},
 
 		s = {
 			name = "Search",
@@ -215,28 +197,29 @@ local function normal_keymap()
 			w = { [[ <Esc><Cmd>lua require("telescope").extensions.arecibo.websearch()<CR>]], "Web" },
 		},
 
-		v = {
-			name = "Vimspector",
-			G = { "<cmd>lua require('config.vimspector').generate_debug_profile()<cr>", "Generate Debug Profile" },
-			I = { "<cmd>VimspectorInstall<cr>", "Install" },
-			U = { "<cmd>VimspectorUpdate<cr>", "Update" },
-			R = { "<cmd>call vimspector#RunToCursor()<cr>", "Run to Cursor" },
-			c = { "<cmd>call vimspector#Continue()<cr>", "Continue" },
-			i = { "<cmd>call vimspector#StepInto()<cr>", "Step Into" },
-			o = { "<cmd>call vimspector#StepOver()<cr>", "Step Over" },
-			s = { "<cmd>call vimspector#Launch()<cr>", "Start" },
-			t = { "<cmd>call vimspector#ToggleBreakpoint()<cr>", "Toggle Breakpoint" },
-			u = { "<cmd>call vimspector#StepOut()<cr>", "Step Out" },
-			S = { "<cmd>call vimspector#Stop()<cr>", "Stop" },
-			r = { "<cmd>call vimspector#Restart()<cr>", "Restart" },
-			x = { "<cmd>VimspectorReset<cr>", "Reset" },
-			H = { "<cmd>lua require('config.vimspector').toggle_human_mode()<cr>", "Toggle HUMAN mode" },
-		},
+		--v = {
+		--	name = "Vimspector",
+		--	G = { "<cmd>lua require('config.vimspector').generate_debug_profile()<cr>", "Generate Debug Profile" },
+		--	I = { "<cmd>VimspectorInstall<cr>", "Install" },
+		--	U = { "<cmd>VimspectorUpdate<cr>", "Update" },
+		--	R = { "<cmd>call vimspector#RunToCursor()<cr>", "Run to Cursor" },
+		--	c = { "<cmd>call vimspector#Continue()<cr>", "Continue" },
+		--	i = { "<cmd>call vimspector#StepInto()<cr>", "Step Into" },
+		--	o = { "<cmd>call vimspector#StepOver()<cr>", "Step Over" },
+		--	s = { "<cmd>call vimspector#Launch()<cr>", "Start" },
+		--	t = { "<cmd>call vimspector#ToggleBreakpoint()<cr>", "Toggle Breakpoint" },
+		--	u = { "<cmd>call vimspector#StepOut()<cr>", "Step Out" },
+		--	S = { "<cmd>call vimspector#Stop()<cr>", "Stop" },
+		--	r = { "<cmd>call vimspector#Restart()<cr>", "Restart" },
+		--	x = { "<cmd>VimspectorReset<cr>", "Reset" },
+		--	H = { "<cmd>lua require('config.vimspector').toggle_human_mode()<cr>", "Toggle HUMAN mode" },
+		--},
 
 		w = {
 			name = "wiki.vim",
-			n = { "<Plug>(wiki-open)", "Open" },
+			w = { "<Plug>(wiki-index)", "Index" },
 			["<leader>w"] = { "<Plug>(wiki-journal)", "Journal" },
+			n = { "<Plug>(wiki-open)", "Open" },
 			x = { "<Plug>(wiki-reload)", "Reload" },
 			g = {
 				name = "Graph",
@@ -284,15 +267,15 @@ local function normal_keymap()
 			c = { "<cmd>Telescope neoclip<cr>", "Clipboard" },
 			d = { "<cmd>DiffviewOpen<cr>", "Diff View Open" },
 			D = { "<cmd>DiffviewClose<cr>", "Diff View Close" },
-			i = { "<cmd>PackerInstall<cr>", "Install" },
+			i = { "<cmd>Lazy install<cr>", "Install" },
 			m = { "<cmd>lua require('telescope').extensions.macroscope.default()<cr>", "Macros" },
-			p = { "<cmd>PackerProfile<cr>", "Profile" },
-			s = { "<cmd>PackerSync<cr>", "Sync" },
-			S = { "<cmd>PackerStatus<cr>", "Status" },
-			u = { "<cmd>PackerUpdate<cr>", "Update" },
+			p = { "<cmd>Lazy profile<cr>", "Profile" },
+			s = { "<cmd>Lazy sync<cr>", "Sync" },
+			S = { "<cmd>Lazy check<cr>", "Status" },
+			u = { "<cmd>Lazy update<cr>", "Update" },
 			-- x = { "<cmd>cd %:p:h<cr>", "Change Directory" },
 			-- x = { "<cmd>set autochdir<cr>", "Auto ChDir" },
-			x = { "<cmd>Telescope cder<cr>", "Change Directory" },
+			--x = { "<cmd>Telescope cder<cr>", "Change Directory" },
 			e = { "!!$SHELL<CR>", "Execute line" },
 			W = { "<cmd>lua require('utils.session').toggle_session()<cr>", "Toggle Workspace Saving" },
 			w = { "<cmd>lua require('utils.session').list_session()<cr>", "Restore Workspace" },

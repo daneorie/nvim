@@ -106,6 +106,8 @@ bindkey -M vicmd "L" vi-forward-blank-word-end
 bindkey -M vicmd "E" vi-join
 bindkey -M vicmd "^J" down-history
 
+bindkey -s ^f "tmux-sessionizer\n"
+
 # Setting the prompt
 NEWLINE=$'\n'
 ## Options

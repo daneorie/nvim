@@ -33,6 +33,10 @@ ln -s ~/dotfiles/nvim/ ~/.config/
 ln -s ~/dotfiles/gitui/ ~/.config/
 ln -s ~/dotfiles/alacritty/ ~/.config/
 ln -s ~/dotfiles/ubersicht/widgets/ ~/Library/Application Support/Übersicht/
+
+# scripts
+ln -s ~/dotfiles/scripts/tmux-sessionizer ~/.local/bin/
+ln -s ~/dotfiles/scripts/tmux-windowizer ~/.local/bin/
 ```
 
 Install Homebrew

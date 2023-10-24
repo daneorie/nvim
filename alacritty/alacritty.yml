@@ -129,26 +129,26 @@ key_bindings:
   - { key: J, mods: Shift, mode: Vi|~Search, action: SearchPrevious } # Colemak
 
   # tmux
-  - { key: LBracket, mods: Command, chars: "\x06\x5b" } # ctrl-f [ : Use command + [ to cycle through windows left
-  - { key: RBracket, mods: Command, chars: "\x06\x5d" } # ctrl-f ] : Use command + ] to cycle through windows right
+  - { key: LBracket, mods: Command, chars: "\x02\x5b" } # ctrl-b [ : Use command + [ to cycle through windows left
+  - { key: RBracket, mods: Command, chars: "\x02\x5d" } # ctrl-b ] : Use command + ] to cycle through windows right
   - { key: Key6, mods: Control, chars: "\x1e" } #          : ctrl-^ doesn't work in some terminals like alacritty
-  - { key: D, mods: Command, chars: "\x06\x76" } # ctrl-f v : Split pane vertically
-  - { key: D, mods: Command|Shift, chars: "\x06\x73" } # ctrl-f s : Split pane horizontally
-  - { key: W, mods: Command, chars: "\x06\x78" } # ctrl-f x : Close pane; closes window if last pane
-  - { key: T, mods: Command, chars: "\x06\x63" } # ctrl-f c : Create window (tab)
-  - { key: Key1, mods: Command, chars: "\x06\x31" } # ctrl-f 1 : Select window 1
-  - { key: Key2, mods: Command, chars: "\x06\x32" } # ctrl-f 2 : Select window 2
-  - { key: Key3, mods: Command, chars: "\x06\x33" } # ctrl-f 3 : Select window 3
-  - { key: Key4, mods: Command, chars: "\x06\x34" } # ctrl-f 4 : Select window 4
-  - { key: Key5, mods: Command, chars: "\x06\x35" } # ctrl-f 5 : Select window 5
-  - { key: Key6, mods: Command, chars: "\x06\x36" } # ctrl-f 6 : Select window 6
-  - { key: Key7, mods: Command, chars: "\x06\x37" } # ctrl-f 7 : Select window 7
-  - { key: Key8, mods: Command, chars: "\x06\x38" } # ctrl-f 8 : Select window 8
-  - { key: Key9, mods: Command, chars: "\x06\x39" } # ctrl-f 9 : Select window 9
-  - { key: Left, mods: Command, chars: "\x06\x4e" } # ctrl-f n : Resize pane - Left
-  - { key: Down, mods: Command, chars: "\x06\x45" } # ctrl-f e : Resize pane - Down
-  - { key: Up, mods: Command, chars: "\x06\x49" } # ctrl-f i : Resize pane - Up
-  - { key: Right, mods: Command, chars: "\x06\x4f" } # ctrl-f o : Resize pane - Right
+  - { key: D, mods: Command, chars: "\x02\x76" } # ctrl-b v : Split pane vertically
+  - { key: D, mods: Command|Shift, chars: "\x02\x73" } # ctrl-b s : Split pane horizontally
+  - { key: W, mods: Command, chars: "\x02\x78" } # ctrl-b x : Close pane; closes window if last pane
+  - { key: T, mods: Command, chars: "\x02\x63" } # ctrl-b c : Create window (tab)
+  - { key: Key1, mods: Command, chars: "\x02\x31" } # ctrl-b 1 : Select window 1
+  - { key: Key2, mods: Command, chars: "\x02\x32" } # ctrl-b 2 : Select window 2
+  - { key: Key3, mods: Command, chars: "\x02\x33" } # ctrl-b 3 : Select window 3
+  - { key: Key4, mods: Command, chars: "\x02\x34" } # ctrl-b 4 : Select window 4
+  - { key: Key5, mods: Command, chars: "\x02\x35" } # ctrl-b 5 : Select window 5
+  - { key: Key6, mods: Command, chars: "\x02\x36" } # ctrl-b 6 : Select window 6
+  - { key: Key7, mods: Command, chars: "\x02\x37" } # ctrl-b 7 : Select window 7
+  - { key: Key8, mods: Command, chars: "\x02\x38" } # ctrl-b 8 : Select window 8
+  - { key: Key9, mods: Command, chars: "\x02\x39" } # ctrl-b 9 : Select window 9
+  - { key: Left, mods: Command, chars: "\x02\x4e" } # ctrl-b n : Resize pane - Left
+  - { key: Down, mods: Command, chars: "\x02\x45" } # ctrl-b e : Resize pane - Down
+  - { key: Up, mods: Command, chars: "\x02\x49" } # ctrl-b i : Resize pane - Up
+  - { key: Right, mods: Command, chars: "\x02\x4f" } # ctrl-b o : Resize pane - Right
 
   # 5u - ctrl -- any overlaps require \x33 instead of \x1b, which will need to be passed on with tmux and interpretted by NeoVim
   - { key: Tab, mods: Control, chars: "\x1b[9;5u" } # ctrl-tab
@@ -175,7 +175,7 @@ key_bindings:
   - { key: C, mods: Control|Shift, chars: "\x1b[99;6u" } # shift-ctrl-c
   - { key: D, mods: Control|Shift, chars: "\x1b[100;6u" } # shift-ctrl-d
   - { key: E, mods: Control|Shift, chars: "\x1b[101;6u" } # shift-ctrl-e
-  - { key: F, mods: Control|Shift, chars: "\x1b[102;6u" } # shift-ctrl-f
+  - { key: F, mods: Control|Shift, chars: "\x1b[102;6u" } # shift-ctrl-b
   - { key: G, mods: Control|Shift, chars: "\x1b[103;6u" } # shift-ctrl-g
   - { key: H, mods: Control|Shift, chars: "\x1b[104;6u" } # shift-ctrl-h
   - { key: I, mods: Control|Shift, chars: "\x1b[105;6u" } # shift-ctrl-i
@@ -199,10 +199,10 @@ key_bindings:
 
   # 9u - cmd
   # For some reason these are needed for cmd-e to be recognized by NVIM in tmux as <M-e>, for example
-  - { key: E, mods: Command, chars: "\x06\x65" } # ctrl-f e
-  - { key: I, mods: Command, chars: "\x06\x69" } # ctrl-f i
-  - { key: N, mods: Command, chars: "\x06\x6e" } # ctrl-f n
-  - { key: O, mods: Command, chars: "\x06\x6f" } # ctrl-f o
+  - { key: E, mods: Command, chars: "\x02\x65" } # ctrl-b e
+  - { key: I, mods: Command, chars: "\x02\x69" } # ctrl-b i
+  - { key: N, mods: Command, chars: "\x02\x6e" } # ctrl-b n
+  - { key: O, mods: Command, chars: "\x02\x6f" } # ctrl-b o
   # Actual bindings
   - { key: Semicolon, mods: Command, chars: "\x1b[59;9u" } # cmd-;
   - { key: A, mods: Command, chars: "\x1b[97;9u" } # cmd-a

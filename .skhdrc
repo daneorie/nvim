@@ -116,7 +116,7 @@ hyper - p: open -a Photos
 hyper - g: open -nb org.alacritty --args --config-file ~/.config/alacritty/alacritty.yml --title WikiJournal -e $SHELL -lc "tmux new -A -s 'WikiJournal' -n 'Journal' 'source ~/.zshrc; cd $WIKI_HOME; nvim +WikiJournal'"
 #------------------
 #hyper - a: open -nb org.alacritty
-hyper - a: open -nb org.alacritty --args --config-file ~/.config/alacritty/alacritty.yml --title main -e $SHELL -lc "tmux new -A -s 'main' -n 'dotfiles' 'source ~/.zshrc; cd ~/dotfiles; nvim .'"
+hyper - a: open -nb org.alacritty --args --config-file ~/.config/alacritty/alacritty.yml --title main -e $SHELL -lc "tmux-sessionizer"
 hyper - r: open -a Mail
 hyper - s: osascript -e 'tell application "Safari"' -e 'make new document' -e 'activate' -e 'end tell'
 hyper - t: open -a Notes && open -a Notes

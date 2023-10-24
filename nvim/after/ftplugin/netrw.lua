@@ -19,18 +19,18 @@ vim.api.nvim_create_autocmd("filetype", {
 		bind("i", "<up>")
 
 		-- toggle the dotfiles
-		bind(".", "<cmd>call <SNR>59_NetrwHidden(1)<CR>")
+		bind(".", "<cmd>call <SNR>66_NetrwHidden(1)<CR>")
 
 		-- close the preview window
 		bind("P", "<C-w>z")
 
 		-- cycle between tree listings
-		bind("h", "<cmd>call <SNR>59_NetrwListStyle(1)<CR>")
+		bind("h", "<cmd>call <SNR>66_NetrwListStyle(1)<CR>")
 
 		-- create a new file
 		bind("a", "<Plug>NetrwOpenFile:w<CR>:Explore<CR>")
 
 		-- rename file
-		bind("r", "<cmd>call <SNR>59_NetrwLocalRename(expand('%:p:h'))<CR>")
+		bind("r", "<cmd>call <SNR>66_NetrwLocalRename(expand('%:p:h'))<CR>")
 	end,
 })

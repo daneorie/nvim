@@ -28,6 +28,7 @@ ln -s ~/dotfiles/.lesskey ~
 ln -s ~/dotfiles/.tmux.conf ~
 ln -s ~/dotfiles/.yabairc ~
 ln -s ~/dotfiles/.skhdrc ~
+ln -s ~/dotfiles/.wezterm.lua ~
 ln -s ~/dotfiles/com.example.KeyRemapping.plist ~/Library/LaunchAgents/
 ln -s ~/dotfiles/nvim/ ~/.config/
 ln -s ~/dotfiles/gitui/ ~/.config/

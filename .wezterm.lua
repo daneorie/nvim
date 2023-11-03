@@ -72,6 +72,10 @@ wezterm.on("update-right-status", function(window, pane)
 	window:set_right_status(name or "")
 end)
 
+wezterm.on("update-right-status", function(window, pane)
+	window:set_right(window:active_workspace())
+end)
+
 config.leader = { key = "Space", mods = "ALT" }
 config.keys = {
 	-- ALT+Space, followed by 'r' will put us in resize-pane
@@ -186,34 +190,38 @@ config.keys = {
 	--{ key = "s", mods = "CMD", action = act.SendString("\x1b[115;9u") }, -- cmd-s
 	{ key = "u", mods = "CMD", action = act.SendString("\x1b[117;9u") }, -- cmd-u
 	{ key = "y", mods = "CMD", action = act.SendString("\x1b[121;9u") }, -- cmd-y
+
+	-- Prompt for a name to use for a new workspace and switch to it.
+	{
+		key = "W",
+		mods = "CTRL|SHIFT",
+		action = act.PromptInputLine({
+			description = wezterm.format({
+				{ Attribute = { Intensity = "Bold" } },
+				{ Foreground = { AnsiColor = "Fuchsia" } },
+				{ Text = "Enter name for new workspace" },
+			}),
+			action = wezterm.action_callback(function(window, pane, line)
+				-- line will be `nil` if they hit escape without entering anything
+				-- An empty string if they just hit enter
+				-- Or the actual line of text they wrote
+				if line then
+					window:perform_action(
+						act.SwitchToWorkspace({
+							name = line,
+						}),
+						pane
+					)
+				end
+			end),
+		}),
+	},
 }
 
 config.key_tables = {
-	-- Set keymaps for Colemak navigation.
-	--   Here's the circle of mappings: n -> h -> i -> k -> o -> l -> e -> j -> n
-	--bind-key -T copy-mode-vi 'a' send-keys -X cancel
-	--bind-key -T copy-mode-vi 'h' send-keys -X cancel
-	--bind-key -T copy-mode-vi 'j' send-keys -X search-again
-	--bind-key -T copy-mode-vi 'k' send-keys -X other-end
-	--bind-key -T copy-mode-vi 'l' send-keys -X next-word-end
-	--bind-key -T copy-mode-vi 'n' send-keys -X cursor-left
-	--bind-key -T copy-mode-vi 'e' send-keys -X cursor-down
-	--bind-key -T copy-mode-vi 'i' send-keys -X cursor-up
-	--bind-key -T copy-mode-vi 'o' send-keys -X cursor-right
-	--bind-key -T copy-mode-vi 'H' send-keys -X cancel
-	--bind-key -T copy-mode-vi 'J' send-keys -X search-reverse
-	--bind-key -T copy-mode-vi 'K' send-keys -X cancel
-	--bind-key -T copy-mode-vi 'L' send-keys -X new-space-end
-	--bind-key -T copy-mode-vi 'N' send-keys -X top-line
-	--unbind   -T copy-mode-vi 'E'
-	--unbind   -T copy-mode-vi 'I'
-	--bind-key -T copy-mode-vi 'O' send-keys -X bottom-line
-
 	--unbind   -T copy-mode-vi C-d
 	--bind-key -T copy-mode-vi C-u send-keys -X half-page-down
 	--bind-key -T copy-mode-vi C-y send-keys -X half-page-up
-	--bind-key -T copy-mode-vi C-, send-keys -X page-down
-	--bind-key -T copy-mode-vi C-. send-keys -X page-up
 
 	-- alacritty vi-mode
 	--{ key = "h", mode = "Vi|~Search", action = ToggleViMode } -- Colemak
@@ -298,7 +306,6 @@ config.key_tables = {
 		{ key = "b", mods = "ALT", action = act.CopyMode("MoveBackwardWord") },
 		{ key = "b", mods = "CTRL", action = act.CopyMode("PageUp") },
 		{ key = "c", mods = "CTRL", action = act.CopyMode("Close") },
-		{ key = "d", mods = "CTRL", action = act.CopyMode({ MoveByPage = 0.5 }) },
 		{ key = "f", mods = "NONE", action = act.CopyMode({ JumpForward = { prev_char = false } }) },
 		{ key = "f", mods = "ALT", action = act.CopyMode("MoveForwardWord") },
 		{ key = "f", mods = "CTRL", action = act.CopyMode("PageDown") },
@@ -312,11 +319,12 @@ config.key_tables = {
 		{ key = "o", mods = "NONE", action = act.CopyMode("MoveRight") },
 		{ key = ",", mods = "CTRL", action = act.CopyMode("PageDown") },
 		{ key = ".", mods = "CTRL", action = act.CopyMode("PageUp") },
+		{ key = "u", mods = "CTRL", action = act.CopyMode({ MoveByPage = 0.5 }) },
+		{ key = "y", mods = "CTRL", action = act.CopyMode({ MoveByPage = -0.5 }) },
 		{ key = "m", mods = "ALT", action = act.CopyMode("MoveToStartOfLineContent") },
 		{ key = "k", mods = "NONE", action = act.CopyMode("MoveToSelectionOtherEnd") },
 		{ key = "q", mods = "NONE", action = act.CopyMode("Close") },
 		{ key = "t", mods = "NONE", action = act.CopyMode({ JumpForward = { prev_char = true } }) },
-		{ key = "u", mods = "CTRL", action = act.CopyMode({ MoveByPage = -0.5 }) },
 		{ key = "v", mods = "NONE", action = act.CopyMode({ SetSelectionMode = "Cell" }) },
 		{ key = "v", mods = "CTRL", action = act.CopyMode({ SetSelectionMode = "Block" }) },
 		{ key = "w", mods = "NONE", action = act.CopyMode("MoveForwardWord") },

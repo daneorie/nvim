@@ -57,23 +57,24 @@ end
 
 local function map(things)
 	local t = {}
-	for key in string.gmatch(things, "([^,]+)") do
+	for key in things:gmatch("([^,]+)") do
 		table.insert(t, act.SendKey({ key = key }))
 	end
 	return t
 end
 
--- Show which key table is active in the status area
+-- Show which workspace and key table are active in the status area
 wezterm.on("update-right-status", function(window, pane)
-	local name = window:active_key_table()
-	if name then
-		name = "TABLE: " .. name
+	local workspace = window:active_workspace()
+	local key_table = window:active_key_table()
+	local status = {}
+	if workspace then
+		table.insert(status, workspace)
 	end
-	window:set_right_status(name or "")
-end)
-
-wezterm.on("update-right-status", function(window, pane)
-	window:set_right(window:active_workspace())
+	if key_table then
+		table.insert(status, key_table:upper())
+	end
+	window:set_right_status(table.concat(status, ", ") or "")
 end)
 
 config.leader = { key = "Space", mods = "ALT" }
@@ -170,7 +171,7 @@ config.keys = {
 	{ key = "p", mods = "CTRL|SHIFT", action = act.SendString("\x1b[112;6u") }, -- shift-ctrl-p
 	{ key = "q", mods = "CTRL|SHIFT", action = act.SendString("\x1b[113;6u") }, -- shift-ctrl-q
 	{ key = "r", mods = "CTRL|SHIFT", action = act.SendString("\x1b[114;6u") }, -- shift-ctrl-r
-	{ key = "s", mods = "CTRL|SHIFT", action = act.SendString("\x1b[115;6u") }, -- shift-ctrl-s
+	--{ key = "s", mods = "CTRL|SHIFT", action = act.SendString("\x1b[115;6u") }, -- shift-ctrl-s
 	{ key = "t", mods = "CTRL|SHIFT", action = act.SendString("\x1b[116;6u") }, -- shift-ctrl-t
 	{ key = "u", mods = "CTRL|SHIFT", action = act.SendString("\x1b[117;6u") }, -- shift-ctrl-u
 	{ key = "v", mods = "CTRL|SHIFT", action = act.SendString("\x1b[118;6u") }, -- shift-ctrl-v
@@ -193,7 +194,7 @@ config.keys = {
 
 	-- Prompt for a name to use for a new workspace and switch to it.
 	{
-		key = "W",
+		key = "w",
 		mods = "CTRL|SHIFT",
 		action = act.PromptInputLine({
 			description = wezterm.format({
@@ -215,6 +216,57 @@ config.keys = {
 				end
 			end),
 		}),
+	},
+
+	-- switch between a list of workspaces
+	{
+		key = "s",
+		mods = "SHIFT|CMD",
+		action = wezterm.action_callback(function(window, pane)
+			-- Here you can dynamically construct a longer list if needed
+
+			local home = wezterm.home_dir
+			local workspaces = {
+				{ id = home, label = home },
+				{ id = home .. "/dotfiles", label = home .. "/dotfiles" },
+			}
+
+			for _, path in ipairs(wezterm.glob(home .. "/repos/*")) do
+				table.insert(workspaces, {
+					id = path,
+					label = path,
+				})
+			end
+
+			window:perform_action(
+				act.InputSelector({
+					action = wezterm.action_callback(function(inner_window, inner_pane, id, label)
+						if not id and not label then
+							wezterm.log_info("cancelled")
+						else
+							local name = label:gsub("^.*/", "")
+							wezterm.log_info("id = " .. id)
+							wezterm.log_info("label = " .. label)
+							inner_window:perform_action(
+								act.SwitchToWorkspace({
+									--name = label,
+									name = name,
+									spawn = {
+										label = "Workspace: " .. label,
+										cwd = id,
+									},
+								}),
+								inner_pane
+							)
+						end
+					end),
+					title = "Choose Workspace",
+					choices = workspaces,
+					fuzzy = true,
+				}),
+				pane
+			)
+		end),
 	},
 }
 

@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 DEBUG=0
-logfile=~/tmux-sessionizer.log
+logfile=~/wezterm-sessionizer.log
 
 log() {
 	[[ -n $DEBUG ]] && echo "$@" >>"$logfile"
 }
 
-log "running tmux-sessionizer"
+log "running wezterm-sessionizer"
 
 if [[ $# -eq 1 ]]; then
 	selected=$1

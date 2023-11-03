@@ -110,13 +110,13 @@ meh - s: kill -9 $(ps -ef | awk '{ if ($8 == "/usr/local/opt/skhd/bin/skhd") { p
 meh - 0x2C: open -nb org.alacritty --args --config-file ~/.config/alacritty/alacritty.yml # meh - /
 #------------------
 hyper - q: open -a "Activity Monitor"
-hyper - w: open -nb org.alacritty --args --config-file ~/.config/alacritty/alacritty.yml --title WikiIndex -e $SHELL -lc "tmux new -A -s 'WikiIndex' -n 'Index' 'source ~/.zshrc; cd $WIKI_HOME; nvim +WikiIndex'"
+hyper - w: open -nb org.alacritty --args --config-file ~/.config/alacritty/alacritty.yml --title WikiIndex -e $SHELL -lc "tmux new -A -s 'WikiIndex' -n 'Index' 'source ~/.zshrc; cd $WIKI_HOME; nvim +WikiIndex; zsh -i'"
 hyper - f: osascript -e 'tell application "Finder"' -e 'set theWindow to make new Finder window' -e 'activate target of theWindow' -e 'end tell'
 hyper - p: open -a Photos
-hyper - g: open -nb org.alacritty --args --config-file ~/.config/alacritty/alacritty.yml --title WikiJournal -e $SHELL -lc "tmux new -A -s 'WikiJournal' -n 'Journal' 'source ~/.zshrc; cd $WIKI_HOME; nvim +WikiJournal'"
+hyper - g: open -nb org.alacritty --args --config-file ~/.config/alacritty/alacritty.yml --title WikiJournal -e $SHELL -lc "tmux new -A -s 'WikiJournal' -n 'Journal' 'source ~/.zshrc; cd $WIKI_HOME; nvim +WikiJournal'; zsh -i"
 #------------------
 #hyper - a: open -nb org.alacritty
-hyper - a: open -nb org.alacritty --args --config-file ~/.config/alacritty/alacritty.yml --title main -e $SHELL -lc "tmux-sessionizer"
+hyper - a: open -nb org.alacritty --args --config-file ~/.config/alacritty/alacritty.yml --title main -e $SHELL -lc "tmux-sessionizer; zsh -i"
 hyper - r: open -a Mail
 hyper - s: osascript -e 'tell application "Safari"' -e 'make new document' -e 'activate' -e 'end tell'
 hyper - t: open -a Notes && open -a Notes

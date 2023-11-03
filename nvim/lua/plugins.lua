@@ -96,10 +96,16 @@ require("lazy").setup({
 	},
 
 	-- Jumps
+	--{
+	--	"christoomey/vim-tmux-navigator",
+	--	config = function()
+	--		require("config.vim-tmux-navigator").setup()
+	--	end,
+	--},
 	{
-		"christoomey/vim-tmux-navigator",
+		"numToStr/Navigator.nvim",
 		config = function()
-			require("config.vim-tmux-navigator").setup()
+			require("config.navigator").setup()
 		end,
 	},
 	{
@@ -393,6 +399,7 @@ require("lazy").setup({
 			})
 		end,
 	},
+
 	-- Rust
 	{
 		"simrat39/rust-tools.nvim",

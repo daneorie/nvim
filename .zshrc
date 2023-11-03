@@ -114,17 +114,16 @@ NEWLINE=$'\n'
 THEME_VI_INS_MODE_SYMBOL=${THEME_VI_INS_MODE_SYMBOL:-'λ'}
 THEME_VI_CMD_MODE_SYMBOL=${THEME_VI_CMD_MODE_SYMBOL:-'ᐅ'}
 
-## Set symbol for the initial mode
-THEME_VI_MODE_SYMBOL="${THEME_VI_INS_MODE_SYMBOL}"
+## Set symbol for the initial prompt
+PS1="%F{green}${THEME_VI_INS_MODE_SYMBOL}%f "
 
 # on keymap change, define the mode and redraw prompt
 zle-keymap-select() {
 	if [ "${KEYMAP}" = "vicmd" ]; then
-		THEME_VI_MODE_SYMBOL="${THEME_VI_CMD_MODE_SYMBOL}"
+		PS1="%F{green}${THEME_VI_CMD_MODE_SYMBOL}%f "
 	else
-		THEME_VI_MODE_SYMBOL="${THEME_VI_INS_MODE_SYMBOL}"
+		PS1="%F{green}${THEME_VI_INS_MODE_SYMBOL}%f "
 	fi
-	set-prompt
 	zle reset-prompt
 }
 #zle -N zle-keymap-init
@@ -132,7 +131,7 @@ zle -N zle-keymap-select
 
 # reset to default mode at the end of line input reading
 zle-line-finish() {
-	THEME_VI_MODE_SYMBOL="${THEME_VI_INS_MODE_SYMBOL}"
+	PS1="%F{green}${THEME_VI_INS_MODE_SYMBOL}%f "
 }
 zle -N zle-line-finish
 
@@ -141,7 +140,7 @@ zle -N zle-line-finish
 # Fixed by catching SIGINT (C-c), set mode to INS and repropagate the SIGINT,
 # so if anything else depends on it, we will not break it.
 TRAPINT() {
-	THEME_VI_MODE_SYMBOL="${THEME_VI_INS_MODE_SYMBOL}"
+	PS1="%F{green}${THEME_VI_INS_MODE_SYMBOL}%f "
 	return $(( 128 + $1 ))
 }
 
@@ -154,16 +153,9 @@ precmd() {
 set-prompt() {
 	vcs_info
 	if [[ -z ${vcs_info_msg_0_} ]]; then
-		# Oh hey, nothing from vcs_info, so we got more space.
-		# Let's print a longer part of $PWD...
-		PS1="%n@%m [%F{red}%5~%f]$NEWLINE%F{green}$THEME_VI_MODE_SYMBOL%f "
-		RPS1="%{$(echotc UP 1)%}%K{white}%F{black} %D{%T} %f%k%{$(echotc DO 1)%}"
+		print -rP "%K{white}%F{black} %D{%T} %f%k %n@%m [%F{red}%5~%f]"
 	else
-		# vcs_info found something, that needs space. So a shorter $PWD
-		# makes sense.
-		#PS1="%n@%m [%F{red}%3~%f]$NEWLINE${vcs_info_msg_0_} %F{green}$THEME_VI_MODE_SYMBOL%f "
-		PS1="%n@%m [%F{red}%3~%f]$NEWLINE%F{green}$THEME_VI_MODE_SYMBOL%f "
-		RPS1="%{$(echotc UP 1)%}${vcs_info_msg_0_} %K{white}%F{black} %D{%T} %f%k%{$(echotc DO 1)%}"
+		print -rP "%K{white}%F{black} %D{%T} %f%k %n@%m [%F{red}%3~%f] ${vcs_info_msg_0_}"
 	fi
 }
 

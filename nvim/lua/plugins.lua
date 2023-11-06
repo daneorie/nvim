@@ -444,4 +444,17 @@ require("lazy").setup({
 		"mfussenegger/nvim-jdtls",
 		ft = { "java" },
 	},
+
+	-- Scratch Buffer
+	{
+		"mtth/scratch.vim",
+	},
+
+	-- Dimming inactive panes
+	{
+		"levouh/tint.nvim",
+		config = function()
+			require("tint").setup()
+		end,
+	},
 })

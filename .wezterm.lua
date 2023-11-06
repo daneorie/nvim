@@ -13,11 +13,14 @@ end
 
 -- This is where you actually apply your config choices
 
+config.color_scheme = "nordfox"
 config.window_background_opacity = 0.5
 config.text_background_opacity = 0.5
 config.macos_window_background_blur = 40
 config.enable_kitty_keyboard = true
 config.tab_bar_at_bottom = true
+config.window_decorations = "RESIZE"
+config.use_fancy_tab_bar = false
 
 local function is_inside_vim(pane)
 	local tty = pane:get_tty_name()
@@ -64,17 +67,11 @@ local function map(things)
 end
 
 -- Show which workspace and key table are active in the status area
+wezterm.on("update-left-status", function(window, pane)
+	window:set_left_status(" " .. window:active_workspace() .. " " or "")
+end)
 wezterm.on("update-right-status", function(window, pane)
-	local workspace = window:active_workspace()
-	local key_table = window:active_key_table()
-	local status = {}
-	if workspace then
-		table.insert(status, workspace)
-	end
-	if key_table then
-		table.insert(status, key_table:upper())
-	end
-	window:set_right_status(table.concat(status, ", ") or "")
+	window:set_right_status(" " .. window:active_key_table():upper() .. " " or "")
 end)
 
 config.leader = { key = "Space", mods = "ALT" }
@@ -129,6 +126,12 @@ config.keys = {
 	bind_if(is_outside_vim, "i", "CTRL", act.ActivatePaneDirection("Up"), "\x33[105;5u"),
 	bind_if(is_outside_vim, "o", "CTRL", act.ActivatePaneDirection("Right")),
 
+	-- Resizing
+	--{ key = "n", mods = "CTRL|SHIFT", action = act.AdjustPaneSize({ "Left", 3 }) },
+	--{ key = "e", mods = "CTRL|SHIFT", action = act.AdjustPaneSize({ "Down", 3 }) },
+	--{ key = "i", mods = "CTRL|SHIFT", action = act.AdjustPaneSize({ "Up", 3 }) },
+	--{ key = "o", mods = "CTRL|SHIFT", action = act.AdjustPaneSize({ "Right", 3 }) },
+
 	-- NeoVim
 	bind_if(is_inside_vim, "a", "CMD", act.Multiple(map("Escape,g,g,V,G"))),
 	bind_if(is_inside_vim, "s", "CMD", act.Multiple(map("Escape,:,w,Enter"))),
@@ -157,17 +160,17 @@ config.keys = {
 	{ key = "b", mods = "CTRL|SHIFT", action = act.SendString("\x1b[98;6u") }, -- shift-ctrl-b
 	{ key = "c", mods = "CTRL|SHIFT", action = act.SendString("\x1b[99;6u") }, -- shift-ctrl-c
 	{ key = "d", mods = "CTRL|SHIFT", action = act.SendString("\x1b[100;6u") }, -- shift-ctrl-d
-	{ key = "e", mods = "CTRL|SHIFT", action = act.SendString("\x1b[101;6u") }, -- shift-ctrl-e
+	--{ key = "e", mods = "CTRL|SHIFT", action = act.SendString("\x1b[101;6u") }, -- shift-ctrl-e
 	{ key = "f", mods = "CTRL|SHIFT", action = act.SendString("\x1b[102;6u") }, -- shift-ctrl-b
 	{ key = "g", mods = "CTRL|SHIFT", action = act.SendString("\x1b[103;6u") }, -- shift-ctrl-g
 	{ key = "h", mods = "CTRL|SHIFT", action = act.SendString("\x1b[104;6u") }, -- shift-ctrl-h
-	{ key = "i", mods = "CTRL|SHIFT", action = act.SendString("\x1b[105;6u") }, -- shift-ctrl-i
+	--{ key = "i", mods = "CTRL|SHIFT", action = act.SendString("\x1b[105;6u") }, -- shift-ctrl-i
 	{ key = "j", mods = "CTRL|SHIFT", action = act.SendString("\x1b[106;6u") }, -- shift-ctrl-j
 	{ key = "k", mods = "CTRL|SHIFT", action = act.SendString("\x1b[107;6u") }, -- shift-ctrl-k
 	{ key = "l", mods = "CTRL|SHIFT", action = act.SendString("\x1b[108;6u") }, -- shift-ctrl-l
 	{ key = "m", mods = "CTRL|SHIFT", action = act.SendString("\x1b[109;6u") }, -- shift-ctrl-m
-	{ key = "n", mods = "CTRL|SHIFT", action = act.SendString("\x1b[110;6u") }, -- shift-ctrl-n
-	{ key = "o", mods = "CTRL|SHIFT", action = act.SendString("\x1b[111;6u") }, -- shift-ctrl-o
+	--{ key = "n", mods = "CTRL|SHIFT", action = act.SendString("\x1b[110;6u") }, -- shift-ctrl-n
+	--{ key = "o", mods = "CTRL|SHIFT", action = act.SendString("\x1b[111;6u") }, -- shift-ctrl-o
 	{ key = "p", mods = "CTRL|SHIFT", action = act.SendString("\x1b[112;6u") }, -- shift-ctrl-p
 	{ key = "q", mods = "CTRL|SHIFT", action = act.SendString("\x1b[113;6u") }, -- shift-ctrl-q
 	{ key = "r", mods = "CTRL|SHIFT", action = act.SendString("\x1b[114;6u") }, -- shift-ctrl-r

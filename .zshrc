@@ -34,7 +34,8 @@ autoload -U edit-command-line
 zle -N edit-command-line
 bindkey -M vicmd '^v' edit-command-line
 
-export PAGER=less
+#export PAGER=less
+export PAGER=nvimpager
 export LESSKEY=~/.lesskey
 export FZF_DEFAULT_OPTS='--bind=ctrl-e:down,ctrl-u:down,ctrl-y:up'
 alias l='ls -lH'
@@ -48,8 +49,12 @@ alias vi='nvim'
 alias vim='nvim'
 alias cdu='cd-gitroot'
 alias less="$(brew --prefix)/Cellar/less/590/bin/less"
+#alias less=$PAGER
+#alias zless=$PAGER
+#alias more=$PAGER
 alias excel="open -a /Applications/Microsoft\ Excel.app"
 alias refresh="exec $SHELL -l"
+
 
 # git aliases
 alias g='git'

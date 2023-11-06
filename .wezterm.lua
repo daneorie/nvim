@@ -11,11 +11,9 @@ if wezterm.config_builder then
 	config = wezterm.config_builder()
 end
 
--- This is where you actually apply your config choices
-
 config.color_scheme = "nordfox"
-config.window_background_opacity = 0.5
-config.text_background_opacity = 0.5
+config.window_background_opacity = 0.6
+config.text_background_opacity = 0.6
 config.macos_window_background_blur = 40
 config.enable_kitty_keyboard = true
 config.tab_bar_at_bottom = true
@@ -58,21 +56,13 @@ local function bind_if(cond, key, mods, action, alt_str)
 	return { key = key, mods = mods, action = wezterm.action_callback(callback) }
 end
 
-local function map(things)
-	local t = {}
-	for key in things:gmatch("([^,]+)") do
-		table.insert(t, act.SendKey({ key = key }))
-	end
-	return t
-end
-
 -- Show which workspace and key table are active in the status area
 wezterm.on("update-left-status", function(window, pane)
 	window:set_left_status(" " .. window:active_workspace() .. " " or "")
 end)
-wezterm.on("update-right-status", function(window, pane)
-	window:set_right_status(" " .. window:active_key_table():upper() .. " " or "")
-end)
+--wezterm.on("update-right-status", function(window, pane)
+--	window:set_right_status(" " .. window:active_key_table() .. " " or "")
+--end)
 
 config.leader = { key = "Space", mods = "ALT" }
 config.keys = {
@@ -86,18 +76,6 @@ config.keys = {
 			one_shot = false,
 		}),
 	},
-
-	-- ALT+Space, followed by 'a' will put us in activate-pane
-	-- mode until we press some other key or until 1 second (1000ms)
-	-- of time elapses
-	--{
-	--	key = "a",
-	--	mods = "LEADER",
-	--	action = act.ActivateKeyTable({
-	--		name = "activate_pane",
-	--		timeout_milliseconds = 1000,
-	--	}),
-	--},
 
 	-- basic usage
 	{ key = "c", mods = "CMD", action = act.CopyTo("Clipboard") },
@@ -126,74 +104,39 @@ config.keys = {
 	bind_if(is_outside_vim, "i", "CTRL", act.ActivatePaneDirection("Up"), "\x33[105;5u"),
 	bind_if(is_outside_vim, "o", "CTRL", act.ActivatePaneDirection("Right")),
 
-	-- Resizing
-	--{ key = "n", mods = "CTRL|SHIFT", action = act.AdjustPaneSize({ "Left", 3 }) },
-	--{ key = "e", mods = "CTRL|SHIFT", action = act.AdjustPaneSize({ "Down", 3 }) },
-	--{ key = "i", mods = "CTRL|SHIFT", action = act.AdjustPaneSize({ "Up", 3 }) },
-	--{ key = "o", mods = "CTRL|SHIFT", action = act.AdjustPaneSize({ "Right", 3 }) },
-
-	-- NeoVim
-	bind_if(is_inside_vim, "a", "CMD", act.Multiple(map("Escape,g,g,V,G"))),
-	bind_if(is_inside_vim, "s", "CMD", act.Multiple(map("Escape,:,w,Enter"))),
-
-	-- 5u - ctrl -- any overlaps require \x33 instead of \x1b, which will need to be passed on with tmux and interpretted by NeoVim
-	{ key = "Tab", mods = "CTRL", action = act.SendString("\x1b[9;5u") }, -- ctrl-tab
-	{ key = ",", mods = "CTRL", action = act.SendString("\x1b[44;5u") }, -- ctrl-,
-	{ key = "-", mods = "CTRL", action = act.SendString("\x1b[45;5u") }, -- ctrl--
-	{ key = ".", mods = "CTRL", action = act.SendString("\x1b[46;5u") }, -- ctrl-.
-	{ key = "=", mods = "CTRL", action = act.SendString("\x1b[61;5u") }, -- ctrl-=
+	-- 5u - ctrl -- these overlaps require \x33 instead of \x1b, which will need to be interpretted by NeoVim
 	{ key = "[", mods = "CTRL", action = act.SendString("\x33[91;5u") }, -- ctrl-[ - overlaps ESC
-	{ key = "]", mods = "CTRL", action = act.SendString("\x1b[93;5u") }, -- ctrl-]
 	{ key = "h", mods = "CTRL", action = act.SendString("\x33[104;5u") }, -- ctrl-h - overlaps BS/Backspace
 	--{ key = "i", mods = "CTRL", action = act.SendString("\x33[105;5u") }, -- ctrl-i - overlaps TAB
 	{ key = "m", mods = "CTRL", action = act.SendString("\x33[109;5u") }, -- ctrl-m - overlaps CR/Enter
 
-	-- 6u - shift-ctrl
-	{ key = "Tab", mods = "CTRL|SHIFT", action = act.SendString("\x1b[9;6u") }, -- shift-ctrl-tab
-	{ key = ",", mods = "CTRL|SHIFT", action = act.SendString("\x1b[44;6u") }, -- shift-ctrl-, OR ctrl-<
-	{ key = "-", mods = "CTRL|SHIFT", action = act.SendString("\x1b[45;6u") }, -- shift-ctrl-- OR ctrl-_
-	{ key = ".", mods = "CTRL|SHIFT", action = act.SendString("\x1b[46;6u") }, -- shift-ctrl-. OR ctrl->
-	{ key = "=", mods = "CTRL|SHIFT", action = act.SendString("\x1b[61;6u") }, -- shift-ctrl-= OR ctrl-+
-	{ key = "[", mods = "CTRL|SHIFT", action = act.SendString("\x1b[91;6u") }, -- shift-ctrl-[ OR ctrl-{
-	{ key = "]", mods = "CTRL|SHIFT", action = act.SendString("\x1b[93;6u") }, -- shift-ctrl-] OR ctrl-}
-	{ key = "a", mods = "CTRL|SHIFT", action = act.SendString("\x1b[97;6u") }, -- shift-ctrl-a
-	{ key = "b", mods = "CTRL|SHIFT", action = act.SendString("\x1b[98;6u") }, -- shift-ctrl-b
-	{ key = "c", mods = "CTRL|SHIFT", action = act.SendString("\x1b[99;6u") }, -- shift-ctrl-c
-	{ key = "d", mods = "CTRL|SHIFT", action = act.SendString("\x1b[100;6u") }, -- shift-ctrl-d
-	--{ key = "e", mods = "CTRL|SHIFT", action = act.SendString("\x1b[101;6u") }, -- shift-ctrl-e
-	{ key = "f", mods = "CTRL|SHIFT", action = act.SendString("\x1b[102;6u") }, -- shift-ctrl-b
-	{ key = "g", mods = "CTRL|SHIFT", action = act.SendString("\x1b[103;6u") }, -- shift-ctrl-g
-	{ key = "h", mods = "CTRL|SHIFT", action = act.SendString("\x1b[104;6u") }, -- shift-ctrl-h
-	--{ key = "i", mods = "CTRL|SHIFT", action = act.SendString("\x1b[105;6u") }, -- shift-ctrl-i
-	{ key = "j", mods = "CTRL|SHIFT", action = act.SendString("\x1b[106;6u") }, -- shift-ctrl-j
-	{ key = "k", mods = "CTRL|SHIFT", action = act.SendString("\x1b[107;6u") }, -- shift-ctrl-k
-	{ key = "l", mods = "CTRL|SHIFT", action = act.SendString("\x1b[108;6u") }, -- shift-ctrl-l
-	{ key = "m", mods = "CTRL|SHIFT", action = act.SendString("\x1b[109;6u") }, -- shift-ctrl-m
-	--{ key = "n", mods = "CTRL|SHIFT", action = act.SendString("\x1b[110;6u") }, -- shift-ctrl-n
-	--{ key = "o", mods = "CTRL|SHIFT", action = act.SendString("\x1b[111;6u") }, -- shift-ctrl-o
-	{ key = "p", mods = "CTRL|SHIFT", action = act.SendString("\x1b[112;6u") }, -- shift-ctrl-p
-	{ key = "q", mods = "CTRL|SHIFT", action = act.SendString("\x1b[113;6u") }, -- shift-ctrl-q
-	{ key = "r", mods = "CTRL|SHIFT", action = act.SendString("\x1b[114;6u") }, -- shift-ctrl-r
-	--{ key = "s", mods = "CTRL|SHIFT", action = act.SendString("\x1b[115;6u") }, -- shift-ctrl-s
-	{ key = "t", mods = "CTRL|SHIFT", action = act.SendString("\x1b[116;6u") }, -- shift-ctrl-t
-	{ key = "u", mods = "CTRL|SHIFT", action = act.SendString("\x1b[117;6u") }, -- shift-ctrl-u
-	{ key = "v", mods = "CTRL|SHIFT", action = act.SendString("\x1b[118;6u") }, -- shift-ctrl-v
-	{ key = "w", mods = "CTRL|SHIFT", action = act.SendString("\x1b[119;6u") }, -- shift-ctrl-w
-	{ key = "x", mods = "CTRL|SHIFT", action = act.SendString("\x1b[120;6u") }, -- shift-ctrl-x
-	{ key = "y", mods = "CTRL|SHIFT", action = act.SendString("\x1b[121;6u") }, -- shift-ctrl-y
-	{ key = "z", mods = "CTRL|SHIFT", action = act.SendString("\x1b[122;6u") }, -- shift-ctrl-z
-
-	-- 9u - cmd
-	--{ key = ";", mods = "CMD", action = act.SendString("\x1b[59;9u") }, -- cmd-;
-	--{ key = "a", mods = "CMD", action = act.SendString("\x1b[97;9u") }, -- cmd-a
-	{ key = "e", mods = "CMD", action = act.SendString("\x1b[101;9u") }, -- cmd-e
-	{ key = "i", mods = "CMD", action = act.SendString("\x1b[105;9u") }, -- cmd-i
-	{ key = "l", mods = "CMD", action = act.SendString("\x1b[108;9u") }, -- cmd-l
-	{ key = "n", mods = "CMD", action = act.SendString("\x1b[110;9u") }, -- cmd-n
-	{ key = "o", mods = "CMD", action = act.SendString("\x1b[111;9u") }, -- cmd-o
-	--{ key = "s", mods = "CMD", action = act.SendString("\x1b[115;9u") }, -- cmd-s
-	{ key = "u", mods = "CMD", action = act.SendString("\x1b[117;9u") }, -- cmd-u
-	{ key = "y", mods = "CMD", action = act.SendString("\x1b[121;9u") }, -- cmd-y
+	{ key = ";", mods = "CMD", action = act.SendString("\x1b;") },
+	{ key = "a", mods = "CMD", action = act.SendString("\x1ba") },
+	{ key = "b", mods = "CMD", action = act.SendString("\x1bb") },
+	--{ key = "c", mods = "CMD", action = act.SendString("\x1bc") },
+	--{ key = "d", mods = "CMD", action = act.SendString("\x1bd") },
+	{ key = "e", mods = "CMD", action = act.SendString("\x1be") },
+	{ key = "f", mods = "CMD", action = act.SendString("\x1bf") },
+	{ key = "g", mods = "CMD", action = act.SendString("\x1bg") },
+	{ key = "h", mods = "CMD", action = act.SendString("\x1bh") },
+	{ key = "i", mods = "CMD", action = act.SendString("\x1bi") },
+	{ key = "j", mods = "CMD", action = act.SendString("\x1bj") },
+	{ key = "k", mods = "CMD", action = act.SendString("\x1bk") },
+	{ key = "l", mods = "CMD", action = act.SendString("\x1bl") },
+	{ key = "m", mods = "CMD", action = act.SendString("\x1bm") },
+	{ key = "n", mods = "CMD", action = act.SendString("\x1bn") },
+	{ key = "o", mods = "CMD", action = act.SendString("\x1bo") },
+	{ key = "p", mods = "CMD", action = act.SendString("\x1bp") },
+	--{ key = "q", mods = "CMD", action = act.SendString("\x1bq") },
+	{ key = "r", mods = "CMD", action = act.SendString("\x1br") },
+	{ key = "s", mods = "CMD", action = act.SendString("\x1bs") },
+	--{ key = "t", mods = "CMD", action = act.SendString("\x1bt") },
+	{ key = "u", mods = "CMD", action = act.SendString("\x1bu") },
+	--{ key = "v", mods = "CMD", action = act.SendString("\x1bv") },
+	--{ key = "w", mods = "CMD", action = act.SendString("\x1bw") },
+	{ key = "x", mods = "CMD", action = act.SendString("\x1bx") },
+	{ key = "y", mods = "CMD", action = act.SendString("\x1by") },
+	{ key = "z", mods = "CMD", action = act.SendString("\x1bz") },
 
 	-- Prompt for a name to use for a new workspace and switch to it.
 	{
@@ -274,24 +217,6 @@ config.keys = {
 }
 
 config.key_tables = {
-	--unbind   -T copy-mode-vi C-d
-	--bind-key -T copy-mode-vi C-u send-keys -X half-page-down
-	--bind-key -T copy-mode-vi C-y send-keys -X half-page-up
-
-	-- alacritty vi-mode
-	--{ key = "h", mode = "Vi|~Search", action = ToggleViMode } -- Colemak
-	--{ key = "h", mode = "Vi|~Search", action = ScrollToBottom } -- Colemak
-	--{ key = "l", mods = "Control", mode = Vi|~Search, action = ScrollLineDown } -- Colemak
-	--{ key = "n", mode = "Vi|~Search", action = Left } -- Colemak
-	--{ key = "e", mode = "Vi|~Search", action = Down } -- Colemak
-	--{ key = "i", mode = "Vi|~Search", action = Up } -- Colemak
-	--{ key = "o", mode = "Vi|~Search", action = Right } -- Colemak
-	--{ key = "n", mods = "Shift", mode = Vi|~Search, action = High } -- Colemak
-	--{ key = "o", mods = "Shift", mode = Vi|~Search, action = Low } -- Colemak
-	--{ key = "l", mode = "Vi|~Search", action = SemanticRightEnd } -- Colemak
-	--{ key = "l", mods = "Shift", mode = Vi|~Search, action = WordRightEnd } -- Colemak
-	--{ key = "j", mode = "Vi|~Search", action = SearchNext } -- Colemak
-	--{ key = "j", mods = "Shift", mode = Vi|~Search, action = SearchPrevious } -- Colemak
 	resize_pane = {
 		{ key = "LeftArrow", action = act.AdjustPaneSize({ "Left", 1 }) },
 		{ key = "n", mods = "NONE", action = act.AdjustPaneSize({ "Left", 1 }) },
@@ -312,27 +237,13 @@ config.key_tables = {
 		-- Cancel the mode by pressing escape
 		{ key = "Escape", action = "PopKeyTable" },
 	},
-
-	--activate_pane = {
-	--	{ key = "LeftArrow", action = act.ActivatePaneDirection("Left") },
-	--	{ key = "n", action = act.ActivatePaneDirection("Left") },
-
-	--	{ key = "DownArrow", action = act.ActivatePaneDirection("Down") },
-	--	{ key = "e", action = act.ActivatePaneDirection("Down") },
-
-	--	{ key = "UpArrow", action = act.ActivatePaneDirection("Up") },
-	--	{ key = "i", action = act.ActivatePaneDirection("Up") },
-
-	--	{ key = "RightArrow", action = act.ActivatePaneDirection("Right") },
-	--	{ key = "o", action = act.ActivatePaneDirection("Right") },
-	--},
-
 	copy_mode = {
 		{ key = "Tab", mods = "NONE", action = act.CopyMode("MoveForwardWord") },
 		{ key = "Tab", mods = "SHIFT", action = act.CopyMode("MoveBackwardWord") },
 		{ key = "Enter", mods = "NONE", action = act.CopyMode("MoveToStartOfNextLine") },
 		{ key = "Escape", mods = "NONE", action = act.CopyMode("Close") },
 		{ key = "Space", mods = "NONE", action = act.CopyMode({ SetSelectionMode = "Cell" }) },
+		{ key = "/", mods = "NONE", action = act.Search({ CaseSensitiveString = "" }) },
 		{ key = "$", mods = "NONE", action = act.CopyMode("MoveToEndOfLineContent") },
 		{ key = "$", mods = "SHIFT", action = act.CopyMode("MoveToEndOfLineContent") },
 		{ key = ",", mods = "NONE", action = act.CopyMode("JumpReverse") },
@@ -398,6 +309,14 @@ config.key_tables = {
 		{ key = "RightArrow", mods = "ALT", action = act.CopyMode("MoveForwardWord") },
 		{ key = "UpArrow", mods = "NONE", action = act.CopyMode("MoveUp") },
 		{ key = "DownArrow", mods = "NONE", action = act.CopyMode("MoveDown") },
+	},
+	search_mode = {
+		{ key = "Escape", mods = "NONE", action = act.CopyMode("Close") },
+		{ key = "c", mods = "CTRL", action = act.CopyMode("Close") },
+		{ key = "h", mods = "NONE", action = act.CopyMode("Close") },
+		{ key = "q", mods = "NONE", action = act.CopyMode("Close") },
+		{ key = "Enter", mods = "NONE", action = "ActivateCopyMode" },
+
 	},
 }
 

@@ -56,26 +56,55 @@ local function bind_if(cond, key, mods, action, alt_str)
 	return { key = key, mods = mods, action = wezterm.action_callback(callback) }
 end
 
--- Show which workspace and key table are active in the status area
-wezterm.on("update-left-status", function(window, pane)
-	window:set_left_status(" " .. window:active_workspace() .. " " or "")
+wezterm.on("toggle-ligatures", function(window, pane)
+	local overrides = window:get_config_overrides() or {}
+	if not overrides.harfbuzz_features then
+		overrides.harfbuzz_features = { "calt=0", "clig=0", "liga=0" }
+	else
+		overrides.harfbuzz_features = nil
+	end
+	window:set_config_overrides(overrides)
 end)
---wezterm.on("update-right-status", function(window, pane)
---	window:set_right_status(" " .. window:active_key_table() .. " " or "")
---end)
+
+wezterm.on("toggle-transparency", function(window, pane)
+	local overrides = window:get_config_overrides() or {}
+	if not overrides.window_background_opacity then
+		overrides.window_background_opacity = 1.0
+	else
+		overrides.window_background_opacity = nil
+	end
+	if not overrides.text_background_opacity then
+		overrides.text_background_opacity = 1.0
+	else
+		overrides.text_background_opacity = nil
+	end
+	if not overrides.macos_window_background_blur then
+		overrides.macos_window_background_blur = 0
+	else
+		overrides.macos_window_background_blur = nil
+	end
+	window:set_config_overrides(overrides)
+end)
+
+wezterm.on("update-status", function(window, pane)
+	local status = {}
+	local workspace = window:active_workspace()
+	local key_table = window:active_key_table():upper()
+	if workspace then
+		table.insert(status, "WORKSPACE: " .. workspace)
+	end
+	if key_table then
+		table.insert(status, "TABLE: " .. key_table:upper())
+	end
+	window:set_left_status(" " .. table.concat(status, ", ") .. " " or " ")
+end)
 
 config.leader = { key = "Space", mods = "ALT" }
 config.keys = {
-	-- ALT+Space, followed by 'r' will put us in resize-pane
-	-- mode until we cancel that mode.
-	{
-		key = "r",
-		mods = "LEADER",
-		action = act.ActivateKeyTable({
-			name = "resize_pane",
-			one_shot = false,
-		}),
-	},
+	-- LEADER
+	{ key = "r", mods = "LEADER", action = act.ActivateKeyTable({ name = "resize_pane", one_shot = false }) },
+	{ key = "l", mods = "LEADER", action = act.EmitEvent("toggle-ligatures") },
+	{ key = "t", mods = "LEADER", action = act.EmitEvent("toggle-transparency") },
 
 	-- basic usage
 	{ key = "c", mods = "CMD", action = act.CopyTo("Clipboard") },
@@ -173,7 +202,6 @@ config.keys = {
 
 			local home = wezterm.home_dir
 			local workspaces = {
-				{ id = home, label = home },
 				{ id = home .. "/dotfiles", label = home .. "/dotfiles" },
 			}
 
@@ -316,7 +344,6 @@ config.key_tables = {
 		{ key = "h", mods = "NONE", action = act.CopyMode("Close") },
 		{ key = "q", mods = "NONE", action = act.CopyMode("Close") },
 		{ key = "Enter", mods = "NONE", action = "ActivateCopyMode" },
-
 	},
 }
 

@@ -16,18 +16,12 @@ local a_status_ok, actions = pcall(require, "telescope.actions")
 if a_status_ok then
 	local action_n_mappings = {
 		["<C-e>"] = actions.move_selection_next,
-		["e"]     = actions.move_selection_next,
+		["e"] = actions.move_selection_next,
 		["\x33[105;5u"] = actions.move_selection_previous, -- <C-i>
-		["i"]     = actions.move_selection_previous,
-		["<C-q><C-q>"] = require("telescope.builtin").quickfix(),
-		["<C-q><C-a>"] = function(bufnr)
-			actions.send_to_qflist(bufnr)
-			require("telescope.builtin").quickfix()
-		end,
-		["<C-q><C-s>"] = function(bufnr)
-			actions.smart_send_to_qflist(bufnr)
-			require("telescope.builtin").quickfix()
-		end,
+		["i"] = actions.move_selection_previous,
+		["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
+		["<C-a>"] = actions.send_to_qflist + actions.open_qflist,
+		["<C-s>"] = actions.send_selected_to_qflist + actions.open_qflist,
 		["<C-u>"] = actions.results_scrolling_down,
 		["<C-y>"] = actions.results_scrolling_up,
 		["<C-,>"] = actions.preview_scrolling_down,
@@ -36,15 +30,9 @@ if a_status_ok then
 	local action_i_mappings = {
 		["<C-e>"] = actions.move_selection_next,
 		["\x33[105;5u"] = actions.move_selection_previous, -- <C-i>
-		["<C-q><C-q>"] = require("telescope.builtin").quickfix(),
-		["<C-q><C-a>"] = function(bufnr)
-			actions.send_to_qflist(bufnr)
-			require("telescope.builtin").quickfix()
-		end,
-		["<C-q><C-s>"] = function(bufnr)
-			actions.smart_send_to_qflist(bufnr)
-			require("telescope.builtin").quickfix()
-		end,
+		["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
+		["<C-a>"] = actions.send_to_qflist + actions.open_qflist,
+		["<C-s>"] = actions.send_selected_to_qflist + actions.open_qflist,
 		["<C-u>"] = actions.results_scrolling_down,
 		["<C-y>"] = actions.results_scrolling_up,
 		["<C-,>"] = actions.preview_scrolling_down,
@@ -88,7 +76,6 @@ if g_status_ok then
 	extensions_to_load[#extensions_to_load + 1] = "git_worktree"
 end
 
-
 function M.setup()
 	local telescope = require("telescope")
 	telescope.setup({
@@ -105,29 +92,29 @@ function M.setup()
 			buffers = {
 				mappings = {
 					i = {
-						["<C-d>"] = "delete_buffer"
-					}
-				}
-			}
+						["<C-d>"] = "delete_buffer",
+					},
+				},
+			},
 		},
 		extensions = extensions,
-	});
+	})
 
 	for _, extension in ipairs(extensions_to_load) do
 		telescope.load_extension(extension)
 	end
 
-	vim.keymap.set("n", "<leader>ff", "<cmd>Telescope find_files hidden=true<CR>", {noremap = true})
-	vim.keymap.set("n", "<leader>fg", "<cmd>Telescope live_grep<CR>", {noremap = true})
-	vim.keymap.set("n", "<leader>fb", "<cmd>Telescope buffers<CR>", {noremap = true})
-	vim.keymap.set("n", "<leader>fq", "<cmd>Telescope quickfix<CR>", {noremap = true})
-	vim.keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<CR>", {noremap = true})
-	vim.keymap.set("n", "<leader>fw", "<cmd>Telescope workspaces<CR>", {noremap = true})
-	vim.keymap.set("n", "<leader>fv", "<cmd>Telescope vim_bookmarks current_file<CR>", {noremap = true})
-	vim.keymap.set("n", "<leader>fV", "<cmd>Telescope vim_bookmarks all<CR>", {noremap = true})
-	vim.keymap.set("n", "<leader>ft", "<cmd>Telescope telescope-tabs list_tabs<CR>", {noremap = true})
-	vim.keymap.set("n", "<leader>bf", "<cmd>Telescope file_browser<CR>", {noremap = true})
-	vim.keymap.set("n", "<leader>bh", "<cmd>Telescope file_browser hidden=true<CR>", {noremap = true})
+	vim.keymap.set("n", "<leader>ff", "<cmd>Telescope find_files hidden=true<CR>", { noremap = true })
+	vim.keymap.set("n", "<leader>fg", "<cmd>Telescope live_grep<CR>", { noremap = true })
+	vim.keymap.set("n", "<leader>fb", "<cmd>Telescope buffers<CR>", { noremap = true })
+	vim.keymap.set("n", "<leader>fq", "<cmd>Telescope quickfix<CR>", { noremap = true })
+	vim.keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<CR>", { noremap = true })
+	vim.keymap.set("n", "<leader>fw", "<cmd>Telescope workspaces<CR>", { noremap = true })
+	vim.keymap.set("n", "<leader>fv", "<cmd>Telescope vim_bookmarks current_file<CR>", { noremap = true })
+	vim.keymap.set("n", "<leader>fV", "<cmd>Telescope vim_bookmarks all<CR>", { noremap = true })
+	vim.keymap.set("n", "<leader>ft", "<cmd>Telescope telescope-tabs list_tabs<CR>", { noremap = true })
+	vim.keymap.set("n", "<leader>bf", "<cmd>Telescope file_browser<CR>", { noremap = true })
+	vim.keymap.set("n", "<leader>bh", "<cmd>Telescope file_browser hidden=true<CR>", { noremap = true })
 end
 
 return M

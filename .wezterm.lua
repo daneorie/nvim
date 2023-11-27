@@ -26,7 +26,7 @@ local function is_inside_vim(pane)
 		return false
 	end
 
-	local success, stdout, stderr = wezterm.run_child_process({
+	local success, _, _ = wezterm.run_child_process({
 		"sh",
 		"-c",
 		"ps -o state= -o comm= -t"
@@ -56,6 +56,41 @@ local function bind_if(cond, key, mods, action, alt_str)
 	return { key = key, mods = mods, action = wezterm.action_callback(callback) }
 end
 
+local format_title = function(title, is_active, max_width)
+	local background = { Background = { Color = "#1f1f28" } }
+	local title_len = #title
+	local pad_left_len = math.floor((max_width - title_len) / 2) - 1
+	local pad_right_len = max_width - pad_left_len - title_len - 2
+
+	local formatted_title = {
+		Text = "|" .. string.rep(" ", pad_left_len) .. title .. string.rep(" ", pad_right_len) .. "|",
+	}
+	if is_active then
+		return { background, { Foreground = { Color = "#957fb8" } }, formatted_title }
+	else
+		return { background, { Foreground = { Color = "#cad3f5" } }, formatted_title }
+	end
+end
+
+-- Equivalent to POSIX basename(3)
+local function basename(s)
+	return s:gsub("(.*[/\\])(.*)", "%2")
+end
+
+wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_width)
+	-- if there is title already set, proceed with it
+	if type(tab.tab_title) == "string" and #tab.tab_title > 0 then
+		return format_title(tab.tab_title, tab.is_active, max_width)
+	end
+
+	local title = tab.active_pane.title
+	if title == "nvim" then
+		title = basename(tab.active_pane.current_working_dir)
+	end
+
+	return format_title(title, tab.is_active, max_width)
+end)
+
 wezterm.on("toggle-ligatures", function(window, pane)
 	local overrides = window:get_config_overrides() or {}
 	if not overrides.harfbuzz_features then
@@ -70,33 +105,37 @@ wezterm.on("toggle-transparency", function(window, pane)
 	local overrides = window:get_config_overrides() or {}
 	if not overrides.window_background_opacity then
 		overrides.window_background_opacity = 1.0
-	else
-		overrides.window_background_opacity = nil
-	end
-	if not overrides.text_background_opacity then
 		overrides.text_background_opacity = 1.0
-	else
-		overrides.text_background_opacity = nil
-	end
-	if not overrides.macos_window_background_blur then
 		overrides.macos_window_background_blur = 0
 	else
+		overrides.window_background_opacity = nil
+		overrides.text_background_opacity = nil
 		overrides.macos_window_background_blur = nil
 	end
 	window:set_config_overrides(overrides)
 end)
 
 wezterm.on("update-status", function(window, pane)
-	local status = {}
-	local workspace = window:active_workspace()
-	local key_table = window:active_key_table():upper()
-	if workspace then
-		table.insert(status, "WORKSPACE: " .. workspace)
-	end
-	if key_table then
-		table.insert(status, "TABLE: " .. key_table:upper())
-	end
-	window:set_left_status(" " .. table.concat(status, ", ") .. " " or " ")
+	local key_table = window:active_key_table() or "default"
+	window:set_left_status(" " .. key_table .. " ")
+
+	local workspace = window:active_workspace() or ""
+	local cwd = basename(pane:get_current_working_dir()) or ""
+	local cmd = basename(pane:get_foreground_process_name()) or ""
+	local time = wezterm.strftime("%H:%M")
+	window:set_right_status(wezterm.format({
+		{ Text = "| " },
+		{ Text = wezterm.nerdfonts.oct_table .. "  " .. workspace },
+		{ Text = " | " },
+		{ Text = wezterm.nerdfonts.md_folder .. "  " .. cwd },
+		{ Text = " | " },
+		{ Foreground = { Color = "FFB86C" } },
+		{ Text = wezterm.nerdfonts.fa_code .. "  " .. cmd },
+		"ResetAttributes",
+		{ Text = " | " },
+		{ Text = wezterm.nerdfonts.md_clock .. "  " .. time },
+		{ Text = " |" },
+	}))
 end)
 
 config.leader = { key = "Space", mods = "ALT" }
@@ -193,21 +232,37 @@ config.keys = {
 		}),
 	},
 
+	-- rename the tab
+	{
+		key = "E",
+		mods = "CTRL|SHIFT",
+		action = act.PromptInputLine({
+			description = "Enter new name for tab",
+			action = wezterm.action_callback(function(window, pane, line)
+				-- line will be `nil` if they hit escape without entering anything
+				-- An empty string if they just hit enter
+				-- Or the actual line of text they wrote
+				if line then
+					window:active_tab():set_title(line)
+				end
+			end),
+		}),
+	},
+
 	-- switch between a list of workspaces
 	{
 		key = "s",
 		mods = "SHIFT|CMD",
 		action = wezterm.action_callback(function(window, pane)
-			-- Here you can dynamically construct a longer list if needed
-
 			local home = wezterm.home_dir
 			local workspaces = {
-				{ id = home .. "/dotfiles", label = home .. "/dotfiles" },
+				{ id = home .. "/dotfiles|", label = home .. "/dotfiles" },
+				{ id = "/Users/daneorie/wiki|/usr/local/bin/nvim +WikiIndex", label = "/Users/daneorie/wiki" },
 			}
 
 			for _, path in ipairs(wezterm.glob(home .. "/repos/*")) do
 				table.insert(workspaces, {
-					id = path,
+					id = path .. "|",
 					label = path,
 				})
 			end
@@ -219,15 +274,19 @@ config.keys = {
 							wezterm.log_info("cancelled")
 						else
 							local name = label:gsub("^.*/", "")
-							wezterm.log_info("id = " .. id)
+							local cwd = id:gsub("|.*", "")
+							local args = mysplit(id:gsub(".*|", ""), " ")
+							wezterm.log_info("name = " .. name)
 							wezterm.log_info("label = " .. label)
+							wezterm.log_info("cwd = " .. cwd)
 							inner_window:perform_action(
 								act.SwitchToWorkspace({
 									--name = label,
 									name = name,
 									spawn = {
 										label = "Workspace: " .. label,
-										cwd = id,
+										args = args,
+										cwd = cwd,
 									},
 								}),
 								inner_pane
@@ -243,6 +302,26 @@ config.keys = {
 		end),
 	},
 }
+
+for i = 1, 9 do
+	-- CMD + number to activate that numbered tab
+	table.insert(config.keys, {
+		key = tostring(i),
+		mods = "CMD",
+		action = act.ActivateTab(i - 1),
+	})
+end
+
+function mysplit(inputstr, sep)
+	if sep == nil then
+		sep = "%s"
+	end
+	local t = {}
+	for str in string.gmatch(inputstr, "([^" .. sep .. "]+)") do
+		table.insert(t, str)
+	end
+	return t
+end
 
 config.key_tables = {
 	resize_pane = {
@@ -346,15 +425,6 @@ config.key_tables = {
 		{ key = "Enter", mods = "NONE", action = "ActivateCopyMode" },
 	},
 }
-
-for i = 1, 9 do
-	-- CMD + number to activate that tab
-	table.insert(config.keys, {
-		key = tostring(i),
-		mods = "CMD",
-		action = act.ActivateTab(i - 1),
-	})
-end
 
 -- and finally, return the configuration to wezterm
 return config

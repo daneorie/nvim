@@ -61,8 +61,8 @@ check_displays() {
 }
 check_displays
 
-yabai -m signal --add event=display_added action="check_displays" label="Change bottom padding depending on display setup."
-yabai -m signal --add event=display_removed action="check_displays" label="Change bottom padding depending on display setup."
+#yabai -m signal --add event=display_added action="check_displays" label="Change bottom padding depending on display setup."
+#yabai -m signal --add event=display_removed action="check_displays" label="Change bottom padding depending on display setup."
 
 # apps to not manage (ignore)
 yabai -m rule --add manage=off label="off:System Preferences" app="^System Preferences$"
@@ -123,5 +123,6 @@ yabai -m rule --add manage=off label="off:GIMP|Set Image Canvas Size" app="^GIMP
 yabai -m rule --add manage=off label="off:Homerow|Clicking" app="^Homerow$" title="^Clicking$"
 yabai -m rule --add manage=off label="off:Homerow|General" app="^Homerow$" title="^General$"
 yabai -m rule --add manage=off label="off:Homerow|Exceptions" app="^Homerow$" title="^Exceptions$"
+yabai -m rule --add manage=off label="off:Reminders|Settings" app="^Reminders$" title="^Settings$"
 
 echo "yabai configuration loaded..."

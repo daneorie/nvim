@@ -1,6 +1,7 @@
 export NVIM_HOME=~/.config/nvim
 export MAVEN_HOME=~/apache-maven-3.8.1
 export WIKI_HOME=~/wiki
+export XDG_CONFIG_HOME="$HOME/.config"
 
 if [[ -n "/usr/local/bin/brew" ]]; then
 	export PATH="$PATH:/opt/homebrew/bin"
@@ -34,7 +35,6 @@ autoload -U edit-command-line
 zle -N edit-command-line
 bindkey -M vicmd '^v' edit-command-line
 
-#export PAGER=less
 export PAGER=nvimpager
 export LESSKEY=~/.lesskey
 export FZF_DEFAULT_OPTS='--bind=ctrl-e:down,ctrl-u:down,ctrl-y:up'
@@ -49,9 +49,6 @@ alias vi='nvim'
 alias vim='nvim'
 alias cdu='cd-gitroot'
 alias less="$(brew --prefix)/Cellar/less/590/bin/less"
-#alias less=$PAGER
-#alias zless=$PAGER
-#alias more=$PAGER
 alias excel="open -a /Applications/Microsoft\ Excel.app"
 alias refresh="exec $SHELL -l"
 
@@ -89,6 +86,7 @@ antigen bundle mollifier/cd-gitroot # type "cd-gitroot<CR>" to get to the root d
 antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle zsh-users/zsh-syntax-highlighting
 antigen bundle zsh-users/zsh-completions
+antigen bundle mrjohannchang/zsh-interactive-cd
 
 antigen apply
 

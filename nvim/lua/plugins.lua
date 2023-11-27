@@ -143,6 +143,9 @@ require("lazy").setup({
 			},
 		},
 	},
+	{
+		"nvim-treesitter/nvim-treesitter-context",
+	},
 
 	-- Telescope
 	{
@@ -353,6 +356,7 @@ require("lazy").setup({
 		config = function()
 			require("config.wiki").setup()
 		end,
+		disable = true,
 	},
 
 	-- REST
@@ -455,6 +459,87 @@ require("lazy").setup({
 		"levouh/tint.nvim",
 		config = function()
 			require("tint").setup()
+		end,
+	},
+
+	-- Aerial
+	{
+		"stevearc/aerial.nvim",
+		opts = {},
+		-- Optional dependencies
+		dependencies = {
+			"nvim-treesitter/nvim-treesitter",
+			"nvim-tree/nvim-web-devicons",
+		},
+		config = function()
+			require("aerial").setup({
+				-- optionally use on_attach to set keymaps when aerial has attached to a buffer
+				on_attach = function(bufnr)
+					-- Jump forwards/backwards with '{' and '}'
+					vim.keymap.set("n", "{", "<cmd>AerialPrev<CR>", { buffer = bufnr })
+					vim.keymap.set("n", "}", "<cmd>AerialNext<CR>", { buffer = bufnr })
+				end,
+			})
+		end,
+	},
+
+	-- Improved Searching
+	{
+		"backdround/improved-search.nvim",
+		config = function()
+			require("config.improved-search").setup()
+		end,
+	},
+
+	-- Trouble
+	{
+		"folke/trouble.nvim",
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+		opts = {},
+	},
+
+	-- Align
+	{
+		"Vonr/align.nvim",
+		branch = "v2",
+		lazy = true,
+		init = function()
+			require("config.align").init()
+		end,
+	},
+
+	-- Markdown
+	{
+		"jakewvincent/mkdnflow.nvim",
+		config = function()
+			require("config.mkdnflow").setup()
+		end,
+	},
+
+	-- Better navigation with Tab
+	{
+		"boltlessengineer/smart-tab.nvim",
+		config = function()
+			require("smart-tab").setup()
+		end,
+	},
+
+	-- Improved quickfix list
+	{
+		"kevinhwang91/nvim-bqf",
+		config = function()
+			require("bqf").setup({
+				func_map = {
+					drop = "k",
+					openc = "K",
+				},
+				--filter = {
+				--	fzf = {
+				--		action_for = { ["ctrl-s"] = "split", ["ctrl-t"] = "tab drop" },
+				--		extra_opts = { "--bind", "ctrl-o:toggle-all", "--prompt", "> " },
+				--	},
+				--},
+			})
 		end,
 	},
 })

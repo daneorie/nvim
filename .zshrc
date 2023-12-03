@@ -20,7 +20,7 @@ for path_to_add in "${paths_to_add[@]}"; do
 	fi
 done
 
-if [[ -n "~/.keys" ]]; then
+if [[ -e "~/.keys" ]]; then
 	. ~/.keys
 fi
 

@@ -204,6 +204,12 @@ local function normal_keymap()
 			t = { [[ <cmd>UndotreeToggle<cr> ]], "Toggle" },
 		},
 
+		u = {
+			name = "Undotree",
+			f = { [[ <cmd>UndotreeFocus<CR> ]], "Focus" },
+			t = { [[ <cmd>UndotreeToggle<CR> ]], "Toggle" },
+		},
+
 		--v = {
 		--	name = "Vimspector",
 		--	G = { "<cmd>lua require('config.vimspector').generate_debug_profile()<cr>", "Generate Debug Profile" },

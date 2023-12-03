@@ -57,13 +57,19 @@ local function bind_if(cond, key, mods, action, alt_str)
 end
 
 local format_title = function(title, is_active, max_width)
-	local background = { Background = { Color = "#1f1f28" } }
-	local title_len = #title
-	local pad_left_len = math.floor((max_width - title_len) / 2) - 1
-	local pad_right_len = max_width - pad_left_len - title_len - 2
+	local title_max = max_width - 4 -- 4 is for the bookends "|∙" and "∙|"
+	title = title:sub(0, title_max)
 
+	local background = { Background = { Color = "#1f1f28" } }
+	local leftover_width = title_max - #title + 2 -- 2 is for the "∙" part of the bookends
+	local pad_left_len = math.floor(leftover_width / 2)
+	local pad_right_len = leftover_width - pad_left_len
+
+	local padding = "∙"
+	local left_end = "|" .. padding:rep(pad_left_len)
+	local right_end = padding:rep(pad_right_len) .. "|"
 	local formatted_title = {
-		Text = "|" .. string.rep(" ", pad_left_len) .. title .. string.rep(" ", pad_right_len) .. "|",
+		Text = left_end .. title .. right_end,
 	}
 	if is_active then
 		return { background, { Foreground = { Color = "#957fb8" } }, formatted_title }

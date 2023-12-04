@@ -63,44 +63,42 @@ const getBatteryBarStyle = (batteryPercentage) => {
   };
 };
 
-const getChargingBarStyle = (chargingStatus) => {
-  return chargingStatus
-    ? {
-        ...getBaseBarStyle(),
-        background: theme.chargingColor,
-        width: theme.chargingSize,
-        animationName: "color",
-        animationDuration: "1s",
-        animationIterationCount: "infinite",
-        animationDirection: "alternate - reverse",
-        animationTimingFunction: "ease",
-      }
-    : {};
+const getChargingBarStyle = () => {
+  return {
+    ...getBaseBarStyle(),
+    background: theme.chargingColor,
+    width: theme.chargingSize,
+    animationName: "color",
+    animationDuration: "1s",
+    animationIterationCount: "infinite",
+    animationDirection: "alternate - reverse",
+    animationTimingFunction: "ease",
+  };
 };
 
-const getLeftChargingBarStyle = (chargingStatus) => {
+const getLeftChargingBarStyle = () => {
   return {
-    ...getChargingBarStyle(chargingStatus),
+    ...getChargingBarStyle(),
     left: 0,
     marginLeft: 0,
     marginRight: "auto",
   };
 };
 
-const getRightChargingBarStyle = (chargingStatus) => {
+const getRightChargingBarStyle = () => {
   return {
-    ...getChargingBarStyle(chargingStatus),
+    ...getChargingBarStyle(),
     right: 0,
     marginLeft: "auto",
     marginRight: 0,
   };
 };
 
-export const command = `echo "[ $(pmset -g batt | egrep '(\\d+)\%' -o | cut -f1 -d%), $(echo "false") ]"`;
+export const command = `echo "{ \\\"batteryPercentage\\\": $(pmset -g batt | egrep '(\\d+)\%' -o | cut -f1 -d%), \\\"chargingStatus\\\": \\\"$(pmset -g batt | head -n1)\\\" }"`;
 
 export const render = ({ output, error }) => {
-  const batteryPercentage = parseInt(output, USE_BASE_TEN);
-  const chargingStatus = false;
+  const { batteryPercentage, chargingStatus } = JSON.parse(output);
+  const isCharging = chargingStatus == "Now drawing from 'AC Power'";
 
   if (error) {
     console.log(new Date());
@@ -109,14 +107,14 @@ export const render = ({ output, error }) => {
   }
 
   const batteryBarStyle = getBatteryBarStyle(batteryPercentage);
-  const leftChargingBarStyle = getLeftChargingBarStyle(chargingStatus);
-  const rightChargingBarStyle = getRightChargingBarStyle(chargingStatus);
+  const leftChargingBarStyle = getLeftChargingBarStyle();
+  const rightChargingBarStyle = getRightChargingBarStyle();
 
   return (
-		<div>
-			<div style={batteryBarStyle} />
-			<div style={leftChargingBarStyle} />
-			<div style={rightChargingBarStyle} />
-		</div>
+    <div>
+      <div style={batteryBarStyle} />
+      {isCharging && <div style={leftChargingBarStyle} />}
+      {isCharging && <div style={rightChargingBarStyle} />}
+    </div>
   );
 };

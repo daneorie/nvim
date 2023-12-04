@@ -16,7 +16,7 @@ export const settingsStyles = /* css */ `
 .simple-bar--no-bar-background .settings__overlay {
   display: none;
 }
-.simple-bar--on-bottom  .settings__overlay {
+.simple-bar--on-bottom .settings__overlay {
   top: unset;
   bottom: 28px;
 }
@@ -38,7 +38,7 @@ export const settingsStyles = /* css */ `
 .simple-bar--floating .settings__outer {
   top: calc(var(--bar-height) + 20px);
 }
-.simple-bar--on-bottom  .settings__outer {
+.simple-bar--on-bottom .settings__outer {
   top: unset;
   bottom: calc(var(--bar-height) + 10px);
   transform: translate(0, 50px) scale(0.8);

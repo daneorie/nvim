@@ -65,7 +65,7 @@ local format_title = function(title, is_active, max_width)
 	local pad_left_len = math.floor(leftover_width / 2)
 	local pad_right_len = leftover_width - pad_left_len
 
-	local padding = "∙"
+	local padding = " "
 	local left_end = "|" .. padding:rep(pad_left_len)
 	local right_end = padding:rep(pad_right_len) .. "|"
 	local formatted_title = {
@@ -240,7 +240,7 @@ config.keys = {
 
 	-- rename the tab
 	{
-		key = "E",
+		key = "t",
 		mods = "CTRL|SHIFT",
 		action = act.PromptInputLine({
 			description = "Enter new name for tab",

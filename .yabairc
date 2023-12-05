@@ -23,8 +23,8 @@ yabai -m config window_topmost               off
 yabai -m config window_shadow                on
 yabai -m config window_opacity               off
 yabai -m config window_opacity_duration      0.0
-yabai -m config active_window_opacity        1.0
-yabai -m config normal_window_opacity        0.90
+yabai -m config active_window_opacity        0.9
+yabai -m config normal_window_opacity        0.8
 yabai -m config window_border                off
 yabai -m config window_border_width          6
 yabai -m config active_window_border_color   0xff775759
@@ -61,8 +61,8 @@ check_displays() {
 }
 check_displays
 
-yabai -m signal --add event=display_added action="check_displays" label="Change bottom padding depending on display setup."
-yabai -m signal --add event=display_removed action="check_displays" label="Change bottom padding depending on display setup."
+#yabai -m signal --add event=display_added action="check_displays" label="Change bottom padding depending on display setup."
+#yabai -m signal --add event=display_removed action="check_displays" label="Change bottom padding depending on display setup."
 
 # apps to not manage (ignore)
 yabai -m rule --add manage=off label="off:System Preferences" app="^System Preferences$"
@@ -81,7 +81,6 @@ yabai -m rule --add manage=off label="off:Wally" app="^Wally$"
 yabai -m rule --add manage=off label="off:Discord|Discord Updater" app="^Microsoft Teams$" title="^Microsoft Teams Notification$"
 yabai -m rule --add manage=off label="off:Discord|Discord Updater" app="^Discord$" title="^Discord Updater$"
 yabai -m rule --add manage=off label="off:bzbmenu|Backblaze Notification" app="^bzbmenu$" title="^Backblaze Notification$"
-yabai -m rule --add manage=off label="off:Microsoft Teams|Loading Microsoft Teams" app="^Microsoft Teams$" title="^Loading Microsoft Teams$"
 yabai -m rule --add manage=off label="off:Microsoft Teams|Microsoft Teams Notification" app="^Microsoft Teams$" title="^Microsoft Teams Notification$"
 yabai -m rule --add manage=off label="off:Calendar|" app="^Calendar$" title="^$" # This is the autocomplete pop-up for event titles. Not sure if it will catch other things.
 yabai -m rule --add manage=off label="off:Safari|General" app="^Safari$" title="^General$"
@@ -114,5 +113,16 @@ yabai -m rule --add manage=off label="off:Wineskin Winery|Wineskin Winery" app="
 yabai -m rule --add manage=off label="off:Microsoft Outlook|Outlook Preferences" app="^Microsoft Outlook$" title="^Outlook Preferences$"
 yabai -m rule --add manage=off label="off:Arc|Dane" app="^Arc$" title="^Dane$"
 yabai -m rule --add manage=off label="off:Sound Control|Sound Control Preferences" app="^Sound Control$" title="^Sound Control Preferences$"
+yabai -m rule --add manage=off label="off:Dictionary" app="^Dictionary$"
+yabai -m rule --add manage=off label="off:FaceTime|Settings" app="^FaceTime$" title="^Settings$"
+yabai -m rule --add manage=off label="off:1Blocker" app="^1Blocker$"
+yabai -m rule --add manage=off label="off:Microsoft Teams|Meeting with Dane Orie | Microsoft Teams" app="^Microsoft Teams$" title="^Meeting with Dane Orie | Microsoft Teams$"
+yabai -m rule --add manage=off label="off:Steam Helper|Special Offers" app="^Steam Helper$" title="^Special Offers$"
+yabai -m rule --add manage=off label="off:Steam Helper|Friends List" app="^Steam Helper$" title="^Friends List$"
+yabai -m rule --add manage=off label="off:GIMP|Set Image Canvas Size" app="^GIMP$" title="^Set Image Canvas Size$"
+yabai -m rule --add manage=off label="off:Homerow|Clicking" app="^Homerow$" title="^Clicking$"
+yabai -m rule --add manage=off label="off:Homerow|General" app="^Homerow$" title="^General$"
+yabai -m rule --add manage=off label="off:Homerow|Exceptions" app="^Homerow$" title="^Exceptions$"
+yabai -m rule --add manage=off label="off:Reminders|Settings" app="^Reminders$" title="^Settings$"
 
 echo "yabai configuration loaded..."

@@ -1,5 +1,7 @@
 export NVIM_HOME=~/.config/nvim
 export MAVEN_HOME=~/apache-maven-3.8.1
+export WIKI_HOME=~/wiki
+export XDG_CONFIG_HOME="$HOME/.config"
 
 if [[ -n "/usr/local/bin/brew" ]]; then
 	export PATH="$PATH:/opt/homebrew/bin"
@@ -18,10 +20,22 @@ for path_to_add in "${paths_to_add[@]}"; do
 	fi
 done
 
+if [[ -e "~/.keys" ]]; then
+	. ~/.keys
+fi
+
+# When typing '#' in normal/vicmd mode, append a '#' at the beginning of the line and return.
+# This stops the current line from running but keeps it in the history.
 setopt interactivecomments
 
+# When in normal/vicmd mode, typing <C-v> will enter the current line into a nvim buffer for editing.
+# Save and quit the buffer to output the line back to the terminal.
 export EDITOR=nvim
-export PAGER=less
+autoload -U edit-command-line
+zle -N edit-command-line
+bindkey -M vicmd '^v' edit-command-line
+
+export PAGER=nvimpager
 export LESSKEY=~/.lesskey
 export FZF_DEFAULT_OPTS='--bind=ctrl-e:down,ctrl-u:down,ctrl-y:up'
 alias l='ls -lH'
@@ -30,12 +44,14 @@ alias ll='l'
 alias lla='l -a'
 alias lld='l -d'
 alias v='nvim'
+alias v.='nvim .'
 alias vi='nvim'
 alias vim='nvim'
 alias cdu='cd-gitroot'
 alias less="$(brew --prefix)/Cellar/less/590/bin/less"
 alias excel="open -a /Applications/Microsoft\ Excel.app"
 alias refresh="exec $SHELL -l"
+
 
 # git aliases
 alias g='git'
@@ -58,10 +74,6 @@ alias yqwd='yqw --display'
 
 alias testGithub='ssh -T git@github.com'
 
-#cat() {
-	#[[ "$(file $1)" =~ ": directory" ]] && ll $1 || /bin/cat $1
-#}
-
 export KEYTIMEOUT=1 # this lowers the time it takes to switch from viins to vicmd and vice versa
 eval "$(jenv init -)"
 eval "$(rbenv init - zsh)"
@@ -69,10 +81,12 @@ eval "$(rbenv init - zsh)"
 # Plugins (Antigen)
 source /usr/local/share/antigen/antigen.zsh
 
+antigen bundle kutsan/zsh-system-clipboard
 antigen bundle mollifier/cd-gitroot # type "cd-gitroot<CR>" to get to the root directory of a git repo; aliased above
 antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle zsh-users/zsh-syntax-highlighting
 antigen bundle zsh-users/zsh-completions
+antigen bundle mrjohannchang/zsh-interactive-cd
 
 antigen apply
 
@@ -95,23 +109,24 @@ bindkey -M vicmd "L" vi-forward-blank-word-end
 bindkey -M vicmd "E" vi-join
 bindkey -M vicmd "^J" down-history
 
+bindkey -s ^f "tmux-sessionizer\n"
+
 # Setting the prompt
 NEWLINE=$'\n'
 ## Options
 THEME_VI_INS_MODE_SYMBOL=${THEME_VI_INS_MODE_SYMBOL:-'λ'}
 THEME_VI_CMD_MODE_SYMBOL=${THEME_VI_CMD_MODE_SYMBOL:-'ᐅ'}
 
-## Set symbol for the initial mode
-THEME_VI_MODE_SYMBOL="${THEME_VI_INS_MODE_SYMBOL}"
+## Set symbol for the initial prompt
+PS1="%F{green}${THEME_VI_INS_MODE_SYMBOL}%f "
 
 # on keymap change, define the mode and redraw prompt
 zle-keymap-select() {
 	if [ "${KEYMAP}" = "vicmd" ]; then
-		THEME_VI_MODE_SYMBOL="${THEME_VI_CMD_MODE_SYMBOL}"
+		PS1="%F{green}${THEME_VI_CMD_MODE_SYMBOL}%f "
 	else
-		THEME_VI_MODE_SYMBOL="${THEME_VI_INS_MODE_SYMBOL}"
+		PS1="%F{green}${THEME_VI_INS_MODE_SYMBOL}%f "
 	fi
-	set-prompt
 	zle reset-prompt
 }
 #zle -N zle-keymap-init
@@ -119,7 +134,7 @@ zle -N zle-keymap-select
 
 # reset to default mode at the end of line input reading
 zle-line-finish() {
-	THEME_VI_MODE_SYMBOL="${THEME_VI_INS_MODE_SYMBOL}"
+	PS1="%F{green}${THEME_VI_INS_MODE_SYMBOL}%f "
 }
 zle -N zle-line-finish
 
@@ -128,7 +143,7 @@ zle -N zle-line-finish
 # Fixed by catching SIGINT (C-c), set mode to INS and repropagate the SIGINT,
 # so if anything else depends on it, we will not break it.
 TRAPINT() {
-	THEME_VI_MODE_SYMBOL="${THEME_VI_INS_MODE_SYMBOL}"
+	PS1="%F{green}${THEME_VI_INS_MODE_SYMBOL}%f "
 	return $(( 128 + $1 ))
 }
 
@@ -141,17 +156,13 @@ precmd() {
 set-prompt() {
 	vcs_info
 	if [[ -z ${vcs_info_msg_0_} ]]; then
-		# Oh hey, nothing from vcs_info, so we got more space.
-		# Let's print a longer part of $PWD...
-		PS1="%n@%m [%F{red}%5~%f]$NEWLINE%F{green}$THEME_VI_MODE_SYMBOL%f "
-		RPS1="%{$(echotc UP 1)%}%K{white}%F{black} %D{%T} %f%k%{$(echotc DO 1)%}"
+		print -rP "%K{white}%F{black} %D{%T} %f%k %n@%m [%F{red}%5~%f]"
 	else
-		# vcs_info found something, that needs space. So a shorter $PWD
-		# makes sense.
-		#PS1="%n@%m [%F{red}%3~%f]$NEWLINE${vcs_info_msg_0_} %F{green}$THEME_VI_MODE_SYMBOL%f "
-		PS1="%n@%m [%F{red}%3~%f]$NEWLINE%F{green}$THEME_VI_MODE_SYMBOL%f "
-		RPS1="%{$(echotc UP 1)%}${vcs_info_msg_0_} %K{white}%F{black} %D{%T} %f%k%{$(echotc DO 1)%}"
+		print -rP "%K{white}%F{black} %D{%T} %f%k %n@%m [%F{red}%3~%f] ${vcs_info_msg_0_}"
 	fi
 }
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# Created by `pipx` on 2023-05-18 05:50:54
+export PATH="$PATH:/Users/daneorie/.local/bin"

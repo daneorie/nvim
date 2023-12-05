@@ -2,13 +2,11 @@
 // throttle themselves
 export const refreshFrequency = 5000; // ms
 
-const USE_BASE_TEN = 10;
-
 const theme = {
   borderSize: 0,
   thickness: "2px",
-  chargingColor: "lime",
-  chargingSize: "100px",
+	connectedColor: "lime",
+	connectedSize: "50px",
   green: "#97c475",
   green_threshold: 80,
   yellow: "#e5c07b",
@@ -37,7 +35,7 @@ const computeBatteryColor = (level) => {
   if (level > green_threshold) return green;
   if (level > yellow_threshold) return yellow;
   if (level > orange_threshold) return orange;
-  return theme.red;
+  return red;
 };
 
 const getBaseBarStyle = () => {
@@ -63,42 +61,66 @@ const getBatteryBarStyle = (batteryPercentage) => {
   };
 };
 
-const getChargingBarStyle = () => {
+const getChargingAnimationStyle = (isCharging) => {
+	if (isCharging) {
+		return {
+			animationName: "color",
+			animationDuration: "1s",
+			animationIterationCount: "infinite",
+			animationDirection: "alternate-reverse",
+			animationTimingFunction: "ease",
+		}
+	} else {
+		return {};
+	}
+}
+
+const getChargingBarStyle = (isCharging) => {
   return {
     ...getBaseBarStyle(),
-    background: theme.chargingColor,
-    width: theme.chargingSize,
-    animationName: "color",
-    animationDuration: "1s",
-    animationIterationCount: "infinite",
-    animationDirection: "alternate - reverse",
-    animationTimingFunction: "ease",
+		...getChargingAnimationStyle(isCharging),
+    background: theme.connectedColor,
+    width: theme.connectedSize,
   };
 };
 
-const getLeftChargingBarStyle = () => {
+const getLeftChargingBarStyle = (isCharging) => {
   return {
-    ...getChargingBarStyle(),
+    ...getChargingBarStyle(isCharging),
     left: 0,
     marginLeft: 0,
     marginRight: "auto",
   };
 };
 
-const getRightChargingBarStyle = () => {
+const getRightChargingBarStyle = (isCharging) => {
   return {
-    ...getChargingBarStyle(),
+    ...getChargingBarStyle(isCharging),
     right: 0,
     marginLeft: "auto",
     marginRight: 0,
   };
 };
 
-export const command = `echo "{ \\\"batteryPercentage\\\": $(pmset -g batt | egrep '(\\d+)\%' -o | cut -f1 -d%), \\\"chargingStatus\\\": \\\"$(pmset -g batt | head -n1)\\\" }"`;
+export const command = `echo "{
+	\\\"batteryPercentage\\\": $(system_profiler SPPowerDataType | grep "State of Charge" | awk '{ print $5 }'),
+	\\\"connectedStatus\\\": \\\"$(system_profiler SPPowerDataType | grep 'Connected' | head -n1 | awk '{$1=$1};1')\\\",
+	\\\"chargingStatus\\\": \\\"$(system_profiler SPPowerDataType | grep 'Charging' | head -n1 | awk '{$1=$1};1')\\\"
+}"`;
+
+export const className = `
+	@keyframes color {
+		to {
+			background-color: ${theme.green};
+		}
+	}
+`
 
 export const render = ({ output, error }) => {
-  const { batteryPercentage, chargingStatus } = JSON.parse(output);
-  const isCharging = chargingStatus == "Now drawing from 'AC Power'";
+	console.log(output);
+  const { batteryPercentage, connectedStatus, chargingStatus } = JSON.parse(output);
+  const isConnected = connectedStatus == "Connected: Yes";
+  const isCharging = chargingStatus == "Charging: Yes";
 
   if (error) {
     console.log(new Date());
@@ -107,14 +129,14 @@ export const render = ({ output, error }) => {
   }
 
   const batteryBarStyle = getBatteryBarStyle(batteryPercentage);
-  const leftChargingBarStyle = getLeftChargingBarStyle();
-  const rightChargingBarStyle = getRightChargingBarStyle();
+  const leftChargingBarStyle = getLeftChargingBarStyle(isCharging);
+  const rightChargingBarStyle = getRightChargingBarStyle(isCharging);
 
   return (
     <div>
       <div style={batteryBarStyle} />
-      {isCharging && <div style={leftChargingBarStyle} />}
-      {isCharging && <div style={rightChargingBarStyle} />}
+      {isConnected && <div style={leftChargingBarStyle} />}
+      {isConnected && <div style={rightChargingBarStyle} />}
     </div>
   );
 };

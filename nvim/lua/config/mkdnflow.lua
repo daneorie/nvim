@@ -9,6 +9,9 @@ function M.setup()
 			MkdnFoldSection = { "n", "<leader>fs" },
 			MkdnUnfoldSection = { "n", "<leader>Fs" },
 		},
+		perspective = {
+			priority = "current",
+		},
 		wrap = true,
 		links = {
 			conceal = true,

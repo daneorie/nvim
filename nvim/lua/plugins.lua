@@ -554,4 +554,26 @@ require("lazy").setup({
 		end,
 		enabled = false,
 	},
+
+	{
+		"mrjones2014/smart-splits.nvim",
+		lazy = false,
+		config = function()
+			-- these keymaps will also accept a range,
+			--vim.keymap.set('n', '<A-n>', require('smart-splits').resize_left)
+			--vim.keymap.set('n', '<A-e>', require('smart-splits').resize_down)
+			--vim.keymap.set('n', '<A-i>', require('smart-splits').resize_up)
+			--vim.keymap.set('n', '<A-o>', require('smart-splits').resize_right)
+			-- moving between splits
+			vim.keymap.set("n", "<C-n>", require("smart-splits").move_cursor_left)
+			vim.keymap.set("n", "<C-e>", require("smart-splits").move_cursor_down)
+			vim.keymap.set("n", "<C-i>", require("smart-splits").move_cursor_up)
+			vim.keymap.set("n", "<C-o>", require("smart-splits").move_cursor_right)
+			-- swapping buffers between windows
+			vim.keymap.set("n", "<leader><leader>n", require("smart-splits").swap_buf_left)
+			vim.keymap.set("n", "<leader><leader>e", require("smart-splits").swap_buf_down)
+			vim.keymap.set("n", "<leader><leader>i", require("smart-splits").swap_buf_up)
+			vim.keymap.set("n", "<leader><leader>o", require("smart-splits").swap_buf_right)
+		end,
+	},
 })

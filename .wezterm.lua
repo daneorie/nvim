@@ -20,22 +20,10 @@ config.tab_bar_at_bottom = true
 config.window_decorations = "RESIZE"
 config.use_fancy_tab_bar = false
 
+-- if you are *NOT* lazy-loading smart-splits.nvim (recommended)
 local function is_inside_vim(pane)
-	local tty = pane:get_tty_name()
-	if tty == nil then
-		return false
-	end
-
-	local success, _, _ = wezterm.run_child_process({
-		"sh",
-		"-c",
-		"ps -o state= -o comm= -t"
-			.. wezterm.shell_quote_arg(tty)
-			.. " | "
-			.. "grep -iqE '^[^TXZ ]+ +(\\S+\\/)?g?(view|l?n?vim?x?)(diff)?$'",
-	})
-
-	return success
+	-- this is set by the plugin, and unset on ExitPre in Neovim
+	return pane:get_user_vars().IS_NVIM == "true"
 end
 
 local function is_outside_vim(pane)
@@ -144,7 +132,21 @@ wezterm.on("update-status", function(window, pane)
 	}))
 end)
 
-config.leader = { key = "Space", mods = "ALT" }
+local SUPER, META
+if wezterm.target_triple == "x86_64-pc-windows-msvc" then
+	SUPER = "META"
+	META = "SUPER"
+	config.window_background_opacity = 0.8
+	config.text_background_opacity = 0.8
+	config.default_domain = "WSL:Ubuntu"
+	config.warn_about_missing_glyphs = false
+	config.allow_win32_input_mode = false
+else
+	SUPER = "SUPER"
+	META = "META"
+end
+
+config.leader = { key = "Space", mods = META }
 config.keys = {
 	-- LEADER
 	{ key = "r", mods = "LEADER", action = act.ActivateKeyTable({ name = "resize_pane", one_shot = false }) },
@@ -152,25 +154,25 @@ config.keys = {
 	{ key = "t", mods = "LEADER", action = act.EmitEvent("toggle-transparency") },
 
 	-- basic usage
-	{ key = "c", mods = "CMD", action = act.CopyTo("Clipboard") },
-	{ key = "v", mods = "CMD", action = act.PasteFrom("Clipboard") },
-	{ key = "q", mods = "CMD", action = act.QuitApplication },
-	{ key = "n", mods = "CMD|SHIFT", action = act.SpawnWindow },
-	{ key = "n", mods = "CMD|ALT", action = act.SwitchToWorkspace },
-	{ key = "Enter", mods = "CMD", action = act.ActivateCopyMode },
+	{ key = "c", mods = SUPER, action = act.CopyTo("Clipboard") },
+	{ key = "v", mods = SUPER, action = act.PasteFrom("Clipboard") },
+	{ key = "q", mods = SUPER, action = act.QuitApplication },
+	{ key = "n", mods = SUPER .. "|SHIFT", action = act.SpawnWindow },
+	{ key = "n", mods = SUPER .. "|" .. META, action = act.SwitchToWorkspace },
+	{ key = "Enter", mods = SUPER, action = act.ActivateCopyMode },
 
 	-- wezterm navigation
-	{ key = "[", mods = "CMD", action = act.ActivateTabRelative(-1) },
-	{ key = "]", mods = "CMD", action = act.ActivateTabRelative(1) },
+	{ key = "[", mods = SUPER, action = act.ActivateTabRelative(-1) },
+	{ key = "]", mods = SUPER, action = act.ActivateTabRelative(1) },
 	{ key = "6", mods = "CTRL", action = act.ActivateLastTab },
-	{ key = "d", mods = "CMD", action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
-	{ key = "d", mods = "CMD|SHIFT", action = act.SplitVertical({ domain = "CurrentPaneDomain" }) },
-	{ key = "w", mods = "CMD", action = act.CloseCurrentPane({ confirm = true }) },
-	{ key = "t", mods = "CMD", action = act.SpawnTab("CurrentPaneDomain") },
-	{ key = "LeftArrow", mods = "CMD", action = act.AdjustPaneSize({ "Left", 5 }) },
-	{ key = "DownArrow", mods = "CMD", action = act.AdjustPaneSize({ "Down", 5 }) },
-	{ key = "UpArrow", mods = "CMD", action = act.AdjustPaneSize({ "Up", 5 }) },
-	{ key = "RightArrow", mods = "CMD", action = act.AdjustPaneSize({ "Right", 5 }) },
+	{ key = "d", mods = SUPER, action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
+	{ key = "d", mods = SUPER .. "|SHIFT", action = act.SplitVertical({ domain = "CurrentPaneDomain" }) },
+	{ key = "w", mods = SUPER, action = act.CloseCurrentPane({ confirm = true }) },
+	{ key = "t", mods = SUPER, action = act.SpawnTab("CurrentPaneDomain") },
+	{ key = "LeftArrow", mods = SUPER, action = act.AdjustPaneSize({ "Left", 5 }) },
+	{ key = "DownArrow", mods = SUPER, action = act.AdjustPaneSize({ "Down", 5 }) },
+	{ key = "UpArrow", mods = SUPER, action = act.AdjustPaneSize({ "Up", 5 }) },
+	{ key = "RightArrow", mods = SUPER, action = act.AdjustPaneSize({ "Right", 5 }) },
 
 	-- Wezterm & NeoVim Pane Navigation
 	bind_if(is_outside_vim, "n", "CTRL", act.ActivatePaneDirection("Left")),
@@ -184,33 +186,33 @@ config.keys = {
 	--{ key = "i", mods = "CTRL", action = act.SendString("\x33[105;5u") }, -- ctrl-i - overlaps TAB
 	{ key = "m", mods = "CTRL", action = act.SendString("\x33[109;5u") }, -- ctrl-m - overlaps CR/Enter
 
-	{ key = ";", mods = "CMD", action = act.SendString("\x1b;") },
-	{ key = "a", mods = "CMD", action = act.SendString("\x1ba") },
-	{ key = "b", mods = "CMD", action = act.SendString("\x1bb") },
-	--{ key = "c", mods = "CMD", action = act.SendString("\x1bc") },
-	--{ key = "d", mods = "CMD", action = act.SendString("\x1bd") },
-	{ key = "e", mods = "CMD", action = act.SendString("\x1be") },
-	{ key = "f", mods = "CMD", action = act.SendString("\x1bf") },
-	{ key = "g", mods = "CMD", action = act.SendString("\x1bg") },
-	{ key = "h", mods = "CMD", action = act.SendString("\x1bh") },
-	{ key = "i", mods = "CMD", action = act.SendString("\x1bi") },
-	{ key = "j", mods = "CMD", action = act.SendString("\x1bj") },
-	{ key = "k", mods = "CMD", action = act.SendString("\x1bk") },
-	{ key = "l", mods = "CMD", action = act.SendString("\x1bl") },
-	{ key = "m", mods = "CMD", action = act.SendString("\x1bm") },
-	{ key = "n", mods = "CMD", action = act.SendString("\x1bn") },
-	{ key = "o", mods = "CMD", action = act.SendString("\x1bo") },
-	{ key = "p", mods = "CMD", action = act.SendString("\x1bp") },
-	--{ key = "q", mods = "CMD", action = act.SendString("\x1bq") },
-	{ key = "r", mods = "CMD", action = act.SendString("\x1br") },
-	{ key = "s", mods = "CMD", action = act.SendString("\x1bs") },
-	--{ key = "t", mods = "CMD", action = act.SendString("\x1bt") },
-	{ key = "u", mods = "CMD", action = act.SendString("\x1bu") },
-	--{ key = "v", mods = "CMD", action = act.SendString("\x1bv") },
-	--{ key = "w", mods = "CMD", action = act.SendString("\x1bw") },
-	{ key = "x", mods = "CMD", action = act.SendString("\x1bx") },
-	{ key = "y", mods = "CMD", action = act.SendString("\x1by") },
-	{ key = "z", mods = "CMD", action = act.SendString("\x1bz") },
+	{ key = ";", mods = SUPER, action = act.SendString("\x1b;") },
+	{ key = "a", mods = SUPER, action = act.SendString("\x1ba") },
+	{ key = "b", mods = SUPER, action = act.SendString("\x1bb") },
+	--{ key = "c", mods = SUPER, action = act.SendString("\x1bc") },
+	--{ key = "d", mods = SUPER, action = act.SendString("\x1bd") },
+	{ key = "e", mods = SUPER, action = act.SendString("\x1be") },
+	{ key = "f", mods = SUPER, action = act.SendString("\x1bf") },
+	{ key = "g", mods = SUPER, action = act.SendString("\x1bg") },
+	{ key = "h", mods = SUPER, action = act.SendString("\x1bh") },
+	{ key = "i", mods = SUPER, action = act.SendString("\x1bi") },
+	{ key = "j", mods = SUPER, action = act.SendString("\x1bj") },
+	{ key = "k", mods = SUPER, action = act.SendString("\x1bk") },
+	{ key = "l", mods = SUPER, action = act.SendString("\x1bl") },
+	{ key = "m", mods = SUPER, action = act.SendString("\x1bm") },
+	{ key = "n", mods = SUPER, action = act.SendString("\x1bn") },
+	{ key = "o", mods = SUPER, action = act.SendString("\x1bo") },
+	{ key = "p", mods = SUPER, action = act.SendString("\x1bp") },
+	--{ key = "q", mods = SUPER, action = act.SendString("\x1bq") },
+	{ key = "r", mods = SUPER, action = act.SendString("\x1br") },
+	{ key = "s", mods = SUPER, action = act.SendString("\x1bs") },
+	--{ key = "t", mods = SUPER, action = act.SendString("\x1bt") },
+	{ key = "u", mods = SUPER, action = act.SendString("\x1bu") },
+	--{ key = "v", mods = SUPER, action = act.SendString("\x1bv") },
+	--{ key = "w", mods = SUPER, action = act.SendString("\x1bw") },
+	{ key = "x", mods = SUPER, action = act.SendString("\x1bx") },
+	{ key = "y", mods = SUPER, action = act.SendString("\x1by") },
+	{ key = "z", mods = SUPER, action = act.SendString("\x1bz") },
 
 	-- Prompt for a name to use for a new workspace and switch to it.
 	{
@@ -258,12 +260,12 @@ config.keys = {
 	-- switch between a list of workspaces
 	{
 		key = "s",
-		mods = "SHIFT|CMD",
+		mods = SUPER .. "|SHIFT",
 		action = wezterm.action_callback(function(window, pane)
-			local home = wezterm.home_dir
+			local home = wezterm.glob(wezterm.home_dir)[1]
 			local workspaces = {
 				{ id = home .. "/dotfiles|", label = home .. "/dotfiles" },
-				{ id = "/Users/daneorie/wiki|/usr/local/bin/nvim +WikiIndex", label = "/Users/daneorie/wiki" },
+				{ id = "~/wiki|/home/linuxbrew/.linuxbrew/bin/nvim index.md", label = home .. "/wiki" },
 			}
 
 			for _, path in ipairs(wezterm.glob(home .. "/repos/*")) do
@@ -310,10 +312,10 @@ config.keys = {
 }
 
 for i = 1, 9 do
-	-- CMD + number to activate that numbered tab
+	-- SUPER + number to activate that numbered tab
 	table.insert(config.keys, {
 		key = tostring(i),
-		mods = "CMD",
+		mods = SUPER,
 		action = act.ActivateTab(i - 1),
 	})
 end
@@ -382,11 +384,11 @@ config.key_tables = {
 		{ key = "^", mods = "SHIFT", action = act.CopyMode("MoveToStartOfLineContent") },
 		{ key = "a", mods = "NONE", action = act.CopyMode("Close") },
 		{ key = "b", mods = "NONE", action = act.CopyMode("MoveBackwardWord") },
-		{ key = "b", mods = "ALT", action = act.CopyMode("MoveBackwardWord") },
+		{ key = "b", mods = META, action = act.CopyMode("MoveBackwardWord") },
 		{ key = "b", mods = "CTRL", action = act.CopyMode("PageUp") },
 		{ key = "c", mods = "CTRL", action = act.CopyMode("Close") },
 		{ key = "f", mods = "NONE", action = act.CopyMode({ JumpForward = { prev_char = false } }) },
-		{ key = "f", mods = "ALT", action = act.CopyMode("MoveForwardWord") },
+		{ key = "f", mods = META, action = act.CopyMode("MoveForwardWord") },
 		{ key = "f", mods = "CTRL", action = act.CopyMode("PageDown") },
 		{ key = "g", mods = "NONE", action = act.CopyMode("MoveToScrollbackTop") },
 		{ key = "g", mods = "CTRL", action = act.CopyMode("Close") },
@@ -400,7 +402,7 @@ config.key_tables = {
 		{ key = ".", mods = "CTRL", action = act.CopyMode("PageUp") },
 		{ key = "u", mods = "CTRL", action = act.CopyMode({ MoveByPage = 0.5 }) },
 		{ key = "y", mods = "CTRL", action = act.CopyMode({ MoveByPage = -0.5 }) },
-		{ key = "m", mods = "ALT", action = act.CopyMode("MoveToStartOfLineContent") },
+		{ key = "m", mods = META, action = act.CopyMode("MoveToStartOfLineContent") },
 		{ key = "k", mods = "NONE", action = act.CopyMode("MoveToSelectionOtherEnd") },
 		{ key = "q", mods = "NONE", action = act.CopyMode("Close") },
 		{ key = "t", mods = "NONE", action = act.CopyMode({ JumpForward = { prev_char = true } }) },
@@ -417,9 +419,9 @@ config.key_tables = {
 		{ key = "End", mods = "NONE", action = act.CopyMode("MoveToEndOfLineContent") },
 		{ key = "Home", mods = "NONE", action = act.CopyMode("MoveToStartOfLine") },
 		{ key = "LeftArrow", mods = "NONE", action = act.CopyMode("MoveLeft") },
-		{ key = "LeftArrow", mods = "ALT", action = act.CopyMode("MoveBackwardWord") },
+		{ key = "LeftArrow", mods = META, action = act.CopyMode("MoveBackwardWord") },
 		{ key = "RightArrow", mods = "NONE", action = act.CopyMode("MoveRight") },
-		{ key = "RightArrow", mods = "ALT", action = act.CopyMode("MoveForwardWord") },
+		{ key = "RightArrow", mods = META, action = act.CopyMode("MoveForwardWord") },
 		{ key = "UpArrow", mods = "NONE", action = act.CopyMode("MoveUp") },
 		{ key = "DownArrow", mods = "NONE", action = act.CopyMode("MoveDown") },
 	},

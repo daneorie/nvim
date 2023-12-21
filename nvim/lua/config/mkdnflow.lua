@@ -10,6 +10,9 @@ function M.setup()
 			MkdnUnfoldSection = { "n", "<leader>Fs" },
 		},
 		wrap = true,
+		perspective = {
+			priority = "current",
+		},
 		links = {
 			conceal = true,
 			transform_explicit = function(text)

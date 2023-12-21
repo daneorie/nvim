@@ -5,8 +5,8 @@ export const refreshFrequency = 5000; // ms
 const theme = {
   borderSize: 0,
   thickness: "2px",
-	connectedColor: "lime",
-	connectedSize: "50px",
+  connectedColor: "lime",
+  connectedSize: "20px",
   green: "#97c475",
   green_threshold: 80,
   yellow: "#e5c07b",
@@ -62,23 +62,23 @@ const getBatteryBarStyle = (batteryPercentage) => {
 };
 
 const getChargingAnimationStyle = (isCharging) => {
-	if (isCharging) {
-		return {
-			animationName: "color",
-			animationDuration: "1s",
-			animationIterationCount: "infinite",
-			animationDirection: "alternate-reverse",
-			animationTimingFunction: "ease",
-		}
-	} else {
-		return {};
-	}
-}
+  if (isCharging) {
+    return {
+      animationName: "color",
+      animationDuration: "1s",
+      animationIterationCount: "infinite",
+      animationDirection: "alternate-reverse",
+      animationTimingFunction: "ease",
+    };
+  } else {
+    return {};
+  }
+};
 
 const getChargingBarStyle = (isCharging) => {
   return {
     ...getBaseBarStyle(),
-		...getChargingAnimationStyle(isCharging),
+    ...getChargingAnimationStyle(isCharging),
     background: theme.connectedColor,
     width: theme.connectedSize,
   };
@@ -103,7 +103,7 @@ const getRightChargingBarStyle = (isCharging) => {
 };
 
 export const command = `echo "{
-	\\\"batteryPercentage\\\": $(system_profiler SPPowerDataType | grep "State of Charge" | awk '{ print $5 }'),
+	\\\"batteryPercentage\\\": $(system_profiler SPPowerDataType | grep 'State of Charge' | awk '{ print $5 }'),
 	\\\"connectedStatus\\\": \\\"$(system_profiler SPPowerDataType | grep 'Connected' | head -n1 | awk '{$1=$1};1')\\\",
 	\\\"chargingStatus\\\": \\\"$(system_profiler SPPowerDataType | grep 'Charging' | head -n1 | awk '{$1=$1};1')\\\"
 }"`;
@@ -114,11 +114,11 @@ export const className = `
 			background-color: ${theme.green};
 		}
 	}
-`
+`;
 
 export const render = ({ output, error }) => {
-	console.log(output);
-  const { batteryPercentage, connectedStatus, chargingStatus } = JSON.parse(output);
+  const { batteryPercentage, connectedStatus, chargingStatus } =
+    JSON.parse(output);
   const isConnected = connectedStatus == "Connected: Yes";
   const isCharging = chargingStatus == "Charging: Yes";
 

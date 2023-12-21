@@ -11,6 +11,8 @@
     ;; |fn|ctrl|opt|cmd |       space       | 0  |meh|     arrows|  ;; |  |    |   |    |       space       | 0  |   |           |  ;;  fn ctrl opt cmd         space         0   meh      arrows
     ;; –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––  ;; –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––  ;;
     ;;
+    ;; http://www.keyboard-layout-editor.com/##@@=~%0A%60&=!%0A1%0A%0AF1&=%2F@%0A2%0A%0AF2&=%23%0A3%0A%0AF3&=$%0A4%0A%0AF4&=%25%0A5%0A%0AF5&=%5E%0A6%0A%0AF6&=%2F&%0A7%0A%0AF7&=*%0A8%0A%0AF8&=(%0A9%0A%0AF9&=)%0A0%0A%0AF10&=%2F_%0A-%0A%0AF11&=+%0A%2F=%0A%0AF12&_w:2%3B&=Caps%20Lock%3B&@_w:1.5%3B&=Tab%0A%0A%0AEscape&=Q%0A%0A%0A!&=W%0A%0A%0A%2F@&=F%0A%0A%0A%7B&=P%0A%0A%0A%7D&=G%0A%0A%0A%7C&=J%0A%0A%0A%25&=L%0A%0A%0A7&=U%0A%0A%0A8&=Y%0A%0A%0A9&=%2F%3B%0A%2F:%0A%0A*&=%7B%0A%5B&=%7D%0A%5D&_w:1.5%3B&=%7C%0A%5C%3B&@_w:1.75%3B&=Backspace&=A%0A%0A%0A%2F=&=R%0A%0A%0A$&=S%0A%0A%0A(&=T%0A%0A%0A)&=D%0A%0A%0A%60&=H%0A%0A%0A%2F&&=N%0A%0A%0A4&=E%0A%0A%0A5&=I%0A%0A%0A6&=O%0A%0A%0A-&=%22%0A'&_w:2.25%3B&=Enter%3B&@_w:2.25%3B&=Shift%0A(&=Z%0A%0A%0A%23&=X%0A%0A%0A%5E&=C%0A%0A%0A%5B&=V%0A%0A%0A%5D&=B%0A%0A%0A,&=K&=M%0A%0A%0A1&=%3C%0A,%0A%0A2&=%3E%0A.%0A%0A3&=%3F%0A%2F%2F%0A%0A%5C&_w:2.75%3B&=Shift%0A)%3B&@_w:1.25%3B&=Ctrl&_w:1.25%3B&=Option&_w:1.25%3B&=Command&_a:7&w:6.25%3B&=&_a:4&w:1.25%3B&=Hyper%0A%0A%0A0&_w:1.25%3B&=Meh&_a:7&w:1.25%3B&=&_w:1.25%3B&=
+    ;;
 
     {:des "SpaceFN: Space+<key> to match Moonlander Symbol-layer setup (https://configure.zsa.io/moonlander/layouts/BPZEx/latest/1)"
      :rules [:space-mode

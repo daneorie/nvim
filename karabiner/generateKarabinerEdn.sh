@@ -8,8 +8,8 @@ echo "{" > $karabiner
 cat setup.edn >> $karabiner
 echo >> $karabiner
 echo ":main [" >> $karabiner
-cat spaceCadetShifts.edn >> $karabiner
-echo >> $karabiner
+#cat spaceCadetShifts.edn >> $karabiner
+#echo >> $karabiner
 cat spaceFn.edn >> $karabiner
 echo >> $karabiner
 cat colemak.edn >> $karabiner

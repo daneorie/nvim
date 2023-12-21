@@ -143,9 +143,6 @@ require("lazy").setup({
 			},
 		},
 	},
-	{
-		"nvim-treesitter/nvim-treesitter-context",
-	},
 
 	-- Telescope
 	{
@@ -236,6 +233,10 @@ require("lazy").setup({
 			"hrsh7th/cmp-nvim-lsp",
 			{
 				"L3MON4D3/LuaSnip",
+				-- follow latest release.
+				version = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
+				-- install jsregexp (optional!).
+				build = "make install_jsregexp",
 				config = function()
 					--require("config.snip").setup()
 				end,
@@ -356,7 +357,7 @@ require("lazy").setup({
 		config = function()
 			require("config.wiki").setup()
 		end,
-		disable = true,
+		enabled = false,
 	},
 
 	-- REST
@@ -440,7 +441,7 @@ require("lazy").setup({
 	--	config = function()
 	--		require("go").setup()
 	--	end,
-	--	disable = true,
+	--	enabled = false,
 	--},
 
 	-- Java
@@ -513,6 +514,7 @@ require("lazy").setup({
 		config = function()
 			require("config.mkdnflow").setup()
 		end,
+		enabled = true,
 	},
 
 	-- Better navigation with Tab
@@ -540,5 +542,16 @@ require("lazy").setup({
 				--},
 			})
 		end,
+	},
+
+	-- Markdown Images
+	{
+		"edluffy/hologram.nvim",
+		config = function()
+			require("hologram").setup({
+				auto_display = true, -- WIP automatic markdown image display, may be prone to breaking
+			})
+		end,
+		enabled = false,
 	},
 })

@@ -124,5 +124,6 @@ yabai -m rule --add manage=off label="off:Homerow|Clicking" app="^Homerow$" titl
 yabai -m rule --add manage=off label="off:Homerow|General" app="^Homerow$" title="^General$"
 yabai -m rule --add manage=off label="off:Homerow|Exceptions" app="^Homerow$" title="^Exceptions$"
 yabai -m rule --add manage=off label="off:Reminders|Settings" app="^Reminders$" title="^Settings$"
+yabai -m rule --add manage=off label="off:Talon|About Talon" app="^Talon$" title="^About Talon$"
 
 echo "yabai configuration loaded..."

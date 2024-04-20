@@ -13,6 +13,9 @@ npm i -g dockly
 brew install tokei
 brew install bottom
 brew install navi
+brew install sketchybar
+brew install kindavim
+brew install hammerspoon
 ```
 
 ## Basic Setup
@@ -36,11 +39,18 @@ ln -s ~/dotfiles/nvimpager/ ~/.config/
 ln -s ~/dotfiles/gitui/ ~/.config/
 ln -s ~/dotfiles/alacritty/ ~/.config/
 ln -s ~/dotfiles/yazi/ ~/.config/
-ln -s ~/dotfiles/ubersicht/widgets/ ~/Library/Application Support/Übersicht/
+ln -s ~/dotfiles/ubersicht/widgets/ ~/Library/Application\ Support/Übersicht/
+ln -s ~/dotfiles/sketchybar ~/.config/
+ln -s ~/dotfiles/hammerspoon ~/.hammerspoon
 
 # scripts
 ln -s ~/dotfiles/scripts/tmux-sessionizer ~/.local/bin/
 ln -s ~/dotfiles/scripts/tmux-windowizer ~/.local/bin/
+
+# start the services
+yabai --start-service
+brew services start sketchybar
+brew services start hammerspoon
 ```
 
 Install Homebrew

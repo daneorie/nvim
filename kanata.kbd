@@ -4,11 +4,18 @@
 ;; keys matches with deflayer declarations and all deflayer declarations must
 ;; have the same number of keys as defsrc. Any keys not listed in defsrc will
 ;; be passed straight to the operating system.
-(defsrc
+;;(defsrc ;;qwerty as default layer
+;;  grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
+;;  tab  q    w    e    r    t    y    u    i    o    p    [    ]    \
+;;  caps a    s    d    f    g    h    j    k    l    ;    '    ret
+;;  lsft z    x    c    v    b    n    m    ,    .    /    rsft
+;;  lctl lmet lalt           spc            ralt rmet rctl
+;;)
+(defsrc ;;colemak as default layer
   grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
-  tab  q    w    e    r    t    y    u    i    o    p    [    ]    \
-  caps a    s    d    f    g    h    j    k    l    ;    '    ret
-  lsft z    x    c    v    b    n    m    ,    .    /    rsft
+  tab  q    w    f    p    g    j    l    u    y    ;    [    ]    \
+  caps a    r    s    t    d    h    n    e    i    o    '    ret
+  lsft z    x    c    v    b    k    m    ,    .    /    rsft
   lctl lmet lalt           spc            ralt rmet rctl
 )
 
@@ -18,7 +25,7 @@
   tab  q    w    f    p    g    j    l    u    y    ;    [    ]    \
   bspc a    r    s    t    d    h    n    e    i    o    '    ret
   lsft z    x    c    v    b    k    m    ,    .    /    rsft
-  lctl lmet lalt           @spc           ralt rmet rctl
+  lctl lalt lmet           @spc           rmet ralt rctl
 )
 
 (deflayer qwerty
@@ -26,7 +33,11 @@
   tab  q    w    e    r    t    y    u    i    o    p    [    ]    \
   caps a    s    d    f    g    h    j    k    l    ;    '    ret
   lsft z    x    c    v    b    n    m    ,    .    /    rsft
-  lctl lmet lalt           @spc            ralt rmet rctl
+  lctl lalt lmet           @spc           rmet ralt rctl
+)
+
+(defcfg
+  delegate-to-first-layer yes
 )
 
 (defalias
@@ -39,8 +50,8 @@
   ^ S-6 ;; ^
   & S-7 ;; &
   * S-8 ;; *
-  pro S-9 ;; (
-  prc S-0 ;; )
+  ;;( S-9 ;; (
+  ;;) S-0 ;; )
   { S-[ ;; {
   } S-] ;; }
   | S-\ ;; |
@@ -57,11 +68,18 @@
 ;; underscore _ which means "transparent". Transparent means the base layer
 ;; behaviour is used when pressing that key.
 
+;;(deflayer symbols
+;;  _    f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12  lrld
+;;  esc  @!   @@   @{   @}   @|   @%   7    8    9    @*   _    _    _
+;;  _    =    @$   S-9  S-0  grv  @&   4    5    6    -    _    _
+;;  _    @#   @^   [    ]    ,    spc  1    2    3    \    _
+;;  _    _    _              _              0    _    _
+;;)
 (deflayer symbols
   _    f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12  lrld
-  esc  @!   @@   @{   @}   @|   @%   7    8    9    @*   _    _    _
-  _    =    @$   @pro @prc grv  @&   4    5    6    -    _    _
-  _    @#   @^   [    ]    ,    spc  1    2    3    \    _
+  esc  @!   @@   S-0  @*   grv  4    6    7    @%   -    _    _    _
+  _    =    @}   @$   @|   S-9  @&   spc  @{   8    9    _    _
+  _    @#   @^   [    ]    ,    5    1    2    3    \    _
   _    _    _              _              0    _    _
 )
 

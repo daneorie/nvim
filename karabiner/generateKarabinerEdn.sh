@@ -12,7 +12,9 @@ echo ":main [" >> $karabiner
 #echo >> $karabiner
 cat spaceFn.edn >> $karabiner
 echo >> $karabiner
-cat colemak.edn >> $karabiner
+#cat colemak.edn >> $karabiner
+#echo >> $karabiner
+cat kindaVim.edn >> $karabiner
 echo >> $karabiner
 cat hyperMeh.edn >> $karabiner
 echo >> $karabiner

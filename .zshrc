@@ -12,6 +12,7 @@ paths_to_add=(
 	"/usr/local/sbin"
 	"$MAVEN_HOME/bin"
 	"$HOME/.jenv/bin"
+	"$HOME/Library/Python/3.11/bin"
 )
 # Add paths to PATH if they don't already exist
 for path_to_add in "${paths_to_add[@]}"; do
@@ -51,7 +52,16 @@ alias cdu='cd-gitroot'
 alias less="$(brew --prefix)/Cellar/less/590/bin/less"
 alias excel="open -a /Applications/Microsoft\ Excel.app"
 alias refresh="exec $SHELL -l"
+alias wiki="nvim $WIKI_HOME/index.md"
 
+# `define` but remove the last 4 lines
+define() {
+	/usr/local/bin/define $* | grep -n "." | sort -nr | sed '1,4d' | sort -n | sed 's/^[0-9]*://' | $PAGER
+}
+
+c() {
+    $HOME/dotfiles/shell/scripts/cht.sh "$@" | $PAGER
+}
 
 # git aliases
 alias g='git'
@@ -163,6 +173,9 @@ set-prompt() {
 }
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# Path to custom completions
+fpath=($HOME/dotfiles/shell/completions/ $fpath)
 
 # Created by `pipx` on 2023-05-18 05:50:54
 export PATH="$PATH:/Users/daneorie/.local/bin"

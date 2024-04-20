@@ -47,15 +47,19 @@ export const Widget = () => {
     const defaultList = Object.keys(AppNotifications.methods.default)
       .filter((appName) => notificationWidgetOptions[AppOptions.apps[appName]])
       .map((appName) => AppIdentifiers.apps[appName]);
-    const defaultResponse = await Uebersicht.run(
+
+    const defaultAppBadgeJsonList = await Uebersicht.run(
       `./simple-bar/lib/scripts/notifications-default.sh "${database}" "${defaultList.join(
         "', '"
       )}"`
-    );
-    const defaultAppBadgeJsonList = JSON.parse(defaultResponse);
-    function getAppNameByIdentifier(object, value) {
+    )
+			.then((output) => JSON.parse(output))
+			.catch(defaultList.map((key) => ({ identifier: key, count: 0 })));
+
+    const getAppNameByIdentifier = (object, value) => {
       return Object.keys(object).find((key) => object[key] === value);
     }
+
     defaultAppBadgeJsonList.forEach((appObject) => {
       const appName = getAppNameByIdentifier(
         AppIdentifiers.apps,
@@ -65,12 +69,12 @@ export const Widget = () => {
     });
 
     // handle python execution
-    const pythonResponse = await Uebersicht.run(
+    const pythonAppBadgeJsonList = await Uebersicht.run(
       `./simple-bar/lib/scripts/notifications-other.py3`
-    );
-    const pythonAppBadgeJsonList = JSON.parse(
-      pythonResponse.replace(/'/g, '"').replace(/<null>/g, "0")
-    );
+    )
+			.then((output) => JSON.parse(output.replace(/'/g, '"').replace(/<null>/g, "0")))
+			.catch({});
+
     Object.keys(AppNotifications.methods.python)
       .filter((appName) => notificationWidgetOptions[AppOptions.apps[appName]])
       .forEach((appName) =>

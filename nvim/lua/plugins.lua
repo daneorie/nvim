@@ -67,6 +67,7 @@ require("lazy").setup({
 			"nvim-tree/nvim-web-devicons",
 		},
 		config = function()
+			--require("octo").setup()
 			require("octo").setup({ enable_builtin = true })
 			vim.cmd([[hi OctoEditable guibg=none]])
 		end,
@@ -193,6 +194,7 @@ require("lazy").setup({
 		"mfussenegger/nvim-dap",
 		dependencies = {
 			"theHamsta/nvim-dap-virtual-text",
+			"nvim-neotest/nvim-nio",
 			"rcarriga/nvim-dap-ui",
 			"mfussenegger/nvim-dap-python",
 			"nvim-telescope/telescope-dap.nvim",
@@ -362,45 +364,43 @@ require("lazy").setup({
 
 	-- REST
 	{
+		"vhyrro/luarocks.nvim",
+		opts = {
+			rocks = {
+				"lua-curl",
+				"nvim-nio",
+				"mimetypes",
+				"xml2lua",
+			},
+		},
+		priority = 1000,
+		config = true,
+	},
+	{
 		"rest-nvim/rest.nvim",
-		dependencies = { "nvim-lua/plenary.nvim" },
+		dependencies = { "luarocks.nvim" },
+		ft = { "http", "https" },
+		keys = {
+			{
+				"<localleader>rr",
+				"<cmd>Rest run<cr>",
+				desc = "Run request under the cursor",
+			},
+			{
+				"<localleader>rl",
+				"<cmd>Rest run last<cr>",
+				desc = "Re-run latest request",
+			},
+		},
 		config = function()
 			require("rest-nvim").setup({
-				-- Open request results in a horizontal split
-				result_split_horizontal = false,
-				-- Keep the http file buffer above|left when split horizontal|vertical
-				result_split_in_place = false,
-				-- Skip SSL verification, useful for unknown certificates
-				skip_ssl_verification = true,
-				-- Encode URL before making request
-				encode_url = true,
-				-- Highlight request on run
-				highlight = {
-					enabled = true,
-					timeout = 150,
-				},
 				result = {
-					-- toggle showing URL, HTTP info, headers at top the of result window
-					show_url = true,
-					-- show the generated curl command in case you want to launch
-					-- the same request via the terminal (can be verbose)
-					show_curl_command = false,
-					show_http_info = true,
-					show_headers = true,
-					-- executables or functions for formatting response body [optional]
-					-- set them to false if you want to disable them
-					formatters = {
-						json = "jq",
-						html = function(body)
-							return vim.fn.system({ "tidy", "-i", "-q", "-" }, body)
-						end,
+					keybinds = {
+						buffer_local = false,
+						prev = "N",
+						next = "O",
 					},
 				},
-				-- Jump to request line on run
-				jump_to_request = false,
-				env_file = ".env",
-				custom_dynamic_variables = {},
-				yank_dry_run = true,
 			})
 		end,
 	},
